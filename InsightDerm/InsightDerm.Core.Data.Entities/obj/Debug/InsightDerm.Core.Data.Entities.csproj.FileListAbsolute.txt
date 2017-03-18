@@ -1,0 +1,4 @@
+/Users/nicolasrubiano/Desktop/Proyects/InsightDerm/InsightDerm/InsightDerm.Core.Data.Entities/bin/Debug/InsightDerm.Core.Data.Entities.dll
+/Users/nicolasrubiano/Desktop/Proyects/InsightDerm/InsightDerm/InsightDerm.Core.Data.Entities/bin/Debug/InsightDerm.Core.Data.Entities.dll.mdb
+/Users/nicolasrubiano/Desktop/Proyects/InsightDerm/InsightDerm/InsightDerm.Core.Data.Entities/obj/Debug/InsightDerm.Core.Data.Entities.dll
+/Users/nicolasrubiano/Desktop/Proyects/InsightDerm/InsightDerm/InsightDerm.Core.Data.Entities/obj/Debug/InsightDerm.Core.Data.Entities.dll.mdb
