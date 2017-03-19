@@ -1,24 +1,29 @@
 ﻿<Properties StartupConfiguration="{89D3A4A1-75C7-410D-9BC2-7578D6353399}|Default" NuGet.AddPackagesDialog.IncludePrerelease="True">
-  <MonoDevelop.Ide.Workbench ActiveDocument="InsightDerm.Host.Api/Startup.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="InsightDerm.Core.Data.Entities/Infrastructure/InsightDermContext.cs">
     <Files>
       <File FileName="InsightDerm.Host.Api/Program.cs" Line="15" Column="1" />
-      <File FileName="InsightDerm.Host.Api/Modules/LoginModule.cs" Line="13" Column="61" />
-      <File FileName="InsightDerm.Host.Api/Modules/BaseModule.cs" Line="14" Column="4" />
+      <File FileName="InsightDerm.Host.Api/Modules/LoginModule.cs" Line="24" Column="1" />
+      <File FileName="InsightDerm.Host.Api/Modules/BaseModule.cs" Line="12" Column="1" />
       <File FileName="InsightDerm.Host.Api/appsettings.json" Line="2" Column="15" />
       <File FileName="InsightDerm.Host.Api/Core/Settings/ApiSettings.cs" Line="8" Column="15" />
       <File FileName="InsightDerm.Host.Api/Core/Bootstrapper.cs" Line="1" Column="36" />
       <File FileName="InsightDerm.Host.Api/appsettings.Development.json" Line="1" Column="2" />
-      <File FileName="InsightDerm.Host.Api/Startup.cs" Line="21" Column="4" />
+      <File FileName="InsightDerm.Host.Api/Startup.cs" Line="36" Column="10" />
+      <File FileName="InsightDerm.Core.Data.Entities/project.json" Line="14" Column="2" />
+      <File FileName="InsightDerm.Core.Data.Entities/Program.cs" Line="8" Column="4" />
+      <File FileName="InsightDerm.Core.Data.Entities/Model/Doctor.cs" Line="9" Column="34" />
+      <File FileName="InsightDerm.Core.Data.Entities/Infrastructure/InsightDermContext.cs" Line="17" Column="61" />
+      <File FileName="InsightDerm.Core.Data.Entities/Infrastructure/InsightDermContextFactory.cs" Line="5" Column="54" />
+      <File FileName="InsightDerm.Core.Data.Entities/Infrastructure/ServiceCollectionsExtensions.cs" Line="13" Column="43" />
+      <File FileName="InsightDerm.Core.Data.Entities/Infrastructure/DbInitializer.cs" Line="25" Column="6" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.Host.InsightDerm.Host.Api PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/nicolasrubiano/Desktop/Proyects/InsightDerm/InsightDerm/InsightDerm.Host.Api/Modules/LoginModule.cs" relfile="InsightDerm.Host.Api/Modules/LoginModule.cs" line="15" column="67" />
-      <Breakpoint file="/Users/nicolasrubiano/Desktop/Proyects/InsightDerm/InsightDerm/InsightDerm.Host.Api/Modules/BaseModule.cs" relfile="InsightDerm.Host.Api/Modules/BaseModule.cs" line="12" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.Core.Data.InsightDerm.Core.Data.Domain HideGettingStarted="True" />
 </Properties>
