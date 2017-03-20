@@ -7,3 +7,12 @@
 /Users/nicolasrubiano/Desktop/Proyects/InsightDerm/InsightDerm/InsightDerm.Host.Api/obj/Debug/netcoreapp1.1/InsightDerm.Host.Api.AssemblyInfo.cs
 /Users/nicolasrubiano/Desktop/Proyects/InsightDerm/InsightDerm/InsightDerm.Host.Api/obj/Debug/netcoreapp1.1/InsightDerm.Host.Api.dll
 /Users/nicolasrubiano/Desktop/Proyects/InsightDerm/InsightDerm/InsightDerm.Host.Api/obj/Debug/netcoreapp1.1/InsightDerm.Host.Api.pdb
+C:\Users\nicolas.rubiano\Desktop\Proyects\InsightDerm\InsightDerm\InsightDerm.Host.Api\bin\Debug\netcoreapp1.1\InsightDerm.Host.Api.deps.json
+C:\Users\nicolas.rubiano\Desktop\Proyects\InsightDerm\InsightDerm\InsightDerm.Host.Api\bin\Debug\netcoreapp1.1\InsightDerm.Host.Api.runtimeconfig.json
+C:\Users\nicolas.rubiano\Desktop\Proyects\InsightDerm\InsightDerm\InsightDerm.Host.Api\bin\Debug\netcoreapp1.1\InsightDerm.Host.Api.runtimeconfig.dev.json
+C:\Users\nicolas.rubiano\Desktop\Proyects\InsightDerm\InsightDerm\InsightDerm.Host.Api\bin\Debug\netcoreapp1.1\InsightDerm.Host.Api.dll
+C:\Users\nicolas.rubiano\Desktop\Proyects\InsightDerm\InsightDerm\InsightDerm.Host.Api\bin\Debug\netcoreapp1.1\InsightDerm.Host.Api.pdb
+C:\Users\nicolas.rubiano\Desktop\Proyects\InsightDerm\InsightDerm\InsightDerm.Host.Api\obj\Debug\netcoreapp1.1\InsightDerm.Host.Api.csprojResolveAssemblyReference.cache
+C:\Users\nicolas.rubiano\Desktop\Proyects\InsightDerm\InsightDerm\InsightDerm.Host.Api\obj\Debug\netcoreapp1.1\InsightDerm.Host.Api.AssemblyInfo.cs
+C:\Users\nicolas.rubiano\Desktop\Proyects\InsightDerm\InsightDerm\InsightDerm.Host.Api\obj\Debug\netcoreapp1.1\InsightDerm.Host.Api.dll
+C:\Users\nicolas.rubiano\Desktop\Proyects\InsightDerm\InsightDerm\InsightDerm.Host.Api\obj\Debug\netcoreapp1.1\InsightDerm.Host.Api.pdb

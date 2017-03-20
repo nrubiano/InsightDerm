@@ -1,0 +1,9 @@
+C:\Users\nicolas.rubiano\Desktop\Proyects\InsightDerm\InsightDerm\InsightDerm.Core.Data.Domain\bin\Debug\netcoreapp1.1\InsightDerm.Core.Data.Domain.deps.json
+C:\Users\nicolas.rubiano\Desktop\Proyects\InsightDerm\InsightDerm\InsightDerm.Core.Data.Domain\bin\Debug\netcoreapp1.1\InsightDerm.Core.Data.Domain.dll
+C:\Users\nicolas.rubiano\Desktop\Proyects\InsightDerm\InsightDerm\InsightDerm.Core.Data.Domain\obj\Debug\netcoreapp1.1\InsightDerm.Core.Data.Domain.AssemblyInfo.cs
+C:\Users\nicolas.rubiano\Desktop\Proyects\InsightDerm\InsightDerm\InsightDerm.Core.Data.Domain\obj\Debug\netcoreapp1.1\InsightDerm.Core.Data.Domain.csprojResolveAssemblyReference.cache
+C:\Users\nicolas.rubiano\Desktop\Proyects\InsightDerm\InsightDerm\InsightDerm.Core.Data.Domain\bin\Debug\netcoreapp1.1\InsightDerm.Core.Data.Domain.pdb
+C:\Users\nicolas.rubiano\Desktop\Proyects\InsightDerm\InsightDerm\InsightDerm.Core.Data.Domain\obj\Debug\netcoreapp1.1\InsightDerm.Core.Data.Domain.dll
+C:\Users\nicolas.rubiano\Desktop\Proyects\InsightDerm\InsightDerm\InsightDerm.Core.Data.Domain\obj\Debug\netcoreapp1.1\InsightDerm.Core.Data.Domain.pdb
+C:\Users\nicolas.rubiano\Desktop\Proyects\InsightDerm\InsightDerm\InsightDerm.Core.Data.Domain\bin\Debug\netcoreapp1.1\InsightDerm.Core.Data.Domain.runtimeconfig.json
+C:\Users\nicolas.rubiano\Desktop\Proyects\InsightDerm\InsightDerm\InsightDerm.Core.Data.Domain\bin\Debug\netcoreapp1.1\InsightDerm.Core.Data.Domain.runtimeconfig.dev.json
