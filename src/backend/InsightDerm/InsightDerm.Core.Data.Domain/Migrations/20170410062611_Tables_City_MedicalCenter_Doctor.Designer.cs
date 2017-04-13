@@ -8,9 +8,10 @@ using InsightDerm.Core.Data.Domain.Infrastructure;
 namespace InsightDerm.Core.Data.Domain.Migrations
 {
     [DbContext(typeof(InsightDermContext))]
-    partial class InsightDermContextModelSnapshot : ModelSnapshot
+    [Migration("20170410062611_Tables_City_MedicalCenter_Doctor")]
+    partial class Tables_City_MedicalCenter_Doctor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
