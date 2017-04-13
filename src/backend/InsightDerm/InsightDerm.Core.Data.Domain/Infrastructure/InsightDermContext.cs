@@ -14,7 +14,8 @@ namespace InsightDerm.Core.Data.Domain.Infrastructure
 		{ }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+		{
+		    modelBuilder.EnableAutoHistory();
             modelBuilder.Entity<City>().ToTable("City");
             modelBuilder.Entity<Doctor>().ToTable("Doctor");
             modelBuilder.Entity<MedicalCenter>().ToTable("MedicalCenter");

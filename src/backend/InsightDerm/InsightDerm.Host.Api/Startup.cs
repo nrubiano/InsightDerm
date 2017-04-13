@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Nancy.Owin;
 
 namespace InsightDerm.Host.Api
@@ -38,7 +37,7 @@ namespace InsightDerm.Host.Api
             loggerFactory.AddDebug();
 
 			app.UseOwin(x => x.UseNancy(new NancyOptions() { 
-				Bootstrapper = new Bootstrapper(app)
+				Bootstrapper = new Bootstrapper(app, Configuration)
 			}));
         }
     }

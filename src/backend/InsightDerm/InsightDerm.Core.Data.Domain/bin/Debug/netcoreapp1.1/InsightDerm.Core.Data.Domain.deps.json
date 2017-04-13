@@ -1,13 +1,14 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v1.1",
-    "signature": "ecb9ad00bce6d4bc116a777ba16b265f64417514"
+    "signature": "0a7455cff80069fe3a2a1e5b4d44f26ca8df16bb"
   },
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v1.1": {
       "insightderm.core.data.domain/1.0.0": {
         "dependencies": {
+          "Microsoft.EntityFrameworkCore.AutoHistory": "1.1.1",
           "Microsoft.EntityFrameworkCore.Design": "1.1.1",
           "Microsoft.EntityFrameworkCore.Tools": "1.1.0",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "1.1.0",
@@ -68,6 +69,16 @@
         },
         "runtime": {
           "lib/netstandard1.3/Microsoft.EntityFrameworkCore.dll": {}
+        }
+      },
+      "microsoft.entityframeworkcore.autohistory/1.1.1": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "1.1.1",
+          "Microsoft.EntityFrameworkCore.Relational": "1.1.1",
+          "Newtonsoft.Json": "9.0.1"
+        },
+        "runtime": {
+          "lib/netstandard1.6.1/Microsoft.EntityFrameworkCore.AutoHistory.dll": {}
         }
       },
       "microsoft.entityframeworkcore.design/1.1.1": {
@@ -178,6 +189,14 @@
         },
         "runtime": {
           "lib/netstandard1.0/Microsoft.Extensions.Primitives.dll": {}
+        }
+      },
+      "newtonsoft.json/9.0.1": {
+        "dependencies": {
+          "System.Runtime.Serialization.Primitives": "4.1.1"
+        },
+        "runtime": {
+          "lib/netstandard1.0/Newtonsoft.Json.dll": {}
         }
       },
       "npgsql/3.1.9": {
@@ -291,6 +310,11 @@
           "lib/netstandard1.0/System.Runtime.CompilerServices.Unsafe.dll": {}
         }
       },
+      "system.runtime.serialization.primitives/4.1.1": {
+        "runtime": {
+          "lib/netstandard1.3/System.Runtime.Serialization.Primitives.dll": {}
+        }
+      },
       "system.text.encodings.web/4.3.0": {
         "runtime": {
           "lib/netstandard1.0/System.Text.Encodings.Web.dll": {}
@@ -338,6 +362,13 @@
       "sha512": "sha512-sxMTM8x3XydYSBWgSXqopytBoJfd5LETtMedvL98KXD69KDTruxqF+mv3UFW7pr9hxj10YGie2rvfMmx6euLkw==",
       "path": "microsoft.entityframeworkcore/1.1.1",
       "hashPath": "microsoft.entityframeworkcore.1.1.1.nupkg.sha512"
+    },
+    "microsoft.entityframeworkcore.autohistory/1.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-xgJc1ow1is1G3FiIAQyJ+XjU0JAqcrXn+Zb8R1PUBlZh807elgr7BnGu+KCptpyjzBePvXX7pHiZSEKeqwZWAQ==",
+      "path": "microsoft.entityframeworkcore.autohistory/1.1.1",
+      "hashPath": "microsoft.entityframeworkcore.autohistory.1.1.1.nupkg.sha512"
     },
     "microsoft.entityframeworkcore.design/1.1.1": {
       "type": "package",
@@ -437,6 +468,13 @@
       "path": "microsoft.extensions.primitives/1.1.0",
       "hashPath": "microsoft.extensions.primitives.1.1.0.nupkg.sha512"
     },
+    "newtonsoft.json/9.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-1oH7J+GMwoilub1tvyOdBmA+Ftd316eBDN3btUTH/bnqahUqjhKP1uCsz4/cyWrlrE/rDfElVb9kiU4AvWFqsg==",
+      "path": "newtonsoft.json/9.0.1",
+      "hashPath": "newtonsoft.json.9.0.1.nupkg.sha512"
+    },
     "npgsql/3.1.9": {
       "type": "package",
       "serviceable": true,
@@ -534,6 +572,13 @@
       "sha512": "sha512-Mu5oK6OpZGhcPdqq24BVpr0WOMyxSJmmpDEWjZUTz4hNNS9+j0BST5+BfDCo1QKzGvOfc7G88HacJB2WgJd0Yw==",
       "path": "system.runtime.compilerservices.unsafe/4.3.0",
       "hashPath": "system.runtime.compilerservices.unsafe.4.3.0.nupkg.sha512"
+    },
+    "system.runtime.serialization.primitives/4.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-5DtyZbQcJkaH+au91JLYOVmpwV2WkkbMJvgkfC8CfBnCRYlKsTJzFSmAXlaovqnrBfOazUwBf0z/UVwmuq530Q==",
+      "path": "system.runtime.serialization.primitives/4.1.1",
+      "hashPath": "system.runtime.serialization.primitives.4.1.1.nupkg.sha512"
     },
     "system.text.encodings.web/4.3.0": {
       "type": "package",
