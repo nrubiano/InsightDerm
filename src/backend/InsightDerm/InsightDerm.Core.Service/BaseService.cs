@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using InsightDerm.Core.Service.Interfaces;
@@ -7,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InsightDerm.Core.Service
 {
-    public class BaseService<TEntity, TDto> : IBaseService<TDto> 
+    public class BaseService<TEntity, TDto> : IBaseService<TDto, TEntity> 
                                                     where TDto : class
                                                     where TEntity : class
     {
@@ -25,9 +27,11 @@ namespace InsightDerm.Core.Service
             _repository = UnitOfWork.Repository<TEntity>();
         }
 
-        public async Task<List<TDto>> GetAll()
+        public IEnumerable<TDto> GetAll(Expression<Func<TEntity, bool>> predicate)
         {
-            throw new NotImplementedException();
+            var list = _repository.Query(predicate).Select(x => x);
+
+            return _mapper.Map<IEnumerable<TDto>>(list);
         }
 
         public async Task<TDto> Create(TDto entity)

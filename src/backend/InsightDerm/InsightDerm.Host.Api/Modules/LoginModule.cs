@@ -23,12 +23,9 @@ namespace InsightDerm.Host.Api.Controllers
 
 		protected virtual async Task<dynamic> Get(dynamic args, CancellationToken ct)
 		{
-		    await _cityService.Create(new CityDto()
-		    {
-                Name = "Hello Dude"
-		    });
+		    var cityList = _cityService.GetAll(x => x.Name != "");
 
-		    return "Hello World, it's Nancy on .NET Core";
+		    return Response.AsJson(cityList);
 		}
 	}
 }
