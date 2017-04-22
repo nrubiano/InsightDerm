@@ -17,16 +17,16 @@ import { TablesModule } from './tables/tables.module';
   imports: [
     CommonModule,
     AppsModule,
-    ChartsModule,
-    ComponentsModule,
+    //ChartsModule,
+    //ComponentsModule,
     DashboardsModule,
-    DocumentationModule,
-    EcommerceModule,
-    FormsModule,
-    IconsModule,
-    LayoutModule,
+    //DocumentationModule,
+    //EcommerceModule,
+    //FormsModule,
+    //IconsModule,
+    //LayoutModule,
     PagesModule,
-    TablesModule
+    //TablesModule
   ]
 })
 export class StructureModule { }
