@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InsightDerm.Core.Data.Domain.Infrastructure
 {
-	public class InsightDermContext : DbContext
-	{
-		public DbSet<Doctor> Doctors { get; set; }
+    public class InsightDermContext : DbContext
+    {
+        public DbSet<Doctor> Doctors { get; set; }
         public DbSet<City> Cities { get; set; }
-        public DbSet<MedicalCenter> MedicalCenters { get; set; }        
+        public DbSet<MedicalCenter> MedicalCenters { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<MedicalHistory> MedicalHistories { get; set; }
         public DbSet<Antecedent> Antecedents { get; set; }
@@ -16,6 +16,8 @@ namespace InsightDerm.Core.Data.Domain.Infrastructure
         public DbSet<TreatmentPlan> TreatmentPlans { get; set; }
         public DbSet<PhysicalExam> PhysicalExams { get; set; }
         public DbSet<Reason> Reasons { get; set; }
+        public DbSet<CIE10> CIE10 { get; set; }
+        public DbSet<Diagnostic> Diagnostics { get; set; }
 
         public InsightDermContext(DbContextOptions<InsightDermContext> options)
 			: base(options)
@@ -37,6 +39,10 @@ namespace InsightDerm.Core.Data.Domain.Infrastructure
             modelBuilder.Entity<TreatmentPlan>().ToTable("TreatmentPlan");
             modelBuilder.Entity<PhysicalExam>().ToTable("PhysicalExam");
             modelBuilder.Entity<Reason>().ToTable("Reason");
+            modelBuilder.Entity<CIE10>().ToTable("CIE10");
+            modelBuilder.Entity<Diagnostic>()
+                .HasKey(x => new { x.MedicalHistoryId, x.CIE10Id });
+            modelBuilder.Entity<Diagnostic>().ToTable("Diagnostic");
         }
 	}
 }

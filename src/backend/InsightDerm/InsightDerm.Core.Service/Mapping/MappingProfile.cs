@@ -40,6 +40,12 @@ namespace InsightDerm.Core.Service.Mapping
 
             CreateMap<TreatmentPlan, TreatmentPlanDto>();
             CreateMap<TreatmentPlanDto, TreatmentPlan>();
+
+            CreateMap<CIE10, CIE10Dto>();
+            CreateMap<CIE10Dto, CIE10>();
+
+            CreateMap<Diagnostic, DiagnosticDto>();
+            CreateMap<DiagnosticDto, Diagnostic>();
         }
     }
 }
