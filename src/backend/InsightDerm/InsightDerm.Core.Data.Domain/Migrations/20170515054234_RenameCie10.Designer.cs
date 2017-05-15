@@ -8,9 +8,10 @@ using InsightDerm.Core.Data.Domain.Infrastructure;
 namespace InsightDerm.Core.Data.Domain.Migrations
 {
     [DbContext(typeof(InsightDermContext))]
-    partial class InsightDermContextModelSnapshot : ModelSnapshot
+    [Migration("20170515054234_RenameCie10")]
+    partial class RenameCie10
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)

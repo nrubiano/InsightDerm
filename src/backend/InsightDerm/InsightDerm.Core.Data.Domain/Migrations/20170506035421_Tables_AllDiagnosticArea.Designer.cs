@@ -8,9 +8,10 @@ using InsightDerm.Core.Data.Domain.Infrastructure;
 namespace InsightDerm.Core.Data.Domain.Migrations
 {
     [DbContext(typeof(InsightDermContext))]
-    partial class InsightDermContextModelSnapshot : ModelSnapshot
+    [Migration("20170506035421_Tables_AllDiagnosticArea")]
+    partial class Tables_AllDiagnosticArea
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
@@ -29,7 +30,7 @@ namespace InsightDerm.Core.Data.Domain.Migrations
                     b.ToTable("Antecedent");
                 });
 
-            modelBuilder.Entity("InsightDerm.Core.Data.Domain.Model.Cie10", b =>
+            modelBuilder.Entity("InsightDerm.Core.Data.Domain.Model.CIE10", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -41,7 +42,7 @@ namespace InsightDerm.Core.Data.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cie10");
+                    b.ToTable("CIE10");
                 });
 
             modelBuilder.Entity("InsightDerm.Core.Data.Domain.Model.City", b =>
@@ -78,7 +79,7 @@ namespace InsightDerm.Core.Data.Domain.Migrations
                 {
                     b.Property<Guid>("MedicalHistoryId");
 
-                    b.Property<Guid>("Cie10Id");
+                    b.Property<Guid>("CIE10Id");
 
                     b.Property<string>("Description")
                         .HasMaxLength(255);
@@ -87,9 +88,9 @@ namespace InsightDerm.Core.Data.Domain.Migrations
 
                     b.Property<int>("DoctorId");
 
-                    b.HasKey("MedicalHistoryId", "Cie10Id");
+                    b.HasKey("MedicalHistoryId", "CIE10Id");
 
-                    b.HasAlternateKey("Cie10Id", "MedicalHistoryId");
+                    b.HasAlternateKey("CIE10Id", "MedicalHistoryId");
 
                     b.ToTable("Diagnostic");
                 });
@@ -298,9 +299,9 @@ namespace InsightDerm.Core.Data.Domain.Migrations
 
             modelBuilder.Entity("InsightDerm.Core.Data.Domain.Model.Diagnostic", b =>
                 {
-                    b.HasOne("InsightDerm.Core.Data.Domain.Model.Cie10", "Cie10")
+                    b.HasOne("InsightDerm.Core.Data.Domain.Model.CIE10", "CIE10")
                         .WithMany()
-                        .HasForeignKey("Cie10Id")
+                        .HasForeignKey("CIE10Id")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("InsightDerm.Core.Data.Domain.Model.MedicalHistory", "MedicalHistory")
