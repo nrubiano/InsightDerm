@@ -4,6 +4,7 @@ import { CommonModule }  from '@angular/common';
 import { Routes, RouterModule }  from '@angular/router';
 
 import {DataTableModule,SharedModule,DialogModule,ButtonModule} from 'primeng/primeng';
+import { DxDataGridModule } from 'devextreme-angular';
 
 import { MedicalCenterList } from './medical-center.list'
 
@@ -16,6 +17,7 @@ export const routes: Routes = [
     CommonModule,
     DataTableModule,
     DialogModule,
+    DxDataGridModule,
     ButtonModule,
     SharedModule,
     FormsModule,

@@ -1,17 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { DataTableModule,SharedModule,DialogModule,ButtonModule} from 'primeng/primeng';
+import CustomStore from 'devextreme/data/custom_store';
+import { DoctorsService } from '../../services/doctors.services';
 
 declare var $: any;
 declare var jQuery: any;
 
 @Component({
   selector: 'fea-doctor-list',
-  templateUrl: './doctor.list.html'
+  templateUrl: './doctor.list.html',
+  providers:[
+    DoctorsService
+  ]
 })
-
 export class DoctorList implements OnInit {
   
-    doctors: any[];
+    doctors: CustomStore;
 
     displayDialog: boolean;
 
@@ -21,17 +24,10 @@ export class DoctorList implements OnInit {
     
     new: boolean;
 
+    constructor(private doctorsService : DoctorsService) {}
+
     ngOnInit() {
-        this.doctors = [
-            {
-                Name: "Nicolas Rubiano",
-                Identification: "1019038492",
-                Phone: "7971010",
-                Cellphone: "3007971010",
-                Email: "nicolas.rubiano@colmedica.com",
-                City: "Bogota"
-            }
-        ];
+        this.doctors = this.doctorsService.store;
     }
 
     showDialogToAdd() {

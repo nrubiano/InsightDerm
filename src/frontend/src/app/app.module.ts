@@ -1,3 +1,4 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -14,9 +15,9 @@ import { MenuRightComponent } from './components/menu-right/menu-right.component
 import { FooterComponent } from './components/footer/footer.component';
 
 import { StructureModule } from './structure/structure.module';
-import { FeaturesModule } from './features/features.module'
+import { FeaturesModule } from './features/features.module';
 
-
+import { DoctorsService } from './services/doctors.services';
 
 declare var NProgress: any;
 
@@ -30,6 +31,7 @@ declare var NProgress: any;
     ],
     imports: [
         BrowserModule,
+        BrowserAnimationsModule,
         FormsModule,
         HttpModule,
         RouterModule,
@@ -38,7 +40,9 @@ declare var NProgress: any;
         NgbModule.forRoot(),
         routing
     ],
-    providers: [],
+    providers: [
+      DoctorsService      
+    ],
     bootstrap: [ AppComponent ]
 })
 

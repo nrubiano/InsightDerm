@@ -9,7 +9,8 @@ namespace InsightDerm.Core.Service.Mapping
         public MappingProfile()
         {
             CreateMap<City, CityDto>();
-            CreateMap<CityDto, City>();
+
+			CreateMap<Doctor, DoctorDto>();
         }
     }
 }

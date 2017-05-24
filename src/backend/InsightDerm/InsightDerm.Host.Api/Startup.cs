@@ -26,6 +26,14 @@ namespace InsightDerm.Host.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+			services.AddCors(options =>
+			{
+				options.AddPolicy("CorsPolicy",
+					builder => builder.AllowAnyOrigin()
+					.AllowAnyMethod()
+					.AllowAnyHeader()
+					.AllowCredentials());
+			});
 			services.AddOptions();
 			services.Configure<ApiSettings>(Configuration.GetSection("ApiSettings"));
         }
@@ -36,6 +44,7 @@ namespace InsightDerm.Host.Api
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+            app.UseCors("CorsPolicy");
 			app.UseOwin(x => x.UseNancy(new NancyOptions() { 
 				Bootstrapper = new Bootstrapper(app, Configuration)
 			}));

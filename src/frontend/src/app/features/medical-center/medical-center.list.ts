@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DataTableModule,SharedModule,DialogModule,ButtonModule} from 'primeng/primeng';
+import { DxDataGridModule } from 'devextreme-angular';
+import CustomStore from 'devextreme/data/custom_store';
 
 declare var $: any;
 declare var jQuery: any;

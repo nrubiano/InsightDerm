@@ -53,11 +53,11 @@
         "assets/modules/footer/css/footer.cleanui.css",
         "assets/modules/pages/css/pages.cleanui.css",
         "assets/modules/ecommerce/css/ecommerce.cleanui.css",
-        "assets/modules/apps/css/apps.cleanui.css",
-
-        "../node_modules/primeng/resources/primeng.min.css",
-        "../node_modules/primeng/resources/themes/omega/theme.css",
-        "../node_modules/font-awesome/css/font-awesome.min.css"
+        "assets/modules/apps/css/apps.cleanui.css",        
+        
+        "../node_modules/font-awesome/css/font-awesome.min.css",
+        "../node_modules/devextreme/dist/css/dx.common.css",
+        "../node_modules/devextreme/dist/css/dx.light.compact.css"
       ],
       "scripts": [
         "assets/vendors/jquery/dist/jquery.js",

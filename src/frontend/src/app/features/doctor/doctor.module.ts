@@ -2,10 +2,8 @@ import { FormsModule } from '@angular/forms';
 import { NgModule }      from '@angular/core';
 import { CommonModule }  from '@angular/common';
 import { Routes, RouterModule }  from '@angular/router';
-
-import {DataTableModule,SharedModule,DialogModule,ButtonModule} from 'primeng/primeng';
-
-import { DoctorList } from './doctor.list'
+import { DxDataGridModule } from 'devextreme-angular';
+import { DoctorList } from './doctor.list';
 
 export const routes: Routes = [
   { path: 'doctor/list', component: DoctorList }
@@ -14,10 +12,7 @@ export const routes: Routes = [
 @NgModule({
   imports: [    
     CommonModule,
-    DataTableModule,
-    DialogModule,
-    ButtonModule,
-    SharedModule,
+    DxDataGridModule,
     FormsModule,
     RouterModule.forChild(routes)
   ],
