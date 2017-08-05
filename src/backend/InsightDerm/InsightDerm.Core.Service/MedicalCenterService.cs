@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InsightDerm.Core.Service
 {
-    public class DoctorService : BaseService<Doctor, DoctorDto>
+    public class MedicalCenterService : BaseService<MedicalCenter, MedicalCenterDto>
     {
-        public DoctorService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
+        public MedicalCenterService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
 
         }

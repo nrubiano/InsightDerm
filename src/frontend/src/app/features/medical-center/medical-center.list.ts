@@ -1,18 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { DxDataGridModule } from 'devextreme-angular';
 import CustomStore from 'devextreme/data/custom_store';
+import { MedicalCentersService } from '../../services/medical-centers.services';
+import { CitiesService } from '../../services/cities.services';
 
 declare var $: any;
 declare var jQuery: any;
 
 @Component({
   selector: 'fea-medical-center',
-  templateUrl: './medical-center.list.html'
+  templateUrl: './medical-center.list.html',
+  providers:[
+    MedicalCentersService,
+    CitiesService
+  ]
 })
 
 export class MedicalCenterList implements OnInit {
   
-    medicalCenters: any[];
+    medicalCenters: CustomStore;
+
+    cities: CustomStore
 
     displayDialog: boolean;
 
@@ -22,26 +30,10 @@ export class MedicalCenterList implements OnInit {
     
     newMedicalCenter: boolean;
 
-    ngOnInit() {
-        this.medicalCenters = [
-            {
-                Name: "Medical Center 1",
-                City: "Bogota"
-            },
-            {
-                Name: "Medical Center 2",
-                City: "Bogota"
-            },
-            {
-                Name: "Medical Center 2",
-                City: "Medellin"
-            }
-        ];
-    }
+    constructor(private medicalCenterService : MedicalCentersService, private citiesService : CitiesService) {}
 
-    showDialogToAdd() {
-        this.newMedicalCenter = true;
-        this.medicalCenter = { Name: "", City: "" };
-        this.displayDialog = true;
+    ngOnInit() {
+        this.medicalCenters = this.medicalCenterService.store;
+        this.cities = this.citiesService.store;
     }
 }

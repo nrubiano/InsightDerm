@@ -13,14 +13,32 @@
                     <!-- Grid-->
                         <dx-data-grid
                                 id="gridContainer"
-                                [dataSource]="medicalCenters"
-                                [columns]="['Name', 'City']">
+                                [dataSource]="medicalCenters">
+                                <dxi-column dataField="name"></dxi-column>
+                                <dxi-column
+                                    dataField="cityId"
+                                    caption="Ciudad">         
+                                    <dxo-lookup
+                                        [dataSource]="cities"
+                                        displayExpr="name"
+                                        valueExpr="id">
+                                    </dxo-lookup>
+                                </dxi-column>
                                 <dxo-editing 
                                     mode="form"
                                     [allowUpdating]="true"
                                     [allowDeleting]="true"
                                     [allowAdding]="true">
-                                </dxo-editing>                            
+                                </dxo-editing>    
+                                 <dxo-remote-operations
+                                    [sorting]="true"
+                                    [paging]="true">
+                                </dxo-remote-operations>
+                                <dxo-paging [pageSize]="12"></dxo-paging>
+                                <dxo-pager
+                                    [showPageSizeSelector]="true"
+                                    [allowedPageSizes]="[8, 12, 20]">
+                                </dxo-pager>                                                   
                         </dx-data-grid>
                     <!-- End Grid -->
                 </div>

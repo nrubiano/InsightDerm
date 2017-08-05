@@ -4,10 +4,10 @@ import CustomStore from 'devextreme/data/custom_store';
 import { AppSettings } from '../app.config';
 import 'rxjs/add/operator/toPromise';
 /**
- * Doctors Service
+ * MedicalCenters Service
  */
 @Injectable()
-export class DoctorsService
+export class MedicalCentersService
 {
     store : CustomStore;
 
@@ -20,7 +20,7 @@ export class DoctorsService
      */
     setupStore()
     {
-        var api = AppSettings.API + "/Doctors"
+        var api = AppSettings.API + "/MedicalCenters"
         var http = this.http;
         this.store = new CustomStore({
             load: (loadOptions) :Promise<any> =>

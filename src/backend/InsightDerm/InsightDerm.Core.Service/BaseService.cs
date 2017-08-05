@@ -34,6 +34,13 @@ namespace InsightDerm.Core.Service
             return _mapper.Map<IEnumerable<TDto>>(list);
         }
 
+		public TDto GetSingle(Expression<Func<TEntity, bool>> predicate)
+		{
+            var single = _repository.Query(predicate).FirstOrDefault();
+
+			return _mapper.Map<TDto>(single);
+		}
+
         public async Task<TDto> Create(TDto entity)
         {
             var toInsert = _mapper.Map<TEntity>(entity);

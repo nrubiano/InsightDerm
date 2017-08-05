@@ -17,7 +17,6 @@ namespace InsightDerm.Core.Service.Core
         {
             container.Register(InitUnitOfWork(connectionString));
             container.Register(InitMapper());
-            container.Register<CityService>();
         }
 
         private static IUnitOfWork InitUnitOfWork(string connectionString)

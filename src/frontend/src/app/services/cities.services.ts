@@ -1,13 +1,15 @@
 import { Inject, Injectable } from '@angular/core';
 import { Http, HttpModule } from '@angular/http';
 import CustomStore from 'devextreme/data/custom_store';
+import LoadOptions from 'devextreme/data/custom_store';
+import CustomStoreOptions from 'devextreme/data/custom_store';
 import { AppSettings } from '../app.config';
 import 'rxjs/add/operator/toPromise';
 /**
- * Doctors Service
+ * Cities Service
  */
 @Injectable()
-export class DoctorsService
+export class CitiesService
 {
     store : CustomStore;
 
@@ -20,10 +22,10 @@ export class DoctorsService
      */
     setupStore()
     {
-        var api = AppSettings.API + "/Doctors"
+        var api = AppSettings.API + "/Cities"
         var http = this.http;
         this.store = new CustomStore({
-            load: (loadOptions) :Promise<any> =>
+            load: (loadOptions : any) : Promise<any> =>
             {
                 var params = '?';
 
@@ -45,6 +47,15 @@ export class DoctorsService
                             data: json,
                             totalCount: json.length
                         }
+                    })
+                    .catch(error => { throw 'Data Loading Error' });
+            },
+            byKey: (key :any) : Promise<any> => {
+                return http.get(api + "/" + key)
+                    .toPromise()
+                    .then(response => {
+                        var json = response.json();
+                        return json;
                     })
                     .catch(error => { throw 'Data Loading Error' });
             }

@@ -22,9 +22,9 @@ namespace InsightDerm.Host.Api.Controllers
 
 		protected virtual async Task<dynamic> Get(dynamic args, CancellationToken ct)
 		{
-			var doctorList = _doctorService.GetAll(x => x.Name != "");
+			var entities = _doctorService.GetAll(x => x.Name != "");
 
-			return Response.AsJson(doctorList);
+			return Response.AsJson(entities);
 		}
 	}
 }

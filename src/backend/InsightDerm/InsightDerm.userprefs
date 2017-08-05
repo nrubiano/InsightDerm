@@ -1,14 +1,25 @@
 ﻿<Properties StartupConfiguration="{89D3A4A1-75C7-410D-9BC2-7578D6353399}|Default" NuGet.AddPackagesDialog.IncludePrerelease="True">
-  <MonoDevelop.Ide.Workbench ActiveDocument="InsightDerm.Host.Api/Startup.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="InsightDerm.Core.Service/BaseService.cs">
     <Files>
-      <File FileName="InsightDerm.Host.Api/Modules/DoctorModule.cs" Line="25" Column="23" />
-      <File FileName="InsightDerm.Host.Api/Modules/LoginModule.cs" Line="26" Column="27" />
-      <File FileName="InsightDerm.Core.Service/Mapping/MappingProfile.cs" Line="12" Column="13" />
+      <File FileName="InsightDerm.Host.Api/Modules/DoctorsModule.cs" Line="25" Column="16" />
+      <File FileName="InsightDerm.Host.Api/Modules/LoginModule.cs" Line="13" Column="39" />
+      <File FileName="InsightDerm.Core.Service/Mapping/MappingProfile.cs" Line="15" Column="54" />
       <File FileName="InsightDerm.Host.Api/appsettings.json" Line="7" Column="107" />
       <File FileName="InsightDerm.Host.Api/Core/Settings/ApiSettings.cs" Line="8" Column="15" />
       <File FileName="InsightDerm.Host.Api/Core/Bootstrapper.cs" Line="30" Column="13" />
       <File FileName="InsightDerm.Host.Api/Program.cs" Line="21" Column="1" />
-      <File FileName="InsightDerm.Host.Api/Startup.cs" Line="36" Column="10" />
+      <File FileName="InsightDerm.Host.Api/Startup.cs" Line="37" Column="13" />
+      <File FileName="InsightDerm.Core.Data.Domain/Model/MedicalCenter.cs" Line="16" Column="47" />
+      <File FileName="InsightDerm.Core.Dto/MedicalCenterDto.cs" Line="5" Column="11" />
+      <File FileName="InsightDerm.Host.Api/Modules/CitiesModule.cs" Line="11" Column="26" />
+      <File FileName="InsightDerm.Core.Service/MedicalCenterService.cs" Line="8" Column="18" />
+      <File FileName="InsightDerm.Core.Service/DoctorService.cs" Line="8" Column="57" />
+      <File FileName="InsightDerm.Core.Dto/DoctorDto.cs" Line="20" Column="1" />
+      <File FileName="InsightDerm.Core.Dto/CityDto.cs" Line="1" Column="1" />
+      <File FileName="InsightDerm.Core.Service/BaseService.cs" Line="39" Column="50" />
+      <File FileName="InsightDerm.Core.Service/CityService.cs" Line="8" Column="36" />
+      <File FileName="InsightDerm.Core.Service/Core/ServiceKernel.cs" Line="19" Column="46" />
+      <File FileName="InsightDerm.Host.Api/Modules/MedicalCentersModule.cs" Line="24" Column="46" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />

@@ -9,6 +9,8 @@ namespace InsightDerm.Core.Service.Interfaces
     {
         IEnumerable<TDto> GetAll(Expression<Func<TEntity, bool>> predicate);
 
+        TDto GetSingle(Expression<Func<TEntity, bool>> predicate);
+
         Task<TDto> Create(TDto entity);
 
         void Remove(TDto entity);
