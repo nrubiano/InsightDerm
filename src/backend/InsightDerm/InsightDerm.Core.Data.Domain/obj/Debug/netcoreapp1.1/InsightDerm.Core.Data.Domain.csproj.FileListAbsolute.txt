@@ -26,3 +26,4 @@ C:/Users/Nicolas Rubiano/Desktop/Proyects/InsightDerm/src/backend/InsightDerm/In
 /Users/foxnet/Desktop/Proyects/InsightDerm/src/backend/InsightDerm/InsightDerm.Core.Data.Domain/obj/Debug/netcoreapp1.1/InsightDerm.Core.Data.Domain.dll
 /Users/foxnet/Desktop/Proyects/InsightDerm/src/backend/InsightDerm/InsightDerm.Core.Data.Domain/obj/Debug/netcoreapp1.1/InsightDerm.Core.Data.Domain.pdb
 /Users/foxnet/Desktop/Proyects/InsightDerm/src/backend/InsightDerm/InsightDerm.Core.Data.Domain/obj/Debug/netcoreapp1.1/InsightDerm.Core.Data.Domain.csproj.CoreCompileInputs.cache
+/Users/foxnet/Desktop/Proyects/InsightDerm/src/backend/InsightDerm/InsightDerm.Core.Data.Domain/obj/Debug/netcoreapp1.1/InsightDerm.Core.Data.Domain.AssemblyInfoInputs.cache

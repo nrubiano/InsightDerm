@@ -11,7 +11,9 @@ namespace InsightDerm.Core.Service.Interfaces
 
         TDto GetSingle(Expression<Func<TEntity, bool>> predicate);
 
-        Task<TDto> Create(TDto entity);
+        TDto Create(TDto entity);
+
+        bool Exist(Expression<Func<TEntity, bool>> predicate);
 
         void Remove(TDto entity);
 

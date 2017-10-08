@@ -120,3 +120,4 @@ C:/Users/Nicolas Rubiano/Desktop/Proyects/InsightDerm/src/backend/InsightDerm/In
 /Users/foxnet/Desktop/Proyects/InsightDerm/src/backend/InsightDerm/InsightDerm.Host.Api/obj/Debug/netcoreapp1.1/InsightDerm.Host.Api.AssemblyInfo.cs
 /Users/foxnet/Desktop/Proyects/InsightDerm/src/backend/InsightDerm/InsightDerm.Host.Api/obj/Debug/netcoreapp1.1/InsightDerm.Host.Api.dll
 /Users/foxnet/Desktop/Proyects/InsightDerm/src/backend/InsightDerm/InsightDerm.Host.Api/obj/Debug/netcoreapp1.1/InsightDerm.Host.Api.pdb
+/Users/foxnet/Desktop/Proyects/InsightDerm/src/backend/InsightDerm/InsightDerm.Host.Api/obj/Debug/netcoreapp1.1/InsightDerm.Host.Api.AssemblyInfoInputs.cache

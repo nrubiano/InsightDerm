@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
-using InsightDerm.Core.Dto;
+using AutoMapper;
 using InsightDerm.Core.Service;
 using Microsoft.Extensions.Options;
 using Nancy;
 
 namespace InsightDerm.Host.Api.Controllers
 {
-	public class LoginModule : BaseModule
+    public class LoginModule : BaseModule
 	{
 	    private readonly CityService _cityService;
 
-		public LoginModule(IOptions<ApiSettings> apiSettings, CityService cityService) : base(apiSettings)
+		public LoginModule(IOptions<ApiSettings> apiSettings, IMapper mapper, CityService cityService) : base(apiSettings, mapper)
 		{
 		    _cityService = cityService;
 

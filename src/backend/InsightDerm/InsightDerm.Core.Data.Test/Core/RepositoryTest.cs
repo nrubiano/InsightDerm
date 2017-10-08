@@ -25,7 +25,7 @@ namespace InsightDerm.Core.Data.Test.Core
         private void InitUnitOfWork()
         {
             UnitOfWork = new UnitOfWork<DbContext>(_context);
-            Repository = UnitOfWork.Repository<TEntity>();
+            Repository = UnitOfWork.GetRepository<TEntity>();
         }
 
         [TestInitialize]

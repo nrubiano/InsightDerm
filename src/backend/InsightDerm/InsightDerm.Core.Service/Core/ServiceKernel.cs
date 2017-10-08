@@ -3,6 +3,7 @@ using InsightDerm.Core.Data.Domain.Infrastructure;
 using InsightDerm.Core.Service.Mapping;
 using Microsoft.EntityFrameworkCore;
 using Nancy.TinyIoc;
+using InsightDerm.Core.Data;
 
 namespace InsightDerm.Core.Service.Core
 {

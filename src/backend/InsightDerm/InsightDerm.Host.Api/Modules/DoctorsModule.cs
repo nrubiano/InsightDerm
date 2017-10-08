@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using InsightDerm.Core.Service;
 using Microsoft.Extensions.Options;
 using Nancy;
 
 namespace InsightDerm.Host.Api.Controllers
 {
-	public class DoctorsModule : BaseModule
+    public class DoctorsModule : BaseModule
 	{
 		private readonly DoctorService _doctorService;
 
-		public DoctorsModule(IOptions<ApiSettings> apiSettings, DoctorService doctorService) : base(apiSettings)
+		public DoctorsModule(IOptions<ApiSettings> apiSettings, IMapper mapper, DoctorService doctorService) : base(apiSettings, mapper)
 		{
 			_doctorService = doctorService;
 

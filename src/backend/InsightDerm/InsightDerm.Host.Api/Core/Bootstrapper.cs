@@ -8,27 +8,27 @@ using Nancy.TinyIoc;
 
 namespace InsightDerm.Host.Api
 {
-	public class Bootstrapper : DefaultNancyBootstrapper
-	{
-		private IApplicationBuilder _appBuilder;
+    public class Bootstrapper : DefaultNancyBootstrapper
+    {
+        IApplicationBuilder _appBuilder;
 
-	    private IConfigurationRoot _configuration;
+        IConfigurationRoot _configuration;
 
         public Bootstrapper(IApplicationBuilder appBuilder, IConfigurationRoot configuration)
-		{
-			_appBuilder = appBuilder;
-		    _configuration = configuration;
-		}
+        {
+            _appBuilder = appBuilder;
+            _configuration = configuration;
+        }
 
-		protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
-		{
-			base.ApplicationStartup(container, pipelines);
+        protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
+        {
+            base.ApplicationStartup(container, pipelines);
 
-			var settingsService = (IOptions<ApiSettings>)_appBuilder.ApplicationServices.GetService(typeof(IOptions<ApiSettings>));
+            var settingsService = (IOptions<ApiSettings>)_appBuilder.ApplicationServices.GetService(typeof(IOptions<ApiSettings>));
 
-			container.Register(settingsService);
-            
+            container.Register(settingsService);
+
             ServiceKernel.Init(container, _configuration.GetConnectionString("DefaultConnection"));
-		}
-	}
+        }
+    }
 }

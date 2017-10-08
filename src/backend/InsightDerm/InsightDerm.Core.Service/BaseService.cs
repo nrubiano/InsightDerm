@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
+using InsightDerm.Core.Data;
 using InsightDerm.Core.Service.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace InsightDerm.Core.Service
 {
@@ -24,41 +23,48 @@ namespace InsightDerm.Core.Service
             UnitOfWork = unitOfWork;
 
             _mapper = mapper;
-            _repository = UnitOfWork.Repository<TEntity>();
+            _repository = UnitOfWork.GetRepository<TEntity>();
         }
 
         public IEnumerable<TDto> GetAll(Expression<Func<TEntity, bool>> predicate)
         {
-            var list = _repository.Query(predicate).Select(x => x);
+            var list = _repository.GetPagedList(predicate, null, null, 0, 20);
 
-            return _mapper.Map<IEnumerable<TDto>>(list);
+            return _mapper.Map<IEnumerable<TDto>>(list.Items);
         }
 
 		public TDto GetSingle(Expression<Func<TEntity, bool>> predicate)
 		{
-            var single = _repository.Query(predicate).FirstOrDefault();
+            var single = _repository.GetFirstOrDefault(predicate, null, null, true);
 
 			return _mapper.Map<TDto>(single);
 		}
 
-        public async Task<TDto> Create(TDto entity)
+        public TDto Create(TDto entity)
         {
             var toInsert = _mapper.Map<TEntity>(entity);
 
-            await _repository.InsertAsync(toInsert);
+            _repository.Insert(toInsert);
 
-            await UnitOfWork.SaveChangesAsync(true);
+            UnitOfWork.SaveChanges(true);
+
+            _repository.Detach(toInsert);
 
             return _mapper.Map<TDto>(toInsert);
         }
+
+		public bool Exist(Expression<Func<TEntity, bool>> predicate)
+		{
+			return _repository.Exist(predicate);
+		}
 
         public void Remove(TDto entity)
         {
             var toDelete = _mapper.Map<TEntity>(entity);
 
-            UnitOfWork.SaveChangesAsync(true);
-
             _repository.Delete(toDelete);
+
+			UnitOfWork.SaveChanges(true);
         }
 
         public TDto Update(TDto entity)
@@ -67,7 +73,9 @@ namespace InsightDerm.Core.Service
 
             _repository.Update(toUpdate);
 
-            UnitOfWork.SaveChangesAsync(true);
+            UnitOfWork.SaveChanges(true);
+
+            _repository.Detach(toUpdate);
 
             return _mapper.Map<TDto>(toUpdate);
         }

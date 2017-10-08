@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using InsightDerm.Core.Service;
 using Microsoft.Extensions.Options;
 using Nancy;
@@ -11,7 +12,7 @@ namespace InsightDerm.Host.Api.Modules
     {
         readonly CityService _citiesService;
 
-        public CitiesModule(IOptions<ApiSettings> apiSettings, CityService citiesService) : base(apiSettings)
+        public CitiesModule(IOptions<ApiSettings> apiSettings, IMapper mapper, CityService citiesService) : base(apiSettings, mapper)
         {
             _citiesService = citiesService;
 
