@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\InsightDerm.Core.Data.Domain\InsightDerm.Core.Data.Domain.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <Folder Include="PagedList\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.8.5" />
   </ItemGroup>
 </Project>

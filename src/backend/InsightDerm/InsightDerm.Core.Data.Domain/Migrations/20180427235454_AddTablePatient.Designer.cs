@@ -11,9 +11,10 @@ using System;
 namespace InsightDerm.Core.Data.Domain.Migrations
 {
     [DbContext(typeof(InsightDermContext))]
-    partial class InsightDermContextModelSnapshot : ModelSnapshot
+    [Migration("20180427235454_AddTablePatient")]
+    partial class AddTablePatient
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,20 +59,6 @@ namespace InsightDerm.Core.Data.Domain.Migrations
                     b.ToTable("Doctors");
                 });
 
-            modelBuilder.Entity("InsightDerm.Core.Data.Domain.Model.MaritalStatus", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(100);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("MaritalStatuses");
-                });
-
             modelBuilder.Entity("InsightDerm.Core.Data.Domain.Model.MedicalCenter", b =>
                 {
                     b.Property<Guid>("Id")
@@ -101,23 +88,13 @@ namespace InsightDerm.Core.Data.Domain.Migrations
                     b.Property<DateTime>("BornDate")
                         .HasMaxLength(255);
 
-                    b.Property<string>("Genre")
-                        .IsRequired()
-                        .HasMaxLength(12);
-
-                    b.Property<string>("IdentificationNumber")
+                    b.Property<string>("IdentificatioNumber")
                         .IsRequired()
                         .HasMaxLength(255);
-
-                    b.Property<string>("IdentificationType")
-                        .IsRequired()
-                        .HasMaxLength(12);
 
                     b.Property<string>("Mail")
                         .IsRequired()
                         .HasMaxLength(250);
-
-                    b.Property<Guid>("MaritalStatusId");
 
                     b.Property<string>("MobilePhone")
                         .IsRequired()
@@ -135,8 +112,6 @@ namespace InsightDerm.Core.Data.Domain.Migrations
                         .HasMaxLength(100);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MaritalStatusId");
 
                     b.ToTable("Patients");
                 });
@@ -171,14 +146,6 @@ namespace InsightDerm.Core.Data.Domain.Migrations
                     b.HasOne("InsightDerm.Core.Data.Domain.Model.City", "City")
                         .WithMany()
                         .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("InsightDerm.Core.Data.Domain.Model.Patient", b =>
-                {
-                    b.HasOne("InsightDerm.Core.Data.Domain.Model.MaritalStatus", "MaritalStatus")
-                        .WithMany()
-                        .HasForeignKey("MaritalStatusId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

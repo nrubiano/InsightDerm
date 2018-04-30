@@ -43,6 +43,14 @@ namespace InsightDerm.Core.Data
                                          int pageIndex = 0,
                                          int pageSize = 20,
                                          bool disableTracking = true);
+        
+        
+        IPagedList<TEntity> GetPagedList(string filter,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
+            int pageIndex = 0,
+            int pageSize = 20,
+            bool disableTracking = true);
 
         /// <summary>
         /// Gets the <see cref="IPagedList{TEntity}"/> based on a predicate, orderby delegate and page information. This method default no-tracking query.

@@ -33,6 +33,13 @@ namespace InsightDerm.Core.Service
             return _mapper.Map<IEnumerable<TDto>>(list.Items);
         }
 
+        public IEnumerable<TDto> GetAll(string filter, string sort)
+        {
+            var list = _repository.GetPagedList(filter);
+
+            return _mapper.Map<IEnumerable<TDto>>(list.Items);
+        }
+        
 		public TDto GetSingle(Expression<Func<TEntity, bool>> predicate)
 		{
             var single = _repository.GetFirstOrDefault(predicate, null, null, true);

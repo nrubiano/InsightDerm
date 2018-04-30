@@ -8,6 +8,8 @@ namespace InsightDerm.Core.Service.Interfaces
     public interface IBaseService<TDto, TEntity> where TDto : class
     {
         IEnumerable<TDto> GetAll(Expression<Func<TEntity, bool>> predicate);
+        
+        IEnumerable<TDto> GetAll(string filter, string sort);
 
         TDto GetSingle(Expression<Func<TEntity, bool>> predicate);
 

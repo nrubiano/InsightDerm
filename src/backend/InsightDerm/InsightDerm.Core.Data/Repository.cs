@@ -91,6 +91,35 @@ namespace InsightDerm.Core.Data
             }
         }
 
+        public IPagedList<TEntity> GetPagedList(string filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null, int pageIndex = 0, int pageSize = 20,
+            bool disableTracking = true)
+        {
+            IQueryable<TEntity> query = _dbSet;
+            if (disableTracking)
+            {
+                query = query.AsNoTracking();
+            }
+
+            if (include != null)
+            {
+                query = include(query);
+            }
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                query = query.WhereDynamic(filter);
+            }
+
+            if (orderBy != null)
+            {
+                return orderBy(query).ToPagedList(pageIndex, pageSize);
+            }
+            else
+            {
+                return query.ToPagedList(pageIndex, pageSize);
+            }
+        }
+
         /// <summary>
         /// Gets the <see cref="IPagedList{TEntity}"/> based on a predicate, orderby delegate and page information. This method default no-tracking query.
         /// </summary>

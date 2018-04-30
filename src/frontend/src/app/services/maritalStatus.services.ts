@@ -6,10 +6,10 @@ import CustomStoreOptions from 'devextreme/data/custom_store';
 import { AppSettings } from '../app.config';
 import 'rxjs/add/operator/toPromise';
 /**
- * Cities Service
+ * MaritalStatus Service
  */
 @Injectable()
-export class CitiesService
+export class MaritalStatusService
 {
     store : CustomStore;
 
@@ -22,7 +22,7 @@ export class CitiesService
      */
     setupStore()
     {
-        var api = AppSettings.API + "/Cities"
+        var api = AppSettings.API + "/MaritalStatus"
         var http = this.http;
         this.store = new CustomStore({
             load: (loadOptions : any) : Promise<any> =>

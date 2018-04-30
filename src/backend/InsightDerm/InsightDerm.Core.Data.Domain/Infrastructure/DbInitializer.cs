@@ -15,7 +15,7 @@ namespace InsightDerm.Core.Data.Domain.Infrastructure
             // Look for any doctors.
             if (context.Doctors.Any())
             {
-                return; // DB has been seeded
+                context.Doctors.RemoveRange(context.Doctors.ToList());
             }
 
             var doctors = new List<Doctor> {
@@ -24,9 +24,44 @@ namespace InsightDerm.Core.Data.Domain.Infrastructure
                     Name = "Nicolas Rubiano"
                 }
             };
-
             context.Doctors.AddRange(doctors);
 
+            
+            if (context.MaritalStatuses.Any())
+            {
+                context.MaritalStatuses.RemoveRange(context.MaritalStatuses.ToList());
+            }
+
+            var maritalStatuses = new List<MaritalStatus>
+            {
+                new MaritalStatus
+                {
+                    Id = Guid.NewGuid(),
+                    Description = "Soltero/a"
+                },
+                new MaritalStatus
+                {
+                    Id = Guid.NewGuid(),
+                    Description = "Casado/a"
+                },
+                new MaritalStatus
+                {
+                    Id = Guid.NewGuid(),
+                    Description = "Separado/a"
+                },
+                new MaritalStatus
+                {
+                    Id = Guid.NewGuid(),
+                    Description = "Union Libre"
+                },
+                new MaritalStatus
+                {
+                    Id = Guid.NewGuid(),
+                    Description = "Viudo/a"
+                }
+            };
+            context.MaritalStatuses.AddRange(maritalStatuses);
+            
             context.SaveChanges();
         }
     }

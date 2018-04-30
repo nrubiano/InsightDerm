@@ -74,6 +74,12 @@
                 </a>
                 <ul class="cat__menu-left__list">
                     <li class="cat__menu-left__item" [routerLinkActive]="['cat__menu-left__item--active']">
+                        <a [routerLink]="['consultation/add']">
+                            <span class="cat__menu-left__icon">I</span>
+                            Iniciar Consulta
+                        </a>
+                    </li>
+                    <li class="cat__menu-left__item" [routerLinkActive]="['cat__menu-left__item--active']">
                         <a [routerLink]="['consultation/list']">
                             <span class="cat__menu-left__icon">C</span>
                             Consultas

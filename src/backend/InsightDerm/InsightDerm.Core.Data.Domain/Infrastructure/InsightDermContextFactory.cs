@@ -11,7 +11,11 @@ namespace InsightDerm.Core.Data.Domain.Infrastructure
         {
 			var builder = new DbContextOptionsBuilder<InsightDermContext>();
 			builder.UseNpgsql("User ID=postgres;Password=spmt0518;Host=localhost;Port=5432;Database=insightderm;Pooling=true;");
-			return new InsightDermContext(builder.Options);
+	        var dbContext = new InsightDermContext(builder.Options);
+	        
+	        DbInitializer.Initialize(dbContext);
+	        
+	        return dbContext;
         }
     }
 }
