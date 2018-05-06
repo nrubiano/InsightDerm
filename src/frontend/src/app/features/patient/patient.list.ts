@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DataTableModule,SharedModule,DialogModule,ButtonModule} from 'primeng/primeng';
 
 declare var $: any;
 declare var jQuery: any;

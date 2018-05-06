@@ -8,10 +8,9 @@ declare var jQuery: any;
 
 @Component({
   selector: 'fea-consultation-add',
-  templateUrl: './consultation.add.html',
+  templateUrl: './consultation.add.html',  
   providers:[
-    PatientsService,
-    MaritalStatusService
+    PatientsService
   ]
 })
 export class ConsultationAdd implements OnInit 
@@ -26,33 +25,19 @@ export class ConsultationAdd implements OnInit
     patientId: string;
 
     showFormPatient: boolean = false;
+    
+    showBeginConsultation: boolean = false;
 
     patient: Patient;
-
-    maritalStatuses: any;
     /**
      * Ctor
      */
-    constructor(private patientsService : PatientsService, private maritalStatusService:MaritalStatusService) { }
+    constructor(private patientsService : PatientsService) { }
     /**
      * Init Event
      */
     ngOnInit() {
-        this.loadMaritalStatus();
-    }
-
-    loadMaritalStatus(){
-        this.maritalStatusService
-            .store
-            .load()
-            .then((res:any)=>{                 
-                if(res.totalCount > 0){
-                    this.maritalStatuses = res.data;
-                }
-            }, 
-            () => { 
-                 console.log("Some error happen loading the marital statuses"); 
-            });
+        
     }
     /**
      * Search a patient by his identification number
@@ -66,11 +51,14 @@ export class ConsultationAdd implements OnInit
                 .store
                 .load(options)
                 .then(
-                    (res: any) => {
-                        this.showFormPatient = true;
-                        if(res.data) {
-                            console.log(res.data);
+                    (res: any) => {                                                                
+                        if(res.totalCount == 1) {
+                            this.showFormPatient = false;
+                            this.showBeginConsultation = true;
                             this.patient = res.data[0];
+                        } else {
+                            this.showFormPatient = true;
+                            this.showBeginConsultation = false;
                         }
                     }, 
                     () => {
@@ -79,16 +67,13 @@ export class ConsultationAdd implements OnInit
                 );
     }
 
-    createOrUpdatePatient(form) {        
-        var patient = form.value;
-        patient.bornDate = `${patient.bornDate}T00:00:00`;
-
+    createOrUpdatePatient(patient: Patient) {                
         this.patientsService
                 .store
                 .insert(patient)
                 .then(
                     (res) => {           
-                        form.reset();             
+                        console.log("Ok");
                     },
                     () => {
                         console.log("error");

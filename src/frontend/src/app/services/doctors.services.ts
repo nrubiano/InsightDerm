@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { Http, HttpModule } from '@angular/http';
 import CustomStore from 'devextreme/data/custom_store';
 import { AppSettings } from '../app.config';
-import 'rxjs/add/operator/toPromise';
+
 /**
  * Doctors Service
  */

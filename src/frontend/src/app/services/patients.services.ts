@@ -4,7 +4,7 @@ import CustomStore from 'devextreme/data/custom_store';
 import LoadOptions from 'devextreme/data/custom_store';
 import CustomStoreOptions from 'devextreme/data/custom_store';
 import { AppSettings } from '../app.config';
-import 'rxjs/add/operator/toPromise';
+
 /**
  * Patients Service
  */
@@ -40,11 +40,16 @@ export class PatientsService
             },
             load: (loadOptions) :Promise<any> =>
             {
-                var params = '?';
+                var params = '';
+                
+                if(loadOptions.skip){
+                    params += 'skip=' + loadOptions.skip;
+                }
 
-                params += 'skip=' + loadOptions.skip || 0;
-                params += '&take=' + loadOptions.take || 12;
-
+                if(loadOptions.take){
+                    params += '&take=' + loadOptions.take;
+                }
+                
                 if(loadOptions.filter) {
                     params += '&$filter=' + loadOptions.filter;
                 }
@@ -55,7 +60,13 @@ export class PatientsService
                         params += ' desc';
                     }
                 }
-                return http.get(api + params)
+
+                var query = '';
+                if(params.length > 0){
+                    query = '?' + params;
+                }
+
+                return http.get(api + query)
                     .toPromise()
                     .then(response => {
                         var json = response.json();

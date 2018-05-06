@@ -3,8 +3,6 @@ import { NgModule }      from '@angular/core';
 import { CommonModule }  from '@angular/common';
 import { Routes, RouterModule }  from '@angular/router';
 
-import {DataTableModule,SharedModule,DialogModule,ButtonModule} from 'primeng/primeng';
-
 import { PatientList } from './patient.list'
 
 export const routes: Routes = [
@@ -13,11 +11,7 @@ export const routes: Routes = [
 
 @NgModule({
   imports: [    
-    CommonModule,
-    DataTableModule,
-    DialogModule,
-    ButtonModule,
-    SharedModule,
+    CommonModule,    
     FormsModule,
     RouterModule.forChild(routes)
   ],

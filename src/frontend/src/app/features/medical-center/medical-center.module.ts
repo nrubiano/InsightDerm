@@ -3,7 +3,6 @@ import { NgModule }      from '@angular/core';
 import { CommonModule }  from '@angular/common';
 import { Routes, RouterModule }  from '@angular/router';
 
-import {DataTableModule,SharedModule,DialogModule,ButtonModule} from 'primeng/primeng';
 import { DxDataGridModule } from 'devextreme-angular';
 
 import { MedicalCenterList } from './medical-center.list'
@@ -14,13 +13,9 @@ export const routes: Routes = [
 
 @NgModule({
   imports: [    
-    CommonModule,
-    DataTableModule,
-    DialogModule,
-    DxDataGridModule,
-    ButtonModule,
-    SharedModule,
+    CommonModule,    
     FormsModule,
+    DxDataGridModule,
     RouterModule.forChild(routes)
   ],
   declarations: [

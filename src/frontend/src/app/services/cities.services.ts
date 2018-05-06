@@ -4,7 +4,7 @@ import CustomStore from 'devextreme/data/custom_store';
 import LoadOptions from 'devextreme/data/custom_store';
 import CustomStoreOptions from 'devextreme/data/custom_store';
 import { AppSettings } from '../app.config';
-import 'rxjs/add/operator/toPromise';
+
 /**
  * Cities Service
  */

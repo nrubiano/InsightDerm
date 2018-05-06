@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import {Observable} from 'rxjs/Observable'
+import {Observable} from 'rxjs'
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';;
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
+
+
+
 
 const states = ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado',
   'Connecticut', 'Delaware', 'District Of Columbia', 'Federated States Of Micronesia', 'Florida', 'Georgia',
@@ -35,14 +35,4 @@ export class ComponentsNgBootstrap {
 
   // Timepicker Example
   timepickerModel = {hour: 13, minute: 30};
-
-  // Typeahead Example
-  public typeaheadModel: any;
-  typeaheadSearch = (text$: Observable<string>) =>
-    text$
-      .debounceTime(200)
-      .distinctUntilChanged()
-      .map(term => term.length < 2 ? []
-        : states.filter(v => new RegExp(term, 'gi').test(v)).splice(0, 10));
-
 }

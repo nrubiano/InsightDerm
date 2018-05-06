@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DxDataGridModule } from 'devextreme-angular';
 import CustomStore from 'devextreme/data/custom_store';
 import { MedicalCentersService } from '../../services/medical-centers.services';
 import { CitiesService } from '../../services/cities.services';

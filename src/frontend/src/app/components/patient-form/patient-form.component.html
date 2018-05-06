@@ -1,0 +1,219 @@
+<section class="card" *ngIf="showForm">
+    <div class="card-header">
+        <span class="cat__core__title">
+            <div class="fa fa-stethoscope"></div>
+            <strong>Paciente</strong>            
+        </span>
+    </div>
+    <div class="card-block">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="mb-5">
+                        <form #patientForm="ngForm" (ngSubmit)="onSubmit(patientForm)">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                            <label class="form-label" for="patientName">Nombre</label>
+                                            <input id="name" name="name" #name="ngModel" class="form-control" required minlength="12" [ngModel]="patient?.name">
+                                            <div *ngIf="name.errors && (name.dirty || name.touched)" class="alert alert-danger">
+                                                <div [hidden]="!name.errors.required">
+                                                    Debe ingresar el nombre del paciente.
+                                                </div>
+                                                <div [hidden]="!name.errors.minlength">
+                                                    El nombre del paciente debe contener minimo 12 caracteres.
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="form-label">Tipo Identificación</label>
+                                            <select id="identificationType" name="identificationType"
+                                                    [ngModel]="patient?.identificationType"
+                                                    #identificationType="ngModel"
+                                                    required
+                                                    class="form-control select2">
+                                                <option value="">Seleccione...</option>
+                                                <option value="CC">Cedula Ciudadania</option>
+                                                <option value="TI">Tarjeta Identidad</option>
+                                            </select>
+                                            <div *ngIf="identificationType.errors && (identificationType.dirty || identificationType.touched)" class="alert alert-danger">
+                                                <div [hidden]="!identificationType.errors.required">
+                                                    Debe seleccionar el tipo de identificación del paciente.
+                                                </div>
+                                            </div>
+                                        </div>  
+                                </div>
+                                <div class="col-lg-4">
+                                        <div class="form-group">
+                                                <label class="form-label" for="identificationNumber">Numero Identificación</label>
+                                                <input id="identificationNumber"
+                                                        name="identificationNumber"
+                                                        class="form-control"
+                                                        type="text"
+                                                        [ngModel]="patient?.identificationNumber"
+                                                        #identificationNumber="ngModel"
+                                                        required>
+                                                <div *ngIf="identificationNumber.errors && (identificationNumber.dirty || identificationNumber.touched)" class="alert alert-danger">
+                                                    <div [hidden]="!identificationNumber.errors.required">
+                                                        Debe ingresar el número de identificación del paciente.
+                                                    </div>
+                                                </div>
+                                        </div>
+                                </div>
+                            </div>  
+                            <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                                <label class="form-label" for="maritalStatusId">Estado Civil</label>
+                                                <select id="maritalStatusId" name="maritalStatusId"
+                                                    [ngModel]="patient?.maritalStatusId"
+                                                    #maritalStatusId="ngModel"
+                                                    required
+                                                    class="form-control select2">
+                                                    <option value="">Seleccione...</option>
+                                                    <option *ngFor="let ms of maritalStatuses" [value]="ms.id">{{ ms.description }}</option>
+                                                </select>
+                                                <div *ngIf="maritalStatusId.errors && (maritalStatusId.dirty || maritalStatusId.touched)" class="alert alert-danger">
+                                                    <div [hidden]="!maritalStatusId.errors.required">
+                                                        Debe seleccionar el estado civil del paciente.
+                                                    </div>
+                                                </div>
+                                            </div>  
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="bornDate">Fecha Nacimiento</label>                                            
+                                            <dx-date-box type="date" class="form-control"                                                     
+                                                id="bornDate" 
+                                                name="bornDate"
+                                                [ngModel]="patient?.bornDate | date:'yyyy-MM-dd'"
+                                                #bornDate="ngModel"
+                                                required>
+                                            </dx-date-box>
+                                            <div *ngIf="bornDate.errors && (bornDate.dirty || bornDate.touched)" class="alert alert-danger">
+                                                <div [hidden]="!bornDate.errors.required">
+                                                    Debe seleccionar la fecha de nacimiento del paciente.
+                                                </div>
+                                            </div>
+                                        </div>  
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="genre">Sexo</label>
+                                            <select id="genre"
+                                                    name="genre"
+                                                    [ngModel]="patient?.genre"
+                                                    #genre="ngModel"
+                                                    required
+                                                    class="form-control select2">
+                                                <option value="">Seleccione...</option>
+                                                <option value="M">Masculino</option>
+                                                <option value="F">Femenino</option>
+                                            </select>
+                                            <div *ngIf="genre.errors && (genre.dirty || genre.touched)" class="alert alert-danger">
+                                                <div [hidden]="!genre.errors.required">
+                                                    Debe seleccionar el sexo del paciente.
+                                                </div>
+                                            </div>
+                                        </div>  
+                                    </div>
+                                </div>                                                   
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                                <label class="form-label" for="occupation">Ocupación</label>
+                                                <input id="occupation" 
+                                                    name="occupation"
+                                                    [ngModel]="patient?.occupation"
+                                                    #occupation="ngModel"
+                                                    required
+                                                    type="text"
+                                                    class="form-control">
+                                                <div *ngIf="occupation.errors && (occupation.dirty || occupation.touched)" class="alert alert-danger">
+                                                    <div [hidden]="!occupation.errors.required">
+                                                        Debe ingresar la ocupacion del paciente.
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label class="form-label" for="address">Dirección</label>
+                                                <input id="address" 
+                                                    name="address"
+                                                    [ngModel]="patient?.address"
+                                                    #address="ngModel"
+                                                    required
+                                                    type="text"
+                                                    class="form-control">
+                                                <div *ngIf="address.errors && (address.dirty || address.touched)" class="alert alert-danger">
+                                                    <div [hidden]="!address.errors.required">
+                                                        Debe ingresar la dirección del paciente.
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                    </div>
+                                    <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label class="form-label" for="phone">Telefono</label>
+                                                <input id="phone" 
+                                                    name="phone"
+                                                    [ngModel]="patient?.phone"
+                                                    #phone="ngModel"
+                                                    required
+                                                    type="text"
+                                                    class="form-control">
+                                                <div *ngIf="phone.errors && (phone.dirty || phone.touched)" class="alert alert-danger">
+                                                    <div [hidden]="!phone.errors.required">
+                                                        Debe ingresar el telefono del paciente.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>  
+                                <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label class="form-label" for="mobilePhone">Celular</label>
+                                                <input id="mobilePhone" 
+                                                    name="mobilePhone"
+                                                    [ngModel]="patient?.mobilePhone"
+                                                    #mobilePhone="ngModel"
+                                                    required
+                                                    type="text"
+                                                    class="form-control">
+                                                <div *ngIf="mobilePhone.errors && (mobilePhone.dirty || mobilePhone.touched)" class="alert alert-danger">
+                                                    <div [hidden]="!mobilePhone.errors.required">
+                                                        Debe ingresar el celular del paciente.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                                <label class="form-label" for="mail">Correo Electronico</label>
+                                                <input id="mail" 
+                                                    name="mail"
+                                                    [ngModel]="patient?.mail"
+                                                    #mail="ngModel"
+                                                    required
+                                                    type="text"
+                                                    class="form-control">
+                                                <div *ngIf="mail.errors && (mail.dirty || mail.touched)" class="alert alert-danger">
+                                                    <div [hidden]="!mail.errors.required">
+                                                        Debe ingresar el correo electronico del paciente.
+                                                    </div>
+                                                </div>
+                                        </div>
+                                </div>
+                                <div class="form-actions">
+                                        {{ patientForm.value | json }}
+                                        <button type="submit" class="btn btn-primary width-150" [disabled]="!patientForm.form.valid">Crear</button>
+                                        <button type="button" class="btn btn-default remove-error">Limpiar</button>
+                                </div>
+                        </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
