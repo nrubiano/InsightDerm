@@ -17,7 +17,7 @@ namespace InsightDerm.Core.Service.Core
         private static void InitContainer(TinyIoCContainer container, string connectionString)
         {
             container.Register(InitUnitOfWork(connectionString));
-            container.Register(InitMapper());
+            container.Register(InitMapper());                       
         }
 
         private static IUnitOfWork InitUnitOfWork(string connectionString)
