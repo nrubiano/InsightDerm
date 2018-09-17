@@ -27,6 +27,7 @@ export class PatientsService
         this.store = new CustomStore({
             insert: (item) : Promise<any> => 
             {
+                console.log(item);
                 return  http
                         .post(api, item)
                         .toPromise()

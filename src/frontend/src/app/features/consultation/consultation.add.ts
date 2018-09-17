@@ -67,7 +67,8 @@ export class ConsultationAdd implements OnInit
                 );
     }
 
-    createOrUpdatePatient(patient: Patient) {                
+    createOrUpdatePatient(patient: Patient) {      
+        console.log(patient);          
         this.patientsService
                 .store
                 .insert(patient)

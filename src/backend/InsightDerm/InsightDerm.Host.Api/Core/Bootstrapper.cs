@@ -1,14 +1,15 @@
-﻿using InsightDerm.Core.Service.Core;
+﻿using Autofac;
+using InsightDerm.Core.Service.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
 using Nancy;
-using Nancy.Bootstrapper;
-using Nancy.TinyIoc;
+using Nancy.Bootstrappers.Autofac;
+using Ninject;
 
 namespace InsightDerm.Host.Api
 {
-    public class Bootstrapper : DefaultNancyBootstrapper
+    public class Bootstrapper : AutofacNancyBootstrapper
     {
         IApplicationBuilder _appBuilder;
 
@@ -19,16 +20,18 @@ namespace InsightDerm.Host.Api
             _appBuilder = appBuilder;
             _configuration = configuration;
         }
-
-        protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
+        
+        protected override void ConfigureApplicationContainer(ILifetimeScope existingContainer)
         {
-            base.ApplicationStartup(container, pipelines);
-
+            var builder = new ContainerBuilder();
+            
             var settingsService = (IOptions<ApiSettings>)_appBuilder.ApplicationServices.GetService(typeof(IOptions<ApiSettings>));
 
-            container.Register(settingsService);
-
-            ServiceKernel.Init(container, _configuration.GetConnectionString("DefaultConnection"));
+            builder.RegisterInstance(settingsService).As<IOptions<ApiSettings>>();
+            
+            ServiceKernel.Init(builder, _configuration.GetConnectionString("DefaultConnection"));
+            
+            builder.Update(existingContainer.ComponentRegistry);
         }
     }
 }

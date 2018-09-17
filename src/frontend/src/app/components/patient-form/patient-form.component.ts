@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { DxDateBoxModule } from 'devextreme-angular';
+import * as moment from 'moment';
 import { Patient } from 'app/models/patient';
 import { MaritalStatusService } from 'app/services/maritalStatus.services';
 
@@ -46,7 +46,7 @@ export class PatientFormComponent implements OnInit {
 
     onSubmit(form) {
         this.patient = form.value;
-        this.patient.bornDate = `${this.patient.bornDate}T00:00:00`;
+        this.patient.bornDate = moment(this.patient.bornDate).format();
         this.submit.emit(this.patient);
     }
 }
