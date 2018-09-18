@@ -57,7 +57,7 @@
               "src/assets/modules/apps/css/apps.cleanui.css",
               "node_modules/font-awesome/css/font-awesome.min.css",
               "node_modules/devextreme/dist/css/dx.common.css",
-              "node_modules/devextreme/dist/css/dx.light.compact.css"
+              "node_modules/devextreme/dist/css/dx.material.blue.light.css"
             ],
             "scripts": [
               "src/assets/vendors/jquery/dist/jquery.js",

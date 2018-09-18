@@ -3,7 +3,7 @@ import { NgModule }      from '@angular/core';
 import { CommonModule }  from '@angular/common';
 import { Routes, RouterModule }  from '@angular/router';
 
-import { DxDateBoxModule } from 'devextreme-angular'
+import { DxDateBoxModule, DxTextAreaModule, DxNumberBoxModule } from 'devextreme-angular'
 
 import { ConsultationList } from './consultation.list'
 import { ConsultationAdd } from './consultation.add'
@@ -19,6 +19,8 @@ export const routes: Routes = [
     CommonModule,
     FormsModule,
     DxDateBoxModule,
+    DxTextAreaModule,
+    DxNumberBoxModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes)
   ],

@@ -59,13 +59,247 @@
         </span>
     </div>
     <div class="card-block">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="mb-5">
-                        
+        <div class="nav-tabs-horizontal">
+            <ul class="nav nav-tabs mb-4" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" href="javascript: void(0);" data-toggle="tab" data-target="#consultationReason" role="tab">
+                        <i class="fa fa-stethoscope"></i>
+                        Motivo Consulta
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#record" role="tab">
+                        <i class="fa fa-medkit"></i>
+                        Antecedentes
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#physicalExam" role="tab">
+                        <i class="fa fa-heartbeat"></i>
+                        Examen F&iacute;sico
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#laboratories" role="tab">
+                        <i class="fa fa-ambulance"></i>
+                        Laboratorios
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#historial" role="tab">
+                        <i class="fa fa-database"></i>
+                        Historial Consultas
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="consultationReason" role="tabcard">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                Por favor ingrese el motivo de la consulta:
+                            </div> 
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 form-group padding-top-10 margin-bottom-0">
+                                <dx-text-area></dx-text-area>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="record" role="tabcard">
+                    <section class="card">
+                        <div class="card-header">
+                            <span class="utils__title">
+                                <div class="fa fa-group"></div>
+                                Personales Sociales 
+                            </span>
+                        </div>
+                        <div class="card-block">
+                            <dx-text-area></dx-text-area>
+                        </div>
+                    </section>
+
+                    <section class="card">
+                        <div class="card-header">
+                            <span class="utils__title">
+                                <div class="fa fa-plus-square"></div>
+                                Patol&oacute;gicos 
+                            </span>
+                        </div>
+                        <div class="card-block">
+                            <dx-text-area></dx-text-area>
+                        </div>
+                    </section>
+
+                    <section class="card">
+                        <div class="card-header">
+                            <span class="utils__title">
+                                <div class="fa fa-hospital-o"></div>
+                                Quir&uacute;rgicos
+                            </span>
+                        </div>
+                        <div class="card-block">
+                            <dx-text-area></dx-text-area>
+                        </div>
+                    </section>
+
+                    <section class="card">
+                        <div class="card-header">
+                            <span class="utils__title">
+                                <div class="fa fa-eye"></div>
+                                Al&eacute;rgicos
+                            </span>
+                        </div>
+                        <div class="card-block">
+                            <dx-text-area></dx-text-area>
+                        </div>
+                    </section>
+
+                    <section class="card">
+                        <div class="card-header">
+                            <span class="utils__title">
+                                <div class="fa fa-medkit"></div>
+                                Farmacol&oacute;gicos
+                            </span>
+                        </div>
+                        <div class="card-block">
+                            <dx-text-area></dx-text-area>
+                        </div>
+                    </section>
+
+                    <section class="card">
+                        <div class="card-header">
+                            <span class="utils__title">
+                                <div class="fa fa-heart"></div>
+                                Transfusionales
+                            </span>
+                        </div>
+                        <div class="card-block">
+                            <dx-text-area></dx-text-area>
+                        </div>
+                    </section>
+
+                    <section class="card">
+                        <div class="card-header">
+                            <span class="utils__title">
+                                <div class="fa fa-user"></div>
+                                Hereditarios
+                            </span>
+                        </div>
+                        <div class="card-block">
+                            <dx-text-area></dx-text-area>
+                        </div>
+                    </section>
+
+                    <section class="card">
+                        <div class="card-header">
+                            <span class="utils__title">
+                                <div class="fa fa-expeditedssl"></div>
+                                T&oacute;xicos
+                            </span>
+                        </div>
+                        <div class="card-block">
+                            <dx-text-area></dx-text-area>
+                        </div>
+                    </section>
+
+                    <section class="card">
+                        <div class="card-header">
+                            <span class="utils__title">
+                                <div class="fa fa-thumb-tack"></div>
+                                Otros
+                            </span>
+                        </div>
+                        <div class="card-block">
+                            <dx-text-area></dx-text-area>
+                        </div>
+                    </section>
+                </div>
+                <div class="tab-pane" id="physicalExam" role="tabcard">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-1">
+                                TA:
+                            </div>
+                            <div class="col-md-1">
+                                <dx-number-box></dx-number-box>
+                            </div>   
+                        </div>           
+                        <div class="row">
+                            <div class="col-md-1">
+                                FC:
+                            </div>
+                            <div class="col-md-1">
+                                <dx-number-box></dx-number-box>
+                            </div>    
+                        </div>
+                        <div class="row">
+                            <div class="col-md-1">
+                                Peso:
+                            </div>                        
+                            <div class="col-md-1">
+                                <dx-number-box></dx-number-box>
+                            </div>  
+                        </div>
+                        <div class="row">
+                            <div class="col-md-1">
+                                Talla:
+                            </div>                        
+                            <div class="col-md-1">
+                                <dx-number-box></dx-number-box>
+                            </div> 
+                        </div>
+                        <div class="row">
+                            <div class="col-md-1">
+                                Temperatura:
+                            </div>                        
+                            <div class="col-md-1">
+                                <dx-number-box></dx-number-box>
+                            </div> 
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                Comentarios:
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <dx-text-area></dx-text-area>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="laboratories" role="tabcard">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                Por favor indique los laboratorios ordenados:
+                            </div> 
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 form-group padding-top-10 margin-bottom-0">
+                                <dx-text-area></dx-text-area>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="historial" role="tabcard">
+                    <div class="container-fluid">
+                        <div class="row">                            
+                        </div>
+                        <div class="row">                            
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="card-footer">
+        <div class="mb-5">
+            <button type="button" class="btn mr-2 mb-2 float-right">Cancelar</button>
+            <button type="button" class="btn btn-primary mr-2 mb-2 float-right">Generar Interconsulta</button>            
+        </div>        
     </div>
 </section>
 <!-- END: mconsultation add -->
