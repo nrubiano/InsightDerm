@@ -41,7 +41,9 @@ namespace InsightDerm.Host.Api.Modules
 		{
             var model = BindBody<PatientDto>();
 
-            var exist = _patientService.Exist(x => string.Equals(x.Name, model.Name, StringComparison.OrdinalIgnoreCase));
+            var exist = _patientService.Exist(x => string.Equals(x.IdentificationNumber
+													, model.IdentificationNumber
+													, StringComparison.OrdinalIgnoreCase));
 	
             if (exist)
             {

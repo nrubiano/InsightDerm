@@ -1,4 +1,5 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -38,6 +39,7 @@ declare var NProgress: any;
         StructureModule,
         FeaturesModule,        
         NgbModule.forRoot(),
+        SweetAlert2Module.forRoot(),
         routing
     ],
     providers: [

@@ -1,8 +1,6 @@
-import { Inject, Injectable } from '@angular/core';
-import { Http, HttpModule } from '@angular/http';
+import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
 import CustomStore from 'devextreme/data/custom_store';
-import LoadOptions from 'devextreme/data/custom_store';
-import CustomStoreOptions from 'devextreme/data/custom_store';
 import { AppSettings } from '../app.config';
 
 /**
@@ -26,18 +24,10 @@ export class PatientsService
         var http = this.http;
         this.store = new CustomStore({
             insert: (item) : Promise<any> => 
-            {
-                console.log(item);
+            {                
                 return  http
                         .post(api, item)
-                        .toPromise()
-                        .then(response => {
-                            return response;
-                        })
-                        .catch(error => { 
-                            throw error._body;
-                        });
-                
+                        .toPromise();                
             },
             load: (loadOptions) :Promise<any> =>
             {

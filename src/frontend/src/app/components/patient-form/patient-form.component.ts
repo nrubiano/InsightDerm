@@ -19,7 +19,7 @@ export class PatientFormComponent implements OnInit {
     showForm: boolean;
 
     @Output() 
-    submit = new EventEmitter();
+    submitForm = new EventEmitter();
 
     maritalStatuses: any;
 
@@ -47,6 +47,6 @@ export class PatientFormComponent implements OnInit {
     onSubmit(form) {
         this.patient = form.value;
         this.patient.bornDate = moment(this.patient.bornDate).format();
-        this.submit.emit(this.patient);
+        this.submitForm.emit(this.patient);
     }
 }

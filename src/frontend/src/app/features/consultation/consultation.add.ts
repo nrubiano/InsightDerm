@@ -67,17 +67,16 @@ export class ConsultationAdd implements OnInit
                 );
     }
 
-    createOrUpdatePatient(patient: Patient) {      
-        console.log(patient);          
+    createOrUpdatePatient(patient: Patient) {                
         this.patientsService
                 .store
                 .insert(patient)
                 .then(
                     (res) => {           
-                        console.log("Ok");
+                        this.searchPatient();
                     },
-                    () => {
-                        console.log("error");
+                    (res) => {
+                        console.log(res);
                     }
                 );
     }

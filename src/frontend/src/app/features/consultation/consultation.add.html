@@ -49,7 +49,7 @@
     </div>
 </section>
 
-<patient-form [show]="showFormPatient" (submit)="createOrUpdatePatient($event)"></patient-form>
+<patient-form [show]="showFormPatient" (submitForm)="createOrUpdatePatient($event)"></patient-form>
 
 <section class="card" *ngIf="showBeginConsultation">
     <div class="card-header">
