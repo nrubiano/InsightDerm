@@ -14,8 +14,21 @@
                         <dx-data-grid
                                 id="gridContainer"
                                 [dataSource]="doctors">
-                                <dxi-column dataField="name"></dxi-column>
-                                <dxi-column dataField="email"></dxi-column>
+                                <dxi-column dataField="name">
+                                    <dxi-validation-rule type="required"></dxi-validation-rule>
+                                </dxi-column>
+                                <dxi-column dataField="identification">
+                                    <dxi-validation-rule type="required"></dxi-validation-rule>
+                                </dxi-column>
+                                <dxi-column dataField="phone">
+                                    <dxi-validation-rule type="required"></dxi-validation-rule>
+                                </dxi-column>
+                                <dxi-column dataField="cellPhone">
+                                    <dxi-validation-rule type="required"></dxi-validation-rule>
+                                </dxi-column>
+                                <dxi-column dataField="email">
+                                    <dxi-validation-rule type="required"></dxi-validation-rule>
+                                </dxi-column>
                                 <dxo-editing 
                                     mode="form"
                                     [allowUpdating]="true"

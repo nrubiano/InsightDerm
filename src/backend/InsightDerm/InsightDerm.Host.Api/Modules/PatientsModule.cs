@@ -39,36 +39,36 @@ namespace InsightDerm.Host.Api.Modules
 	    
 		protected virtual async Task<dynamic> Post(dynamic args, CancellationToken ct)
 		{
-            var model = BindBody<PatientDto>();
-
-            var exist = _patientService.Exist(x => string.Equals(x.IdentificationNumber
-													, model.IdentificationNumber
-													, StringComparison.OrdinalIgnoreCase));
+			var model = BindBody<PatientDto>();
+	 
+			var exist = _patientService.Exist(x => string.Equals(x.IdentificationNumber
+         													, model.IdentificationNumber
+         													, StringComparison.OrdinalIgnoreCase));
 	
-            if (exist)
-            {
+			if (exist)
+			{
 				return Negotiate
 						.WithModel($"The patient with the name {model.Name} already exist")
 							.WithStatusCode(HttpStatusCode.BadRequest);
-            }
-                
-            _patientService.Create(model);
-
-            return Response.AsJson(model);
+			}
+				
+			_patientService.Create(model);
+  
+			return Response.AsJson(model);
 		}
-
+	
 		protected virtual async Task<dynamic> Put(dynamic args, CancellationToken ct)
 		{
-            var id = (Guid)args.Id;
+			var id = (Guid)args.Id;
 
-            var model = _patientService.GetSingle(x => x.Id == id);
+			var model = _patientService.GetSingle(x => x.Id == id);
 
-            if (model == null)
-                return HttpStatusCode.NotFound;
+			if (model == null)
+				return HttpStatusCode.NotFound;
 
-            model = UpdateFromBody(model);
+			model = UpdateFromBody(model);
 
-            _patientService.Update(model);
+			_patientService.Update(model);
 
 			return Response.AsJson(model);
 		}
@@ -77,14 +77,14 @@ namespace InsightDerm.Host.Api.Modules
 		{
 			var id = (Guid)args.Id;
 
-            var model = _patientService.GetSingle(x => x.Id == id);
+			var model = _patientService.GetSingle(x => x.Id == id);
 
 			if (model == null)
 				return HttpStatusCode.NotFound;
-            
+			
 			_patientService.Remove(model);
 
 			return Response.AsJson(model);
 		}
-    }
+	}
 }
