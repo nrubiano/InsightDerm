@@ -32,7 +32,8 @@ export class DoctorsService
                             return response;
                         })
                         .catch(error => { 
-                            throw error._body;
+                            console.log(error);
+                            throw error._body.replace(/["]+/g, '');
                         });
                 
             },
@@ -63,6 +64,17 @@ export class DoctorsService
             },
             update: (entity, updatedValues):Promise<any> => {                
                 return http.put(api + "/" + encodeURIComponent(entity.id), Object.assign(entity, updatedValues))
+                                .toPromise()
+                                .then(response => {
+                                    var json = response.json();
+                                    return {
+                                        data: json
+                                    }
+                                })
+                                .catch(error => { throw 'Data Update Error' });
+            },
+            remove: (entity):Promise<any> => {                
+                return http.delete(api + "/" + encodeURIComponent(entity.id), entity)
                                 .toPromise()
                                 .then(response => {
                                     var json = response.json();

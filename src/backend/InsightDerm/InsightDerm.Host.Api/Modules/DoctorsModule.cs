@@ -76,7 +76,7 @@ namespace InsightDerm.Host.Api.Controllers
 			var model = _doctorService.GetSingle(x => x.Id == id);
 	
 			if (model == null)
-				return HttpStatusCode.NotFound;
+				return HttpStatusCode.OK;
 				
 			_doctorService.Remove(model);
 	
