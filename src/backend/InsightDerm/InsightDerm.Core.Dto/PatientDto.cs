@@ -49,5 +49,7 @@ namespace InsightDerm.Core.Dto
         
         [Required]
         public Guid MaritalStatusId { get; set; }
+        
+        public virtual MaritalStatusDto MaritalStatus { get; set; }
     }
 }

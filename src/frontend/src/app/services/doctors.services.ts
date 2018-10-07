@@ -61,8 +61,8 @@ export class DoctorsService
                     })
                     .catch(error => { throw 'Data Loading Error' });
             },
-            update: (entity, updatedValues):Promise<any> => {
-                return http.put(api + "/" + encodeURIComponent(entity.id), updatedValues)
+            update: (entity, updatedValues):Promise<any> => {                
+                return http.put(api + "/" + encodeURIComponent(entity.id), Object.assign(entity, updatedValues))
                                 .toPromise()
                                 .then(response => {
                                     var json = response.json();

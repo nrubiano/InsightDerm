@@ -7,8 +7,10 @@ namespace InsightDerm.Core.Service.Mapping
     public class MappingProfile : Profile
     {
         public MappingProfile()
-        {
+        {       
             CreateMap<City, CityDto>();
+            
+            CreateMap<CityDto, City>();
 
 			CreateMap<Doctor, DoctorDto>();
             
@@ -16,20 +18,16 @@ namespace InsightDerm.Core.Service.Mapping
 
             CreateMap<MedicalCenter, MedicalCenterDto>();
 
-            CreateMap<MedicalCenterDto, MedicalCenter>();
-
-            CreateMap<MedicalCenterDto, MedicalCenterDto>()
+            CreateMap<MedicalCenterDto, MedicalCenter>()
                 .ForMember(mn => mn.CityId, con => con.Condition(c => c.CityId.HasValue));
+            
+            CreateMap<MaritalStatus, MaritalStatusDto>();
             
             CreateMap<MaritalStatusDto, MaritalStatus>();
 
-            CreateMap<MaritalStatus, MaritalStatusDto>();
-            
             CreateMap<Patient, PatientDto>();
             
-            CreateMap<PatientDto, Patient>();
-            
-            ForAllMaps((tm, me) => me.ForAllMembers(mo => mo.Condition((src, target, srcValue, ctx) => srcValue != null)));
+            CreateMap<PatientDto, Patient>();                       
         }
     }
 }

@@ -43,9 +43,11 @@ namespace InsightDerm.Core.Service.Core
 
         private static IMapper InitMapper()
         {
-            var config = new MapperConfiguration(cfg => {                
-                cfg.AddProfile<MappingProfile>();
+            var config = new MapperConfiguration(cfg => {                                     
+                cfg.AddProfile<MappingProfile>();                
             });
+            
+            config.AssertConfigurationIsValid();
             
             return config.CreateMapper();
         }
