@@ -20,6 +20,8 @@ namespace InsightDerm.Host.Api.Modules
 
             Get(GetPath(), (args, ctk) => Get(args, ctk));
 
+	        Get($@"{GetPath()}/{{Id}}", (args, ctk) => GetSingle(args, ctk));
+	        
             Post(GetPath(), (args, ctk) => Post(args, ctk));
 
             Put($@"{GetPath()}/{{Id}}", (args, ctk) => Put(args, ctk));
@@ -34,6 +36,22 @@ namespace InsightDerm.Host.Api.Modules
 
             return Response.AsJson(entities);
         }
+	    
+	    protected virtual async Task<dynamic> GetSingle(dynamic args, CancellationToken ct)
+	    {
+		    if(args.Id != null)
+		    {
+			    var id = (Guid)args.Id;
+			    var entity = _medicalCenterService.GetSingle(x => x.Id == id);
+
+			    if(entity != null)
+				    return Response.AsJson(entity);
+
+			    return HttpStatusCode.NotFound;
+		    }
+
+		    return HttpStatusCode.BadRequest;
+	    }
 
 		protected virtual async Task<dynamic> Post(dynamic args, CancellationToken ct)
 		{

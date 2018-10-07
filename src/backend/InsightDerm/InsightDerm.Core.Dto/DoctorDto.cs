@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace InsightDerm.Core.Dto
 {
@@ -15,5 +16,17 @@ namespace InsightDerm.Core.Dto
         public string CellPhone { get; set; }
 
         public string Email { get; set; }
+        
+        [Required]
+        public Guid MedicalCenterId { get; set; }
+        
+        [Required]
+        public Guid SpecialityId { get; set; }
+        
+        [Required]
+        public virtual MedicalCenterDto MedicalCenter { get; set; }
+        
+        [Required]
+        public virtual SpecialityDto Speciality { get; set; }  
     }
 }

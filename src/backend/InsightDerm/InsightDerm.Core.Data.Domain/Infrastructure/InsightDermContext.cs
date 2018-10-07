@@ -14,6 +14,8 @@ namespace InsightDerm.Core.Data.Domain.Infrastructure
 		public DbSet<MaritalStatus> MaritalStatuses { get; set; }
 		
 		public DbSet<Patient> Patients { get; set; }
+		
+		public DbSet<Speciality> Specialities { get; set; }
 
 		public InsightDermContext(DbContextOptions<InsightDermContext> options)
 			: base(options)
@@ -25,10 +27,20 @@ namespace InsightDerm.Core.Data.Domain.Infrastructure
 		{
 			modelBuilder.EnableAutoHistory(10);
             modelBuilder.Entity<City>().ToTable("Cities");
-            modelBuilder.Entity<Doctor>().ToTable("Doctors");
+			modelBuilder.Entity<Doctor>()
+				.ToTable("Doctors")
+				.HasOne(x => x.Speciality)				
+				.WithMany(x => x.Doctors);
+			
             modelBuilder.Entity<MedicalCenter>().ToTable("MedicalCenters");
 			modelBuilder.Entity<Patient>().ToTable("Patients");
 			modelBuilder.Entity<MaritalStatus>().ToTable("MaritalStatuses");
-        }
+
+			modelBuilder.Entity<Speciality>()
+				.ToTable("Specialities")
+				.HasMany(x => x.Doctors)
+				.WithOne(x => x.Speciality)
+				.OnDelete(DeleteBehavior.SetNull);
+		}
 	}
 }

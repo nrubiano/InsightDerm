@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import CustomStore from 'devextreme/data/custom_store';
 import { DoctorsService } from '../../services/doctors.services';
+import { SpecialitiesService } from '../../services/specialities.services';
+import { MedicalCentersService } from '../../services/medical-centers.services';
 
 declare var $: any;
 declare var jQuery: any;
@@ -9,12 +11,16 @@ declare var jQuery: any;
   selector: 'fea-doctor-list',
   templateUrl: './doctor.list.html',
   providers:[
-    DoctorsService
+    DoctorsService,
+    MedicalCentersService,
+    SpecialitiesService
   ]
 })
 export class DoctorList implements OnInit {
   
     doctors: CustomStore;
+    medicalCenters: CustomStore;
+    specialities: CustomStore;
 
     displayDialog: boolean;
 
@@ -24,10 +30,15 @@ export class DoctorList implements OnInit {
     
     new: boolean;
 
-    constructor(private doctorsService : DoctorsService) {}
+    constructor(private doctorsService : DoctorsService,
+        private specialitiesService : SpecialitiesService,
+        private medicalCentersService : MedicalCentersService
+    ) {}
 
     ngOnInit() {
         this.doctors = this.doctorsService.store;
+        this.medicalCenters = this.medicalCentersService.store;
+        this.specialities = this.specialitiesService.store;
     }
 
     showDialogToAdd() {

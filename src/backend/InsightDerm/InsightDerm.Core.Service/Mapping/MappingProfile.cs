@@ -12,6 +12,10 @@ namespace InsightDerm.Core.Service.Mapping
             
             CreateMap<CityDto, City>();
 
+            CreateMap<Speciality, SpecialityDto>();
+            
+            CreateMap<SpecialityDto, Speciality>();
+            
 			CreateMap<Doctor, DoctorDto>();
             
             CreateMap<DoctorDto, Doctor>();

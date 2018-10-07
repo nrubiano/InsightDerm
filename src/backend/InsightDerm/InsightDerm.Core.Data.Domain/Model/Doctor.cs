@@ -22,5 +22,17 @@ namespace InsightDerm.Core.Data.Domain.Model
 
         [MaxLength(255)]
         public string Email { get; set; }
+        
+        [Required]
+        public Guid MedicalCenterId { get; set; }
+        
+        [Required]
+        public Guid SpecialityId { get; set; }
+        
+        [Required]
+        public virtual MedicalCenter MedicalCenter { get; set; }
+        
+        [Required]
+        public virtual Speciality Speciality { get; set; }        
     }
 }

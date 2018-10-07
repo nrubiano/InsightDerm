@@ -85,6 +85,15 @@ export class MedicalCentersService
                                 console.log(error);
                                 throw 'Data Update Error' 
                             });
+            },
+            byKey: (key :any) : Promise<any> => {
+                return http.get(api + "/" + key)
+                    .toPromise()
+                    .then(response => {
+                        var json = response.json();
+                        return json;
+                    })
+                    .catch(error => { throw 'Data Loading Error' });
             }
         });
     }
