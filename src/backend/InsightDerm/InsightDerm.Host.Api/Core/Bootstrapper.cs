@@ -3,9 +3,7 @@ using InsightDerm.Core.Service.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
-using Nancy;
 using Nancy.Bootstrappers.Autofac;
-using Ninject;
 
 namespace InsightDerm.Host.Api
 {
