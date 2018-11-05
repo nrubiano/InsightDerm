@@ -5,15 +5,21 @@ namespace InsightDerm.Core.Data.Domain.Infrastructure
 {
 	public class InsightDermContext : DbContext
 	{
-		public DbSet<Doctor> Doctors { get; set; }
-
         public DbSet<City> Cities { get; set; }
-		
-		public DbSet<MedicalCenter> MedicalCenters { get; set; }
-		
+
+	    public DbSet<Consultation> Consultations { get; set; }
+
+	    public DbSet<Doctor> Doctors { get; set; }
+
 		public DbSet<MaritalStatus> MaritalStatuses { get; set; }
-		
-		public DbSet<Patient> Patients { get; set; }
+
+	    public DbSet<MedicalCenter> MedicalCenters { get; set; }
+
+	    public DbSet<MedicalLaboratory> MedicalLaboratories { get; set; }
+
+	    public DbSet<MedicalLaboratoryType> MedicalLaboratoryTypes { get; set; }
+
+        public DbSet<Patient> Patients { get; set; }
 		
 		public DbSet<Speciality> Specialities { get; set; }
 
@@ -41,6 +47,12 @@ namespace InsightDerm.Core.Data.Domain.Infrastructure
 				.HasMany(x => x.Doctors)
 				.WithOne(x => x.Speciality)
 				.OnDelete(DeleteBehavior.SetNull);
+
+		    modelBuilder.Entity<Consultation>()
+		        .ToTable("Consultations")
+		        .HasMany(x => x.MedicalLaboratories)
+		        .WithOne(x => x.Consultation)
+		        .OnDelete(DeleteBehavior.SetNull);
 		}
 	}
 }
