@@ -10,17 +10,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{A54CCBFE-7
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{515A1211-8F0A-424B-89EF-6EC6DA579EA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InsightDerm.Core.Data.Domain", "InsightDerm.Core.Data.Domain\InsightDerm.Core.Data.Domain.csproj", "{83BA6557-E793-435A-AB43-3C90AC654407}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InsightDerm.Core.Data.Domain", "InsightDerm.Core.Data.Domain\InsightDerm.Core.Data.Domain.csproj", "{83BA6557-E793-435A-AB43-3C90AC654407}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InsightDerm.Core.Data", "InsightDerm.Core.Data\InsightDerm.Core.Data.csproj", "{B75BC4A6-B5BC-49EB-936C-0FC1DD0FB516}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InsightDerm.Core.Data", "InsightDerm.Core.Data\InsightDerm.Core.Data.csproj", "{B75BC4A6-B5BC-49EB-936C-0FC1DD0FB516}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InsightDerm.Core.Data.Test", "InsightDerm.Core.Data.Test\InsightDerm.Core.Data.Test.csproj", "{F8372A60-B88F-41F7-B43B-22F241558E92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InsightDerm.Core.Data.Test", "InsightDerm.Core.Data.Test\InsightDerm.Core.Data.Test.csproj", "{F8372A60-B88F-41F7-B43B-22F241558E92}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{DFE50266-C56E-4DD4-A37E-47DB75A97EB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InsightDerm.Core.Service", "InsightDerm.Core.Service\InsightDerm.Core.Service.csproj", "{5E176839-59B8-4AF6-A568-2BFEA60303A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InsightDerm.Core.Service", "InsightDerm.Core.Service\InsightDerm.Core.Service.csproj", "{5E176839-59B8-4AF6-A568-2BFEA60303A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InsightDerm.Core.Dto", "InsightDerm.Core.Dto\InsightDerm.Core.Dto.csproj", "{01EA2328-76D1-4545-A061-1FDBA0B0FE40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InsightDerm.Core.Dto", "InsightDerm.Core.Dto\InsightDerm.Core.Dto.csproj", "{01EA2328-76D1-4545-A061-1FDBA0B0FE40}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{1FC6CC67-6C63-404F-9647-6C04DB23A22A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,6 +54,10 @@ Global
 		{01EA2328-76D1-4545-A061-1FDBA0B0FE40}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01EA2328-76D1-4545-A061-1FDBA0B0FE40}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01EA2328-76D1-4545-A061-1FDBA0B0FE40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FC6CC67-6C63-404F-9647-6C04DB23A22A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FC6CC67-6C63-404F-9647-6C04DB23A22A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FC6CC67-6C63-404F-9647-6C04DB23A22A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FC6CC67-6C63-404F-9647-6C04DB23A22A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,5 +71,8 @@ Global
 		{DFE50266-C56E-4DD4-A37E-47DB75A97EB8} = {A54CCBFE-7647-4CD3-A002-4E3E06EEE3CE}
 		{5E176839-59B8-4AF6-A568-2BFEA60303A7} = {DFE50266-C56E-4DD4-A37E-47DB75A97EB8}
 		{01EA2328-76D1-4545-A061-1FDBA0B0FE40} = {DFE50266-C56E-4DD4-A37E-47DB75A97EB8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0CDBC7AF-476F-46C4-9769-14E36C9EB2F2}
 	EndGlobalSection
 EndGlobal

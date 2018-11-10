@@ -1,0 +1,23 @@
+FROM microsoft/aspnetcore:2.0 AS base
+WORKDIR /app
+EXPOSE 80
+
+FROM microsoft/aspnetcore-build:2.0 AS build
+WORKDIR /src
+COPY ["InsightDerm.Host.Api/InsightDerm.Host.Api.csproj", "InsightDerm.Host.Api/"]
+COPY ["InsightDerm.Core.Dto/InsightDerm.Core.Dto.csproj", "InsightDerm.Core.Dto/"]
+COPY ["InsightDerm.Core.Service/InsightDerm.Core.Service.csproj", "InsightDerm.Core.Service/"]
+COPY ["InsightDerm.Core.Data.Domain/InsightDerm.Core.Data.Domain.csproj", "InsightDerm.Core.Data.Domain/"]
+COPY ["InsightDerm.Core.Data/InsightDerm.Core.Data.csproj", "InsightDerm.Core.Data/"]
+RUN dotnet restore "InsightDerm.Host.Api/InsightDerm.Host.Api.csproj"
+COPY . .
+WORKDIR "/src/InsightDerm.Host.Api"
+RUN dotnet build "InsightDerm.Host.Api.csproj" -c Release -o /app
+
+FROM build AS publish
+RUN dotnet publish "InsightDerm.Host.Api.csproj" -c Release -o /app
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app .
+ENTRYPOINT ["dotnet", "InsightDerm.Host.Api.dll"]

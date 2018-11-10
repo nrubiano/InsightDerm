@@ -17,6 +17,11 @@
     },
     "InsightDerm.Host.Api": {
       "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://localhost:{ServicePort}"
     }
   }
 }

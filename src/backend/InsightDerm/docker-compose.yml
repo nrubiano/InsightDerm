@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  insightderm.host.api:
+    image: ${DOCKER_REGISTRY}insightdermhostapi
+    build:
+      context: .
+      dockerfile: InsightDerm.Host.Api/Dockerfile
