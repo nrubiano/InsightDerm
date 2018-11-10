@@ -44,6 +44,7 @@ namespace InsightDerm.Host.Api
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+
             app.UseCors("CorsPolicy");
 			app.UseOwin(x => x.UseNancy(new NancyOptions() { 
 				Bootstrapper = new Bootstrapper(app, Configuration)
