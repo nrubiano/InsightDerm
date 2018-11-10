@@ -62,7 +62,7 @@ export class MedicalCentersService
                     .catch(error => { throw 'Data Loading Error' });
             },
             update: (entity, updatedValues):Promise<any> => {
-                return http.put(api + "/" + encodeURIComponent(entity.id), updatedValues)
+                return http.put(api + "/" + encodeURIComponent(entity.id), {...entity, ...updatedValues})
                                 .toPromise()
                                 .then(response => {
                                     var json = response.json();
