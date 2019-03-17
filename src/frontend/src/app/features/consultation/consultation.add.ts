@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { PatientsService } from '../../services/patients.services';
 import { MaritalStatusService } from '../../services/maritalStatus.services';
 import { Patient } from '../../models/patient';
+import { _getComponentHostLElementNode } from '@angular/core/src/render3/instructions';
+import { Consultation } from 'app/models/consultation';
+import { MedicalBackground } from 'app/models/medical-background';
+import { PhysicalExam } from 'app/models/physical-exam';
+import { ConsultationsService } from 'app/services/consultations.services';
 
 declare var $: any;
 declare var jQuery: any;
@@ -10,7 +15,8 @@ declare var jQuery: any;
   selector: 'fea-consultation-add',
   templateUrl: './consultation.add.html',  
   providers:[
-    PatientsService
+    PatientsService,
+    ConsultationsService
   ]
 })
 export class ConsultationAdd implements OnInit 
@@ -29,15 +35,26 @@ export class ConsultationAdd implements OnInit
     showBeginConsultation: boolean = false;
 
     patient: Patient;
+
+    consultation: Consultation;
+
+    medicalBackground: MedicalBackground;
+    
+    physicalExam: PhysicalExam;
     /**
      * Ctor
      */
-    constructor(private patientsService : PatientsService) { }
+    constructor(
+        private patientsService : PatientsService,
+        private consultationsService : ConsultationsService
+    ) { }
     /**
      * Init Event
      */
     ngOnInit() {
-        
+        this.consultation = new Consultation();
+        this.medicalBackground = new MedicalBackground();
+        this.physicalExam = new PhysicalExam();
     }
     /**
      * Search a patient by his identification number
@@ -79,5 +96,20 @@ export class ConsultationAdd implements OnInit
                         console.log(res);
                     }
                 );
+    }
+
+    saveConsultation() {
+        this.consultation.medicalBackground = this.medicalBackground.json();
+        this.consultation.physicalExam = this.physicalExam.json();
+        this.consultation.patientId = this.patient.id;     
+        
+        this.consultationsService
+            .store
+            .insert(this.consultation)
+            .then(value => {
+                console.log(value);
+            }).catch(error => {
+                console.log(error);
+            });
     }
 }

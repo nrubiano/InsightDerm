@@ -79,18 +79,6 @@
                         Examen F&iacute;sico
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#laboratories" role="tab">
-                        <i class="fa fa-ambulance"></i>
-                        Laboratorios
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#historial" role="tab">
-                        <i class="fa fa-database"></i>
-                        Historial Consultas
-                    </a>
-                </li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="consultationReason" role="tabcard">
@@ -102,7 +90,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12 form-group padding-top-10 margin-bottom-0">
-                                <dx-text-area></dx-text-area>
+                                <dx-text-area [(value)]="consultation.reason"></dx-text-area>
                             </div> 
                         </div>
                     </div>
@@ -116,7 +104,7 @@
                             </span>
                         </div>
                         <div class="card-block">
-                            <dx-text-area></dx-text-area>
+                            <dx-text-area [(value)]="medicalBackground.personal"></dx-text-area>
                         </div>
                     </section>
 
@@ -128,7 +116,7 @@
                             </span>
                         </div>
                         <div class="card-block">
-                            <dx-text-area></dx-text-area>
+                            <dx-text-area [(value)]="medicalBackground.pathological"></dx-text-area>
                         </div>
                     </section>
 
@@ -140,7 +128,7 @@
                             </span>
                         </div>
                         <div class="card-block">
-                            <dx-text-area></dx-text-area>
+                            <dx-text-area [(value)]="medicalBackground.surgical"></dx-text-area>
                         </div>
                     </section>
 
@@ -152,7 +140,7 @@
                             </span>
                         </div>
                         <div class="card-block">
-                            <dx-text-area></dx-text-area>
+                            <dx-text-area [(value)]="medicalBackground.alergic"></dx-text-area>
                         </div>
                     </section>
 
@@ -164,7 +152,7 @@
                             </span>
                         </div>
                         <div class="card-block">
-                            <dx-text-area></dx-text-area>
+                            <dx-text-area [(value)]="medicalBackground.pharmacological"></dx-text-area>
                         </div>
                     </section>
 
@@ -176,7 +164,7 @@
                             </span>
                         </div>
                         <div class="card-block">
-                            <dx-text-area></dx-text-area>
+                            <dx-text-area [(value)]="medicalBackground.transfusions"></dx-text-area>
                         </div>
                     </section>
 
@@ -188,7 +176,7 @@
                             </span>
                         </div>
                         <div class="card-block">
-                            <dx-text-area></dx-text-area>
+                            <dx-text-area [(value)]="medicalBackground.hereditary"></dx-text-area>
                         </div>
                     </section>
 
@@ -200,7 +188,7 @@
                             </span>
                         </div>
                         <div class="card-block">
-                            <dx-text-area></dx-text-area>
+                            <dx-text-area [(value)]="medicalBackground.toxic"></dx-text-area>
                         </div>
                     </section>
 
@@ -212,7 +200,7 @@
                             </span>
                         </div>
                         <div class="card-block">
-                            <dx-text-area></dx-text-area>
+                            <dx-text-area [(value)]="medicalBackground.other"></dx-text-area>
                         </div>
                     </section>
                 </div>
@@ -223,7 +211,7 @@
                                 TA:
                             </div>
                             <div class="col-md-1">
-                                <dx-number-box></dx-number-box>
+                                <dx-number-box [(value)]="physicalExam.ta"></dx-number-box>
                             </div>   
                         </div>           
                         <div class="row">
@@ -231,7 +219,7 @@
                                 FC:
                             </div>
                             <div class="col-md-1">
-                                <dx-number-box></dx-number-box>
+                                <dx-number-box [(value)]="physicalExam.fc"></dx-number-box>
                             </div>    
                         </div>
                         <div class="row">
@@ -239,7 +227,7 @@
                                 Peso:
                             </div>                        
                             <div class="col-md-1">
-                                <dx-number-box></dx-number-box>
+                                <dx-number-box [(value)]="physicalExam.weight"></dx-number-box>
                             </div>  
                         </div>
                         <div class="row">
@@ -247,15 +235,15 @@
                                 Talla:
                             </div>                        
                             <div class="col-md-1">
-                                <dx-number-box></dx-number-box>
+                                <dx-number-box [(value)]="physicalExam.size"></dx-number-box>
                             </div> 
                         </div>
                         <div class="row">
                             <div class="col-md-1">
-                                Temperatura:
+                                Temp:
                             </div>                        
                             <div class="col-md-1">
-                                <dx-number-box></dx-number-box>
+                                <dx-number-box [(value)]="physicalExam.temperature"></dx-number-box>
                             </div> 
                         </div>
                         <div class="row">
@@ -265,40 +253,23 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <dx-text-area></dx-text-area>
+                                <dx-number-box [(value)]="physicalExam.comments"></dx-number-box>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="tab-pane" id="laboratories" role="tabcard">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-12">
-                                Por favor indique los laboratorios ordenados:
-                            </div> 
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12 form-group padding-top-10 margin-bottom-0">
-                                <dx-text-area></dx-text-area>
-                            </div> 
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane" id="historial" role="tabcard">
-                    <div class="container-fluid">
-                        <div class="row">                            
-                        </div>
-                        <div class="row">                            
-                        </div>
-                    </div>
-                </div>
+                </div>                
             </div>
         </div>
     </div>
     <div class="card-footer">
         <div class="mb-5">
             <button type="button" class="btn mr-2 mb-2 float-right">Cancelar</button>
-            <button type="button" class="btn btn-primary mr-2 mb-2 float-right">Guardar Interconsulta</button>            
+            <button 
+                type="button"                 
+                class="btn btn-primary mr-2 mb-2 float-right"
+                (click)="saveConsultation()">
+                Guardar Interconsulta
+            </button>            
         </div>        
     </div>
 </section>

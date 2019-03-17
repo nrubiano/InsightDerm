@@ -1,4 +1,6 @@
-export class Patient {
+import { Entity } from "./base";
+
+export class Patient extends Entity {
     id: string;
     name: string;
     identificationType:string;
