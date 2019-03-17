@@ -21,14 +21,6 @@ export class MedicalCenterList implements OnInit {
 
     cities: CustomStore
 
-    displayDialog: boolean;
-
-    medicalCenter: any = {};
-    
-    selectedMedicalCenter: any;
-    
-    newMedicalCenter: boolean;
-
     constructor(private medicalCenterService : MedicalCentersService, private citiesService : CitiesService) {}
 
     ngOnInit() {

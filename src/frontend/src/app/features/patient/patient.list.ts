@@ -1,41 +1,53 @@
 import { Component, OnInit } from '@angular/core';
+import { PatientsService } from 'app/services/patients.services';
+import CustomStore from 'devextreme/data/custom_store';
+import { MaritalStatusService } from 'app/services/maritalStatus.services';
 
 declare var $: any;
 declare var jQuery: any;
 
 @Component({
   selector: 'fea-patient-list',
-  templateUrl: './patient.list.html'
+  templateUrl: './patient.list.html',
+  providers: [
+      PatientsService,
+      MaritalStatusService
+  ]
 })
 
 export class PatientList implements OnInit {
   
-    patients: any[];
+    patients: CustomStore;
 
-    displayDialog: boolean;
+    maritalStatuses: CustomStore;
 
-    patient: any = {};
-    
-    selectedPatient: any;
-    
-    new: boolean;
+    indentificationTypes: any[];
 
-    ngOnInit() {
-        this.patients = [
+    genres: any[];
+
+    constructor(private patientService: PatientsService, private maritalStatusService: MaritalStatusService) {
+        this.indentificationTypes = [
             {
-                Name: "Camilo Sandoval",
-                Identification: "1019012392",
-                Phone: "7971010",
-                Cellphone: "3007971010",
-                Email: "camilo.sandova@gmail.com",
-                City: "Bogota"
+                id: "CC",
+                name: "Cédula de Ciudadanía"
             }
         ];
+
+        this.genres = [
+            {
+                id: "M",
+                name: "Masculino"
+            },
+            {
+                id: "F",
+                name: "Femenino"
+            }
+        ];
+
+        this.maritalStatuses = maritalStatusService.store;
     }
 
-    showDialogToAdd() {
-        this.new = true;
-        this.patient = {};
-        this.displayDialog = true;
+    ngOnInit() {
+        this.patients = this.patientService.store;
     }
 }

@@ -4,6 +4,7 @@ import { CommonModule }  from '@angular/common';
 import { Routes, RouterModule }  from '@angular/router';
 
 import { PatientList } from './patient.list'
+import { DxDataGridModule } from 'devextreme-angular';
 
 export const routes: Routes = [
   { path: 'patient/list', component: PatientList }
@@ -13,6 +14,7 @@ export const routes: Routes = [
   imports: [    
     CommonModule,    
     FormsModule,
+    DxDataGridModule,
     RouterModule.forChild(routes)
   ],
   declarations: [

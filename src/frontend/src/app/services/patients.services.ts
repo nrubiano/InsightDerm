@@ -24,10 +24,16 @@ export class PatientsService
         var http = this.http;
         this.store = new CustomStore({
             insert: (item) : Promise<any> => 
-            {                
+            {             
                 return  http
                         .post(api, item)
-                        .toPromise();                
+                        .toPromise()
+                        .then(response => {
+                            return response;
+                        })
+                        .catch(error => { 
+                            throw error._body;
+                        });               
             },
             load: (loadOptions) :Promise<any> =>
             {
@@ -70,7 +76,7 @@ export class PatientsService
                     .catch(error => { throw 'Data Loading Error' });
             },
             update: (entity, updatedValues):Promise<any> => {
-                return http.put(api + "/" + encodeURIComponent(entity.id), updatedValues)
+                return http.put(api + "/" + encodeURIComponent(entity.id), {...entity, ...updatedValues})
                                 .toPromise()
                                 .then(response => {
                                     var json = response.json();
