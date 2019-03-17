@@ -24,7 +24,7 @@ export class PatientList implements OnInit {
     indentificationTypes: any[];
 
     genres: any[];
-
+    
     constructor(private patientService: PatientsService, private maritalStatusService: MaritalStatusService) {
         this.indentificationTypes = [
             {

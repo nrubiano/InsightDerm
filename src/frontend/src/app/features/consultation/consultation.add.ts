@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { PatientsService } from '../../services/patients.services';
-import { MaritalStatusService } from '../../services/maritalStatus.services';
 import { Patient } from '../../models/patient';
 import { _getComponentHostLElementNode } from '@angular/core/src/render3/instructions';
 import { Consultation } from 'app/models/consultation';
 import { MedicalBackground } from 'app/models/medical-background';
 import { PhysicalExam } from 'app/models/physical-exam';
 import { ConsultationsService } from 'app/services/consultations.services';
+import notify from 'devextreme/ui/notify';
+
 
 declare var $: any;
 declare var jQuery: any;
@@ -41,6 +42,10 @@ export class ConsultationAdd implements OnInit
     medicalBackground: MedicalBackground;
     
     physicalExam: PhysicalExam;
+
+    popupVisible: boolean = false;
+
+    message: string;
     /**
      * Ctor
      */
@@ -106,10 +111,20 @@ export class ConsultationAdd implements OnInit
         this.consultationsService
             .store
             .insert(this.consultation)
-            .then(value => {
-                console.log(value);
+            .then(value => {                
+                this.message = `La consulta fue creada correctamente!!`;
+                notify(this.message, "success", 2500);
+                this.restore();
             }).catch(error => {
-                console.log(error);
+                this.message = `No se logro procesar la consulta, por favor intente de nuevo más tarde.`;
+                notify(this.message, "error", 2500);
             });
+    }
+
+    restore() {
+        this.consultation = new Consultation();
+        this.medicalBackground = new MedicalBackground();
+        this.physicalExam = new PhysicalExam();
+        this.showBeginConsultation = false;
     }
 }
