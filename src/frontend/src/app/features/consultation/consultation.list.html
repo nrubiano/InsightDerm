@@ -11,7 +11,69 @@
             <div class="col-lg-12">
                 <div class="mb-5">
                     <!-- Grid-->
-                       
+                    <dx-data-grid
+                    id="gridContainer"
+                    [dataSource]="consultations">                    
+                    <dxi-column dataField="patientId"
+                                caption="Identificación Paciente">
+                        <dxo-lookup
+                            [dataSource]="patients"
+                            displayExpr="identificationNumber"
+                            valueExpr="id">
+                        </dxo-lookup>
+                    </dxi-column>
+                    <dxi-column dataField="patientId"
+                                caption="Nombre Paciente">
+                        <dxo-lookup
+                            [dataSource]="patients"
+                            displayExpr="name"
+                            valueExpr="id">
+                        </dxo-lookup>
+                    </dxi-column>
+                    <dxi-column
+                        dataField="reason"
+                        caption="Razón Consulta">
+                    </dxi-column>
+                    <dxi-column
+                        dataField="creationDate"
+                        dataType="date"
+                        format="yyyy/MM/dd hh:mm a"
+                        caption="Fecha Consulta">
+                    </dxi-column>
+                    <dxi-column
+                        dataField="requestedById"
+                        caption="Solicitada Por">
+                        <dxo-lookup
+                            [dataSource]="doctors"
+                            displayExpr="name"
+                            valueExpr="id">
+                        </dxo-lookup>
+                    </dxi-column>
+                    <dxi-column caption="Acciones" 
+                        [minWidth]="320" 
+                        cellTemplate="actionsTemplate">
+                    </dxi-column>
+                    <div *dxTemplate="let d of 'actionsTemplate'">
+                        <div class="chart-cell">
+                            <dx-button 
+                                text="Ver"
+                                icon="find">
+                            </dx-button>
+                            <dx-button text="Asignar">
+                            </dx-button>
+                        </div>
+                    </div>
+                    <dxo-remote-operations
+                        [sorting]="true"
+                        [paging]="true">
+                    </dxo-remote-operations>
+                    <dxo-paging [pageSize]="12"></dxo-paging>
+                    <dxo-pager
+                        [showPageSizeSelector]="true"
+                        [allowedPageSizes]="[8, 12, 20]">
+                    </dxo-pager>                                                   
+            </dx-data-grid>                    
+            <!-- End Grid -->
                     <!-- End Grid -->
                 </div>
             </div>

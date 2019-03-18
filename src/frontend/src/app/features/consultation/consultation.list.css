@@ -1,0 +1,7 @@
+::ng-deep #gridContainer .chart-cell {
+    overflow: visible;
+}
+
+::ng-deep #gridContainer .dx-button {
+    margin-right: 4px;
+}

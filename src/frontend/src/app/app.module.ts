@@ -20,6 +20,8 @@ import { FeaturesModule } from './features/features.module';
 
 import { DoctorsService } from './services/doctors.services';
 
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+
 declare var NProgress: any;
 
 @NgModule({
@@ -38,6 +40,7 @@ declare var NProgress: any;
         RouterModule,
         StructureModule,
         FeaturesModule,        
+        AngularFontAwesomeModule,
         NgbModule.forRoot(),
         SweetAlert2Module.forRoot(),
         routing

@@ -3,7 +3,12 @@ import { NgModule }      from '@angular/core';
 import { CommonModule }  from '@angular/common';
 import { Routes, RouterModule }  from '@angular/router';
 
-import { DxDateBoxModule, DxTextAreaModule, DxNumberBoxModule,  DxPopupModule } from 'devextreme-angular'
+import {  DxDateBoxModule, 
+          DxTextAreaModule, 
+          DxNumberBoxModule,  
+          DxPopupModule, 
+          DxDataGridModule,
+          DxButtonModule } from 'devextreme-angular'
 
 import { ConsultationList } from './consultation.list'
 import { ConsultationAdd } from './consultation.add'
@@ -22,6 +27,8 @@ export const routes: Routes = [
     DxTextAreaModule,
     DxNumberBoxModule,
     DxPopupModule,
+    DxDataGridModule,
+    DxButtonModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes)
   ],
