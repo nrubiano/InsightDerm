@@ -10,7 +10,7 @@ namespace InsightDerm.Core.Data.Domain.Infrastructure
         public InsightDermContext CreateDbContext(string[] args)
         {
 			var builder = new DbContextOptionsBuilder<InsightDermContext>();
-			builder.UseNpgsql("User ID=postgres;Password=spmt0518;Host=173.82.94.226;Port=5432;Database=insightderm;Pooling=true;");
+			builder.UseNpgsql("User ID=foxnet;Password=PVjY%XcF6xuxY@VR;Host=173.82.243.91;Port=5432;Database=insightderm;Pooling=true;");
 	        var dbContext = new InsightDermContext(builder.Options);
 	        
 	        //DbInitializer.Initialize(dbContext);
