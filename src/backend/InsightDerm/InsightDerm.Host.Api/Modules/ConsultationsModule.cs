@@ -19,6 +19,8 @@ namespace InsightDerm.Host.Api.Modules
 
             Get(GetPath(), (args, ctk) => Get(args, ctk));
 
+            Get($@"{GetPath()}/{{Id}}", (args, ctk) => GetSingle(args, ctk));
+
             Post(GetPath(), (args, ctk) => Post(args, ctk));
 
             Put($@"{GetPath()}/{{Id}}", (args, ctk) => Put(args, ctk));
@@ -35,8 +37,17 @@ namespace InsightDerm.Host.Api.Modules
 
 		    return Response.AsJson(entities);
 	    }
-	    
-		protected virtual async Task<dynamic> Post(dynamic args, CancellationToken ct)
+
+        protected virtual async Task<dynamic> GetSingle(dynamic args, CancellationToken ct)
+        {
+            var id = (Guid)args.Id;
+
+            var entities = _consultationService.GetSingle(x => x.Id == id);
+
+            return Response.AsJson(entities);
+        }
+
+        protected virtual async Task<dynamic> Post(dynamic args, CancellationToken ct)
 		{
 			var model = BindBody<ConsultationDto>();
 
