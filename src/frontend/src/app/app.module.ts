@@ -39,16 +39,16 @@ declare var NProgress: any;
         HttpModule,
         RouterModule,
         StructureModule,
-        FeaturesModule,        
+        FeaturesModule,
         AngularFontAwesomeModule,
         NgbModule.forRoot(),
         SweetAlert2Module.forRoot(),
         routing
     ],
     providers: [
-      DoctorsService      
+        DoctorsService
     ],
-    bootstrap: [ AppComponent ]
+    bootstrap: [AppComponent]
 })
 
 export class AppModule {

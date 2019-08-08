@@ -44,6 +44,7 @@
               "src/assets/vendors/cleanhtmlaudioplayer/src/player.css",
               "src/assets/vendors/cleanhtmlvideoplayer/src/player.css",
               "src/assets/modules/core/css/core.cleanui.css",
+              "src/assets/modules/components/css/components.cleanui.css",
               "src/assets/modules/vendors/css/vendors.cleanui.css",
               "src/assets/modules/layouts/css/layouts-pack.cleanui.css",
               "src/assets/modules/themes/css/themes.cleanui.css",

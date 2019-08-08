@@ -503,6 +503,10 @@ pre.cat__core__pre--darken {
     color: #393749;
 }
 
+.cat__core__title div.fa {
+    margin-right: 10px;
+}
+
 .cat__core__donut {
     display: inline-block;
     width: 1.14rem;

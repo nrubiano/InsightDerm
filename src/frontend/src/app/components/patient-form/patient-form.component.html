@@ -42,7 +42,7 @@
                                                     Debe seleccionar el tipo de identificación del paciente.
                                                 </div>
                                             </div>
-                                        </div>  
+                                        </div>
                                 </div>
                                 <div class="col-lg-4">
                                         <div class="form-group">
@@ -207,9 +207,8 @@
                                         </div>
                                 </div>
                                 <div class="form-actions">
-                                        {{ patientForm.value | json }}
                                         <button type="submit" class="btn btn-primary width-150" [disabled]="!patientForm.form.valid">Crear</button>
-                                        <button type="button" class="btn btn-default remove-error">Limpiar</button>
+                                        <button type="button" class="btn btn-default remove-error" (click)="patientForm.reset()">Limpiar</button>
                                 </div>
                         </form>
                 </div>
