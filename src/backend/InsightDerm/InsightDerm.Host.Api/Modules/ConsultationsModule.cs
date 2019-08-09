@@ -9,14 +9,39 @@ using Nancy;
 
 namespace InsightDerm.Host.Api.Modules
 {
-    public class ConsultationsModule : BaseModule
+    public partial class ConsultationsModule : BaseModule
     {
 	    private readonly ConsultationService _consultationService;
+        private readonly DiagnosticImageService _diagnosticImageService;
 
-        public ConsultationsModule(IOptions<ApiSettings> apiSettings, IMapper mapper, ConsultationService consultationService) : base(apiSettings, mapper)
+        public ConsultationsModule(IOptions<ApiSettings> apiSettings, 
+            IMapper mapper, 
+            ConsultationService consultationService, 
+            DiagnosticImageService diagnosticImageService) : base(apiSettings, mapper)
         {
             _consultationService = consultationService;
+            _diagnosticImageService = diagnosticImageService;
 
+            AddRoutingConsultation();
+
+            AddRoutingImages();
+        }
+
+        private void AddRoutingImages()
+        {
+            Get($@"{GetPath()}/{{Id}}/Images", (args, ctk) => GetImages(args, ctk));
+
+            Get($@"{GetPath()}/{{Id}}/Images/{{ImageId}}", (args, ctk) => GetSingleImage(args, ctk));
+
+            Post($@"{GetPath()}/{{Id}}/Images", (args, ctk) => PostImage(args, ctk));
+
+            Put($@"{GetPath()}/{{Id}}/Images/{{ImageId}}", (args, ctk) => PutImage(args, ctk));
+
+            Delete($@"{GetPath()}/{{Id}}/Images/{{ImageId}}", (args, ctk) => DeleteImage(args, ctk));
+        }
+
+        private void AddRoutingConsultation()
+        {
             Get(GetPath(), (args, ctk) => Get(args, ctk));
 
             Get($@"{GetPath()}/{{Id}}", (args, ctk) => GetSingle(args, ctk));
@@ -26,10 +51,9 @@ namespace InsightDerm.Host.Api.Modules
             Put($@"{GetPath()}/{{Id}}", (args, ctk) => Put(args, ctk));
 
             Delete($@"{GetPath()}/{{Id}}", (args, ctk) => Delete(args, ctk));
-
         }
 
-	    protected virtual async Task<dynamic> Get(dynamic args, CancellationToken ct)
+        protected virtual async Task<dynamic> Get(dynamic args, CancellationToken ct)
 	    {
 		    string filter = Request.Query["$filter"];
 		    

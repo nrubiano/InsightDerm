@@ -34,5 +34,7 @@ namespace InsightDerm.Core.Data.Domain.Model
         public Doctor RequestedBy { get; set; }
 
         public virtual List<MedicalLaboratory> MedicalLaboratories { get; set; }
+
+        public List<DiagnosticImage> DiagnosticImages { get; set; }
     }
 }

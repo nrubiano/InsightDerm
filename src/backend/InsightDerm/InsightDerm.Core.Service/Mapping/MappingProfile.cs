@@ -43,7 +43,10 @@ namespace InsightDerm.Core.Service.Mapping
 
             CreateMap<Patient, PatientDto>();
             
-            CreateMap<PatientDto, Patient>();                       
+            CreateMap<PatientDto, Patient>();
+
+            CreateMap<DiagnosticImage, DiagnosticImageDto>();
+            CreateMap<DiagnosticImageDto, DiagnosticImage>();
         }
     }
 }
