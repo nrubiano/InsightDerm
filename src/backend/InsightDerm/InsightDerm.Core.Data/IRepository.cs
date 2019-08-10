@@ -49,7 +49,7 @@ namespace InsightDerm.Core.Data
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
             int pageIndex = 0,
-            int pageSize = 20,
+            int pageSize = 50,
             bool disableTracking = true);
 
         /// <summary>

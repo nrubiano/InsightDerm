@@ -6,36 +6,35 @@ import { ConsultationsService } from 'app/services/consultations.services';
 @Component({
     selector: 'fea-consultation-add',
     templateUrl: './consultation.add.html',
-    providers:[
+    providers: [
         PatientsService,
         ConsultationsService
     ]
 })
-export class ConsultationAdd implements OnInit
-{
+export class ConsultationAdd implements OnInit {
     /**
      * Indicate if the search box is enabled
      */
-    active: boolean = true;
+    active = true;
 
     /**
      * Stores the patient's indentification number
      */
     patientId: string;
 
-    showFormPatient: boolean = false;
+    showFormPatient = false;
 
-    showBeginConsultation: boolean = false;
+    showBeginConsultation = false;
 
     patient: Patient;
 
-    popupVisible: boolean = false;
+    popupVisible = false;
 
     /**
      * Ctor
      */
     constructor(
-        private patientsService : PatientsService
+        private patientsService: PatientsService
     ) { }
     /**
      * Init Event
@@ -45,8 +44,8 @@ export class ConsultationAdd implements OnInit
      * Search a patient by his identification number
      */
     searchPatient(id = null) {
-        var options = {
-            filter:'["IdentificationNumber", "eq", "'+ id +'"]'
+        const options = {
+            filter: '["IdentificationNumber", "eq", "' + id + '"]'
         };
 
         this.patientsService
@@ -54,7 +53,7 @@ export class ConsultationAdd implements OnInit
             .load(options)
             .then(
                 (res: any) => {
-                    if(res.totalCount === 1) {
+                    if (res.totalCount === 1) {
                         this.showFormPatient = false;
                         this.patient = res.data[0];
                         this.showBeginConsultation = true;
@@ -66,7 +65,7 @@ export class ConsultationAdd implements OnInit
                     }
                 },
                 () => {
-                    console.log("error");
+                    console.log('error');
                 }
             );
     }

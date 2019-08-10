@@ -1,13 +1,13 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import notify from "devextreme/ui/notify";
-import {Consultation} from "../../models/consultation";
-import {MedicalBackground} from "../../models/medical-background";
-import {PhysicalExam} from "../../models/physical-exam";
-import {FileUploadControl} from "@iplab/ngx-file-upload";
-import {ConsultationsService} from "../../services/consultations.services";
-import {Http} from "@angular/http";
-import {Lightbox} from "ngx-lightbox";
-import {forkJoin} from "rxjs";
+import notify from 'devextreme/ui/notify';
+import {Consultation} from '../../models/consultation';
+import {MedicalBackground} from '../../models/medical-background';
+import {PhysicalExam} from '../../models/physical-exam';
+import {FileUploadControl} from '@iplab/ngx-file-upload';
+import {ConsultationsService} from '../../services/consultations.services';
+import {Http} from '@angular/http';
+import {Lightbox} from 'ngx-lightbox';
+import {forkJoin} from 'rxjs';
 
 
 interface Image {
@@ -20,18 +20,18 @@ interface Image {
     selector: 'app-consultant-info',
     templateUrl: './consultant-info.component.html',
     styleUrls: ['./consultant-info.component.css'],
-    providers:[
+    providers: [
         ConsultationsService
     ]
 })
 
 export class ConsultantInfoComponent implements OnInit {
-    @Input('isVisible') isVisible: boolean = true;
-    @Input('infoTitle') infoTitle: string = 'Iniciar Consulta';
-    @Input('saveText') saveText: string = 'Guardar Interconsulta';
+    @Input('isVisible') isVisible = true;
+    @Input('infoTitle') infoTitle = 'Iniciar Consulta';
+    @Input('saveText') saveText = 'Guardar Interconsulta';
     @Input('patientId') patientId: any = null;
     @Input('consultantData') consultantData: Consultation = null;
-    @Input('editMode') editMode: boolean = false;
+    @Input('editMode') editMode = false;
     @Output() canceled = new EventEmitter();
     @Output() restored = new EventEmitter();
 
@@ -44,15 +44,14 @@ export class ConsultantInfoComponent implements OnInit {
     physicalExam: PhysicalExam;
 
     message: string;
-    loading: boolean = false;
+    loading = false;
 
     value: any[] = [];
     imagesUlr: string;
     currentImages: Image[] = [];
 
     constructor(
-        private consultationsService : ConsultationsService,
-        private http : Http,
+        private consultationsService: ConsultationsService,
         private lightBox: Lightbox
     ) { }
 
@@ -83,12 +82,14 @@ export class ConsultantInfoComponent implements OnInit {
         this.consultation.physicalExam = this.physicalExam.json();
         this.consultation.patientId = this.patientId;
 
-        let requestFn = !this.editMode ? this.consultationsService.store.insert(this.consultation) : this.consultationsService.store.update(this.consultantData, this.consultation);
+        const requestFn = !this.editMode ?
+            this.consultationsService.insert(this.consultation) :
+            this.consultationsService.update(this.consultantData, this.consultation);
 
-        requestFn.then(consultantData => {
+        requestFn.subscribe(consultantData => {
             this.message = `La consulta fue ${!this.editMode ? 'creada' : 'actualizada'} correctamente!!`;
-            notify(this.message, "success", 2500);
-            //notify('Uploading images', 'info');
+            notify(this.message, 'success', 2500);
+            // notify('Uploading images', 'info');
 
             this.loading = false;
 
@@ -103,8 +104,8 @@ export class ConsultantInfoComponent implements OnInit {
                 }
                 notify('Images have been uploaded', 'success', 2500);
 
-            },error => {
-                notify('Error papu', "error", 2500);
+            }, error => {
+                notify('Error papu', 'error', 2500);
                 this.loading = false;
                 if (!this.editMode) {
                     this.restore();
@@ -112,9 +113,9 @@ export class ConsultantInfoComponent implements OnInit {
             })
 
 
-        }).catch(error => {
+        }, error => {
             this.message = `No se logro procesar la consulta, por favor intente de nuevo más tarde.`;
-            notify(this.message, "error", 2500);
+            notify(this.message, 'error', 2500);
             this.loading = false;
         });
 
@@ -123,7 +124,7 @@ export class ConsultantInfoComponent implements OnInit {
     }
 
     uploadImages(id) {
-        let observables = [];
+        const observables = [];
         this.currentImages.forEach((image) => observables.push(this.consultationsService.uploadImage(id, image.src)));
         return forkJoin(observables);
     }
@@ -140,7 +141,7 @@ export class ConsultantInfoComponent implements OnInit {
         this.restored.emit();
     }
 
-    onFileAdded(event){
+    onFileAdded(event) {
         this.value.map((image) => this.createPreview(image))
     }
 
@@ -148,7 +149,7 @@ export class ConsultantInfoComponent implements OnInit {
         const mimeType = file.type;
 
         if (mimeType.match(/image\/*/) == null) {
-            this.message = "Only images are supported.";
+            this.message = 'Only images are supported.';
             return;
         }
 

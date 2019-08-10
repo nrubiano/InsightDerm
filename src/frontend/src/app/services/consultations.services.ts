@@ -2,110 +2,117 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import CustomStore from 'devextreme/data/custom_store';
 import { AppSettings } from '../app.config';
-import {Observable} from "rxjs";
+import { map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Consultation } from 'app/models/consultation';
 
 /**
  * Consultations Service
  */
 @Injectable()
-export class ConsultationsService
-{
-    store : CustomStore;
+export class ConsultationsService {
+    store: CustomStore;
+    private api: string;
 
-    constructor(private http: Http)
-    {
+    constructor(private http: HttpClient) {
         this.setupStore();
+        this.api = AppSettings.API + '/consultations';
     }
     /**
      * Setup the store with the http methods
      */
     setupStore() {
-        let api = AppSettings.API + "/consultations";
-        let http = this.http;
+        const http = this.http;
         this.store = new CustomStore({
-            byKey: (key) : Promise<any> =>
-            {
-                return http.get(`${api}/${key}`)
+            byKey: (key): Promise<any> => {
+                return http.get(`${this.api}/${key}`)
                     .toPromise()
-                    .then(response => response.json())
-                    .catch(error => { throw 'Data Loading Error' });
+                    .then(response => response)
+                    .catch(error => { throw new Error('Data Loading Error') });
             },
-            insert: (item) : Promise<any> =>
-            {
-                return  http
-                    .post(api, item)
-                    .toPromise();
+            insert: (item): Promise<any> => {
+                return  this.insert(item)
+                            .toPromise();
             },
-            load: (loadOptions): Promise<any> =>
-            {
+            load: (loadOptions): Promise<any> => {
                 let params = '';
 
-                if(loadOptions.skip){
+                if (loadOptions.skip) {
                     params += 'skip=' + loadOptions.skip;
                 }
 
-                if(loadOptions.take){
+                if (loadOptions.take) {
                     params += '&take=' + loadOptions.take;
                 }
 
-                if(loadOptions.filter) {
+                if (loadOptions.filter) {
                     params += '&$filter=' + loadOptions.filter;
                 }
 
-                if(loadOptions.sort) {
+                if (loadOptions.sort) {
                     params += '&orderby=' + loadOptions.sort[0].selector;
-                    if(loadOptions.sort[0].desc) {
+                    if (loadOptions.sort[0].desc) {
                         params += ' desc';
                     }
                 }
 
                 let query = '';
-                if(params.length > 0){
+                if (params.length > 0) {
                     query = '?' + params;
                 }
 
-                return http.get(api + query)
+                return http.get<any[]>(this.api + query)
                     .toPromise()
                     .then(response => {
-                        let json = response.json();
-
+                        const json = response;
                         return {
                             data: json,
                             totalCount: json.length
                         }
                     })
-                    .catch(error => { throw 'Data Loading Error' });
+                    .catch(error => { throw new Error('Data Loading Error') });
             },
-            update: (entity, updatedValues):Promise<any> => {
-                return http.put(api + "/" + encodeURIComponent(entity.id), {...entity, ...updatedValues})
+            update: (entity, updatedValues): Promise<any> => {
+                return this.update(entity, updatedValues)
+                            .toPromise()
+                                .then(response => {
+                                    let json = response.json();
+                                    return {
+                                        data: json
+                                    }
+                                })
+                                .catch(error => { throw 'Data Update Error' });
+            },
+            remove: (key): Promise<any> => {
+                return http.delete(this.api + '/' + encodeURIComponent(key.id))
                     .toPromise()
                     .then(response => {
-                        let json = response.json();
-                        return {
-                            data: json
-                        }
-                    })
-                    .catch(error => { throw 'Data Update Error' });
-            },
-            remove: (key) : Promise<any> => {
-                return http.delete(api + "/" + encodeURIComponent(key.id))
-                    .toPromise()
-                    .then(response => {
-                        let json = response.json();
+                        const json = response;
                         return {
                             data: json
                         }
                     })
                     .catch(error => {
                         console.log(error);
-                        throw 'Data Update Error'
+                        throw new Error('Data Update Error')
                     });
             }
         });
     }
 
+    insert(consultation: Consultation): Observable<Consultation> {
+        return  this.http
+                    .post<Consultation>(this.api, consultation);
+    }
+
+    update(consultation: Consultation, updated: Consultation): Observable<Consultation> {
+        return this.http
+                    .put<Consultation>(this.api + '/' + encodeURIComponent(consultation.id), {...consultation, ...updated});
+    }
+
     uploadImage(consultationId, image) {
-        let api =  `${AppSettings.API}/consultations/${consultationId}/images`;
+        const api =  `${AppSettings.API}/consultations/${consultationId}/images`;
         const http = this.http;
         const payload = {
             consultationId,

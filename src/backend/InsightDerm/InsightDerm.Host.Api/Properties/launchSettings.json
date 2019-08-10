@@ -16,7 +16,8 @@
       }
     },
     "InsightDerm.Host.Api": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "environmentVariables": {}
     },
     "Docker": {
       "commandName": "Docker",

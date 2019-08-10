@@ -3,6 +3,7 @@ import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { Router, NavigationStart, NavigationEnd, RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -37,6 +38,7 @@ declare var NProgress: any;
         BrowserAnimationsModule,
         FormsModule,
         HttpModule,
+        HttpClientModule,
         RouterModule,
         StructureModule,
         FeaturesModule,
