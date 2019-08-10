@@ -1,12 +1,20 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Patient} from "../../models/patient";
 import notify from "devextreme/ui/notify";
 import {Consultation} from "../../models/consultation";
 import {MedicalBackground} from "../../models/medical-background";
 import {PhysicalExam} from "../../models/physical-exam";
 import {FileUploadControl} from "@iplab/ngx-file-upload";
 import {ConsultationsService} from "../../services/consultations.services";
-import {Router} from "@angular/router";
+import {Http} from "@angular/http";
+import {Lightbox} from "ngx-lightbox";
+import {forkJoin} from "rxjs";
+
+
+interface Image {
+    src: string,
+    caption?: string;
+    thumb: string;
+}
 
 @Component({
     selector: 'app-consultant-info',
@@ -16,6 +24,7 @@ import {Router} from "@angular/router";
         ConsultationsService
     ]
 })
+
 export class ConsultantInfoComponent implements OnInit {
     @Input('isVisible') isVisible: boolean = true;
     @Input('infoTitle') infoTitle: string = 'Iniciar Consulta';
@@ -24,6 +33,7 @@ export class ConsultantInfoComponent implements OnInit {
     @Input('consultantData') consultantData: Consultation = null;
     @Input('editMode') editMode: boolean = false;
     @Output() canceled = new EventEmitter();
+    @Output() restored = new EventEmitter();
 
     public fileUploadControl = new FileUploadControl();
     public uploadedFiles: Array<File> = [];
@@ -36,8 +46,14 @@ export class ConsultantInfoComponent implements OnInit {
     message: string;
     loading: boolean = false;
 
+    value: any[] = [];
+    imagesUlr: string;
+    currentImages: Image[] = [];
+
     constructor(
         private consultationsService : ConsultationsService,
+        private http : Http,
+        private lightBox: Lightbox
     ) { }
 
     ngOnInit() {
@@ -51,11 +67,14 @@ export class ConsultantInfoComponent implements OnInit {
             this.consultation.reason = this.consultantData.reason;
             this.updateExistingEntity(this.medicalBackground, this.consultantData.medicalBackground);
             this.updateExistingEntity(this.physicalExam, this.consultantData.physicalExam);
+
+            this.imagesUlr = `localhost:5000/api/v1/consultations/${this.consultantData.id}/images`;
         }
     }
 
     updateExistingEntity(entity, existingData) {
-        Object.keys(JSON.parse(existingData)).forEach((key, item) => entity[key] = item);
+        const parsedData = JSON.parse(existingData);
+        Object.keys(parsedData).forEach((key) => entity[key] = parsedData[key]);
     }
 
     saveConsultation() {
@@ -66,20 +85,47 @@ export class ConsultantInfoComponent implements OnInit {
 
         let requestFn = !this.editMode ? this.consultationsService.store.insert(this.consultation) : this.consultationsService.store.update(this.consultantData, this.consultation);
 
-        requestFn.then(value => {
+        requestFn.then(consultantData => {
             this.message = `La consulta fue ${!this.editMode ? 'creada' : 'actualizada'} correctamente!!`;
             notify(this.message, "success", 2500);
+            //notify('Uploading images', 'info');
+
+            this.loading = false;
 
             if (!this.editMode) {
                 this.restore();
             }
 
-            this.loading = false;
+            this.uploadImages(consultantData.id).subscribe(value => {
+                this.loading = false;
+                if (!this.editMode) {
+                    this.restore();
+                }
+                notify('Images have been uploaded', 'success', 2500);
+
+            },error => {
+                notify('Error papu', "error", 2500);
+                this.loading = false;
+                if (!this.editMode) {
+                    this.restore();
+                }
+            })
+
+
         }).catch(error => {
             this.message = `No se logro procesar la consulta, por favor intente de nuevo más tarde.`;
             notify(this.message, "error", 2500);
             this.loading = false;
         });
+
+
+
+    }
+
+    uploadImages(id) {
+        let observables = [];
+        this.currentImages.forEach((image) => observables.push(this.consultationsService.uploadImage(id, image.src)));
+        return forkJoin(observables);
     }
 
     cancel() {
@@ -91,5 +137,43 @@ export class ConsultantInfoComponent implements OnInit {
         this.medicalBackground = new MedicalBackground();
         this.physicalExam = new PhysicalExam();
         this.isVisible = false;
+        this.restored.emit();
+    }
+
+    onFileAdded(event){
+        this.value.map((image) => this.createPreview(image))
+    }
+
+    createPreview(file: any) {
+        const mimeType = file.type;
+
+        if (mimeType.match(/image\/*/) == null) {
+            this.message = "Only images are supported.";
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (_event) => {
+            this.currentImages.push({
+                src: reader.result,
+                thumb: reader.result,
+                caption: file.name,
+            })
+        }
+    }
+
+    viewImage(index) {
+        // open lightbox
+        if (this.editMode) {
+            this.lightBox.open(this.currentImages, index, {
+                centerVertically: true
+            });
+        }
+    }
+
+    close(): void {
+        // close lightbox programmatically
+        this.lightBox.close();
     }
 }

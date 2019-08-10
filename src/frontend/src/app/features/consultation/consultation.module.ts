@@ -9,7 +9,7 @@ import {
     DxNumberBoxModule,
     DxPopupModule,
     DxDataGridModule,
-    DxButtonModule, DxTextBoxModule, DxValidatorModule
+    DxButtonModule, DxTextBoxModule, DxValidatorModule, DxFileUploaderModule
 } from 'devextreme-angular'
 
 import { ConsultationList } from './consultation.list'
@@ -17,8 +17,8 @@ import { ConsultationAdd } from './consultation.add'
 import { PatientFormComponent } from '../../components/patient-form/patient-form.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ConsultantInfoComponent} from "../consultant-info/consultant-info.component";
-import {FileUploadModule} from "@iplab/ngx-file-upload";
 import {ConsultantDetails} from "./consultant-details";
+import {LightboxModule} from "ngx-lightbox";
 
 export const routes: Routes = [
     { path: 'consultation', component: ConsultationList },
@@ -41,7 +41,8 @@ export const routes: Routes = [
         ReactiveFormsModule,
         BrowserAnimationsModule,
         RouterModule.forChild(routes),
-        FileUploadModule
+        DxFileUploaderModule,
+        LightboxModule
     ],
     declarations: [
         ConsultationList,
