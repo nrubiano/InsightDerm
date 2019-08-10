@@ -9,5 +9,5 @@ export class Consultation extends Entity {
     reason: string;
     medicalBackground: string;
     physicalExam: string;
-    patient: Patient
+    patient: Patient;
 }

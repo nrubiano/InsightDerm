@@ -1,0 +1,8 @@
+<app-consultant-info *ngIf="patientId && consultantData"
+                     [infoTitle]="'Informaci&oacute;n de consulta'"
+                     [patientId]="patientId"
+                     [saveText]="'Actualizar consulta'"
+                     (canceled)="onCancel()"
+                     [editMode]="true"
+                     [consultantData]="consultantData">
+</app-consultant-info>

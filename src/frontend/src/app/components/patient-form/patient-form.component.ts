@@ -49,4 +49,5 @@ export class PatientFormComponent implements OnInit {
         this.patient.bornDate = moment(this.patient.bornDate).format();
         this.submitForm.emit(this.patient);
     }
+
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import CustomStore from 'devextreme/data/custom_store';
 import { AppSettings } from '../app.config';
+import {Observable} from "rxjs";
 
 /**
  * Consultations Service
@@ -11,8 +12,8 @@ export class ConsultationsService
 {
     store : CustomStore;
 
-    constructor(private http: Http) 
-    {   
+    constructor(private http: Http)
+    {
         this.setupStore();
     }
     /**
@@ -20,19 +21,26 @@ export class ConsultationsService
      */
     setupStore()
     {
-        var api = AppSettings.API + "/consultations"
-        var http = this.http;
+        let api = AppSettings.API + "/consultations";
+        let http = this.http;
         this.store = new CustomStore({
-            insert: (item) : Promise<any> => 
-            {                
-                return  http
-                        .post(api, item)
-                        .toPromise();                
-            },
-            load: (loadOptions) :Promise<any> =>
+            byKey: (key) : Promise<any> =>
             {
-                var params = '';
-                
+                return http.get(`${api}/${key}`)
+                    .toPromise()
+                    .then(response => response.json())
+                    .catch(error => { throw 'Data Loading Error' });
+            },
+            insert: (item) : Promise<any> =>
+            {
+                return  http
+                    .post(api, item)
+                    .toPromise();
+            },
+            load: (loadOptions): Promise<any> =>
+            {
+                let params = '';
+
                 if(loadOptions.skip){
                     params += 'skip=' + loadOptions.skip;
                 }
@@ -40,7 +48,7 @@ export class ConsultationsService
                 if(loadOptions.take){
                     params += '&take=' + loadOptions.take;
                 }
-                
+
                 if(loadOptions.filter) {
                     params += '&$filter=' + loadOptions.filter;
                 }
@@ -52,7 +60,7 @@ export class ConsultationsService
                     }
                 }
 
-                var query = '';
+                let query = '';
                 if(params.length > 0){
                     query = '?' + params;
                 }
@@ -60,8 +68,8 @@ export class ConsultationsService
                 return http.get(api + query)
                     .toPromise()
                     .then(response => {
-                        var json = response.json();
-                        
+                        let json = response.json();
+
                         return {
                             data: json,
                             totalCount: json.length
@@ -71,28 +79,28 @@ export class ConsultationsService
             },
             update: (entity, updatedValues):Promise<any> => {
                 return http.put(api + "/" + encodeURIComponent(entity.id), updatedValues)
-                                .toPromise()
-                                .then(response => {
-                                    var json = response.json();
-                                    return {
-                                        data: json
-                                    }
-                                })
-                                .catch(error => { throw 'Data Update Error' });
+                    .toPromise()
+                    .then(response => {
+                        let json = response.json();
+                        return {
+                            data: json
+                        }
+                    })
+                    .catch(error => { throw 'Data Update Error' });
             },
             remove: (key) : Promise<any> => {
                 return http.delete(api + "/" + encodeURIComponent(key.id))
-                            .toPromise()
-                            .then(response => {
-                                var json = response.json();
-                                return {
-                                    data: json
-                                }
-                            })
-                            .catch(error => { 
-                                console.log(error);
-                                throw 'Data Update Error' 
-                            });
+                    .toPromise()
+                    .then(response => {
+                        let json = response.json();
+                        return {
+                            data: json
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        throw 'Data Update Error'
+                    });
             }
         });
     }

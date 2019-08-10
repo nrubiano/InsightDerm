@@ -1,0 +1,5 @@
+.consultant_add .consultant_add__search_group {
+    display: flex;
+    flex-direction: column;
+}
+
