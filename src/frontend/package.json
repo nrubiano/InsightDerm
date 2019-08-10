@@ -36,6 +36,7 @@
     "jszip": "^3.1.5",
     "moment": "^2.22.2",
     "mousetrap": "^1.6.3",
+    "ngx-lightbox": "^1.2.0",
     "rxjs": "^6.1.0",
     "sweetalert2": "^7.26.29",
     "zone.js": "^0.8.11"

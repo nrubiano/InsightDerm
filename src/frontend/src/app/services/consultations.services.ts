@@ -19,8 +19,7 @@ export class ConsultationsService
     /**
      * Setup the store with the http methods
      */
-    setupStore()
-    {
+    setupStore() {
         let api = AppSettings.API + "/consultations";
         let http = this.http;
         this.store = new CustomStore({
@@ -78,7 +77,7 @@ export class ConsultationsService
                     .catch(error => { throw 'Data Loading Error' });
             },
             update: (entity, updatedValues):Promise<any> => {
-                return http.put(api + "/" + encodeURIComponent(entity.id), updatedValues)
+                return http.put(api + "/" + encodeURIComponent(entity.id), {...entity, ...updatedValues})
                     .toPromise()
                     .then(response => {
                         let json = response.json();
@@ -103,5 +102,16 @@ export class ConsultationsService
                     });
             }
         });
+    }
+
+    uploadImage(consultationId, image) {
+        let api =  `${AppSettings.API}/consultations/${consultationId}/images`;
+        const http = this.http;
+        const payload = {
+            consultationId,
+            image
+        };
+
+        return http.post(api, payload);
     }
 }
