@@ -6,36 +6,22 @@
         </span>
     </div>
     <div class="card-block">
-        <div class="nav-tabs-horizontal">
-            <ul class="nav nav-tabs mb-4" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" href="javascript: void(0);" data-toggle="tab" data-target="#consultationReason" role="tab">
-                        <i class="fa fa-stethoscope"></i>
-                        Motivo Consulta
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#record" role="tab">
-                        <i class="fa fa-medkit"></i>
-                        Antecedentes
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#physicalExam" role="tab">
-                        <i class="fa fa-heartbeat"></i>
-                        Examen F&iacute;sico
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#diagnosticImages" role="tab">
-                        <i class="fa fa-image"></i>
-                        Im&aacute;genes Diagnosticas
-                    </a>
-                </li>
-            </ul>
-            <div class="tab-content">
+
+        <dx-accordion
+            #accordion
+            [dataSource]="columns"
+            [collapsible]="true"
+            [multiple]="true"
+            [animationDuration]="300"
+            (onInitialized)="expandAll($event)">
+            <div *dxTemplate="let item of 'title'">
+                <h5 [outerHTML]="item.title"></h5>
+            </div>
+
+
+            <div *dxTemplate="let item of 'item'">
                 <!-- Consultation Reason -->
-                <div class="tab-pane active" id="consultationReason" role="tabcard">
+                <ng-container *ngIf="item.id === 'consultationReason'" >
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-12">
@@ -48,10 +34,12 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </ng-container>
+
+
 
                 <!-- Record -->
-                <div class="tab-pane" id="record" role="tabcard">
+                <ng-container *ngIf="item.id === 'record'" >
                     <section class="card">
                         <div class="card-header">
                             <span class="utils__title">
@@ -159,11 +147,11 @@
                             <dx-text-area [(value)]="medicalBackground.other"></dx-text-area>
                         </div>
                     </section>
-                </div>
+                </ng-container>
 
                 <!-- Physical Exam -->
-                <div class="tab-pane" id="physicalExam" role="tabcard">
-                    <div class="container-fluid">
+                <ng-container *ngIf="item.id === 'physicalExam'">
+                    <div class="container-fluid consultant_info_physical_exam">
                         <div class="row">
                             <div class="col-md-1">
                                 TA:
@@ -172,7 +160,7 @@
                                 <dx-number-box [(value)]="physicalExam.ta"></dx-number-box>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row flex-row">
                             <div class="col-md-1">
                                 FC:
                             </div>
@@ -205,45 +193,74 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
+
+                        </div>
+                        <div class="row col-12">
+                            <div class="row col-12">
                                 Comentarios:
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <dx-number-box [(value)]="physicalExam.comments"></dx-number-box>
+                            <div class="row col-12">
+                                <dx-number-box class="col-12" [(value)]="physicalExam.comments"></dx-number-box>
                             </div>
                         </div>
                     </div>
-                </div>
+                </ng-container>
 
                 <!-- Diagnostic images -->
-                <div class="tab-pane" id="diagnosticImages" role="tabcard">
-                    <dx-file-uploader
-                        #fileUploader
-                        (onValueChanged)="onFileAdded($event)"
-                        [multiple]="true"
-                        accept="image/*"
-                        [(value)]="value"
-                        uploadMode="useForm"
-                        labelText="o arrastralos y sueltalos aqu&iacute;"
-                        selectButtonText="Selecciona archivos"
-                    ></dx-file-uploader>
-
-                    <div class="consultant_info__image_grid">
-                        <div class="consultant_info__image_grid__item"
-                             [ngClass]="{'no_view': !this.editMode}"
-                             *ngFor="let image of currentImages; let i = index">
-                            <img [src]="image.src" alt="'Diagnostic image'" (click)="viewImage(i)">
-                        </div>
+                <ng-container *ngIf="item.id === 'diagnosticImages'">
+                    <div class="consultant_info__loading" *ngIf="loadingImages">
+                        <span class="fa fa-circle-o-notch fa-5x fa-spin" style="color: #0190fe"></span>
+                        <span>Cargando imagens...</span>
                     </div>
-                </div>
+
+                    <ng-container *ngIf="!loadingImages">
+                        <dx-file-uploader
+                            #fileUploader
+                            (onValueChanged)="onFileAdded($event)"
+                            [multiple]="true"
+                            accept="image/*"
+                            [(value)]="value"
+                            uploadMode="useForm"
+                            labelText="o arrastralos y sueltalos aqu&iacute;"
+                            selectButtonText="Selecciona archivos"
+                        ></dx-file-uploader>
+
+                        <div class="consultant_info__image_grid">
+                            <div class="consultant_info__image_grid__item"
+                                 [ngClass]="{'no_view': !this.editMode}"
+                                 *ngFor="let image of currentImages; let i = index">
+                                <ngx-image-zoom
+                                    (mouseenter)="imageIndexHover = i"
+                                    (mouseleave)="imageIndexHover = null"
+                                    [thumbImage]=image.src
+                                    [enableLens]="true"
+                                    [enableScrollZoom]="true"
+                                    (click)="viewImage(i)"
+                                    [lensWidth]="150"
+                                    [lensHeight]="100"
+                                    [zoomMode]="imageIndexHover === i  ? 'click' : 'hover'"
+                                ></ngx-image-zoom>
+
+                                <button
+                                    type="button"
+                                    (mouseenter)="imageIndexHover = i"
+                                    (mouseleave)="imageIndexHover = null"
+                                    [class.show_button]="imageIndexHover === i"
+                                    [disabled]="image.isRemoving"
+                                    class="btn btn-light consultant_info__image_grid__item__remove mr-2 mb-2 float-right"
+                                    (click)="openRemovePopup(image)">
+                                    <span class="fa fa-times"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </ng-container>
+                </ng-container>
             </div>
-        </div>
+        </dx-accordion>
     </div>
     <div class="card-footer">
         <div class="mb-5">
-            <button *ngIf="!editMode" type="button" class="btn mr-2 mb-2 float-right">Cancelar</button>
+            <button *ngIf="!editMode" type="button" class="btn mr-2 mb-2 float-right" (click)="cancel()">Cancelar</button>
             <button
                 type="button"
                 [disabled]="loading"
@@ -254,3 +271,40 @@
         </div>
     </div>
 </section>
+
+
+<dx-popup
+    [height]="200"
+    [showTitle]="true"
+    title="¿Deseas eliminar la imagen?"
+    [dragEnabled]="false"
+    [showCloseButton]="!isRemoving"
+    [closeOnOutsideClick]="!isRemoving"
+    [(visible)]="removePopup"
+    class="consultant_info__remove_buttons_container">
+    <div *dxTemplate="let data of 'content'">
+        <div class="consultant_info__remove_buttons_container__buttons">
+            <button
+                type="button"
+                [disabled]="isRemoving"
+                class="btn btn-primary mr-2 mb-2 float-right"
+                (click)="removeImage(imageToRemove)">
+                <ng-template [ngIf]="!isRemoving" [ngIfElse]="removing">
+                    Eliminar
+                </ng-template>
+
+                <ng-template #removing>
+                    Eliminando <span class="fa fa-circle-o-notch fa-spin"></span>
+                </ng-template>
+            </button>
+
+            <button
+                type="button"
+                [disabled]="isRemoving"
+                class="btn btn-secondary mr-2 mb-2 float-right"
+                (click)="removePopup = false">
+                Cancelar
+            </button>
+        </div>
+    </div>
+</dx-popup>

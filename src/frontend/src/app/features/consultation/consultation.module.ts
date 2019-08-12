@@ -9,7 +9,7 @@ import {
     DxNumberBoxModule,
     DxPopupModule,
     DxDataGridModule,
-    DxButtonModule, DxTextBoxModule, DxValidatorModule, DxFileUploaderModule
+    DxButtonModule, DxTextBoxModule, DxValidatorModule, DxFileUploaderModule, DxAccordionModule
 } from 'devextreme-angular'
 
 import { ConsultationList } from './consultation.list'
@@ -19,6 +19,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ConsultantInfoComponent} from "../consultant-info/consultant-info.component";
 import {ConsultantDetails} from "./consultant-details";
 import {LightboxModule} from "ngx-lightbox";
+import {NgxImageZoomModule} from "ngx-image-zoom";
+import {NgxMasonryModule} from "ngx-masonry";
 
 export const routes: Routes = [
     { path: 'consultation', component: ConsultationList },
@@ -42,7 +44,10 @@ export const routes: Routes = [
         BrowserAnimationsModule,
         RouterModule.forChild(routes),
         DxFileUploaderModule,
-        LightboxModule
+        LightboxModule,
+        NgxImageZoomModule,
+        NgxMasonryModule,
+        DxAccordionModule
     ],
     declarations: [
         ConsultationList,

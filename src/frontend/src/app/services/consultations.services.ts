@@ -111,6 +111,11 @@ export class ConsultationsService {
                     .put<Consultation>(this.api + '/' + encodeURIComponent(consultation.id), {...consultation, ...updated});
     }
 
+    removeImage(consultationId, imageId) {
+        const api =  `${AppSettings.API}/consultations/${consultationId}/images/${imageId}`;
+        return this.http.delete(api);
+    }
+
     uploadImage(consultationId, image) {
         const api =  `${AppSettings.API}/consultations/${consultationId}/images`;
         const http = this.http;
@@ -120,5 +125,10 @@ export class ConsultationsService {
         };
 
         return http.post(api, payload);
+    }
+
+    getImages(consultationId): Observable<any> {
+        const api =  `${AppSettings.API}/consultations/${consultationId}/images`;
+        return this.http.get(api);
     }
 }
