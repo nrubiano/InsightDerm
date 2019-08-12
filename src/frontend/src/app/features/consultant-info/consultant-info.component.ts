@@ -5,15 +5,14 @@ import {MedicalBackground} from '../../models/medical-background';
 import {PhysicalExam} from '../../models/physical-exam';
 import {FileUploadControl} from '@iplab/ngx-file-upload';
 import {ConsultationsService} from '../../services/consultations.services';
-import {Http} from '@angular/http';
-import {Lightbox} from 'ngx-lightbox';
+import {IAlbum, Lightbox} from 'ngx-lightbox';
 import {forkJoin} from 'rxjs';
 
 
-interface Image {
-    src: string,
-    caption?: string;
-    thumb: string;
+interface Image extends IAlbum{
+    id?: any,
+    fromBackend?: boolean,
+    isRemoving?: boolean
 }
 
 @Component({
@@ -35,9 +34,6 @@ export class ConsultantInfoComponent implements OnInit {
     @Output() canceled = new EventEmitter();
     @Output() restored = new EventEmitter();
 
-    public fileUploadControl = new FileUploadControl();
-    public uploadedFiles: Array<File> = [];
-
     consultation: Consultation;
     medicalBackground: MedicalBackground;
 
@@ -48,19 +44,37 @@ export class ConsultantInfoComponent implements OnInit {
 
     value: any[] = [];
     imagesUlr: string;
+    imageIndexHover: number = null;
     currentImages: Image[] = [];
+    loadingImages: boolean = false;
+    imageToRemove: Image = null;
+    removePopup: boolean = false;
+    isRemoving = false;
+    columns: any[];
 
     constructor(
         private consultationsService: ConsultationsService,
         private lightBox: Lightbox
-    ) { }
+    ) {
+        this.columns = [{
+            id: 'consultationReason',
+            title: 'Motivo Consulta'
+        },{
+            id: 'record',
+            title: 'Antecedentes'
+        },{
+            id: 'physicalExam',
+            title: 'Examen F&iacute;sico '
+        },{
+            id: 'diagnosticImages',
+            title: 'Im&aacute;genes Diagnosticas'
+        },]
+    }
 
     ngOnInit() {
         this.consultation = new Consultation();
         this.medicalBackground = new MedicalBackground();
         this.physicalExam = new PhysicalExam();
-
-        this.fileUploadControl.setListVisibility(false);
 
         if (this.consultantData) {
             this.consultation.reason = this.consultantData.reason;
@@ -68,6 +82,23 @@ export class ConsultantInfoComponent implements OnInit {
             this.updateExistingEntity(this.physicalExam, this.consultantData.physicalExam);
 
             this.imagesUlr = `localhost:5000/api/v1/consultations/${this.consultantData.id}/images`;
+
+            this.loadingImages = true;
+
+            this.consultationsService.getImages(this.consultantData.id).subscribe((images) => {
+                images.map((img) => {
+                    this.currentImages.push({
+                        id: img.id,
+                        src: img.image,
+                        thumb: img.image,
+                        fromBackend: true
+                    });
+                });
+
+                this.loadingImages = false;
+            }, (error) => {
+                notify('Error obteniendo las imagenes', 'error', 2500);
+            })
         }
     }
 
@@ -102,10 +133,10 @@ export class ConsultantInfoComponent implements OnInit {
                 if (!this.editMode) {
                     this.restore();
                 }
-                notify('Images have been uploaded', 'success', 2500);
+                notify('Las imagenes han sido agregadas', 'success', 2500);
 
             }, error => {
-                notify('Error papu', 'error', 2500);
+                notify('Error agregando las imagenes', 'error', 2500);
                 this.loading = false;
                 if (!this.editMode) {
                     this.restore();
@@ -118,14 +149,15 @@ export class ConsultantInfoComponent implements OnInit {
             notify(this.message, 'error', 2500);
             this.loading = false;
         });
-
-
-
     }
 
     uploadImages(id) {
         const observables = [];
-        this.currentImages.forEach((image) => observables.push(this.consultationsService.uploadImage(id, image.src)));
+        this.currentImages.forEach((image) => {
+            if (!image.fromBackend) {
+                observables.push(this.consultationsService.uploadImage(id, image.src))
+            }
+        });
         return forkJoin(observables);
     }
 
@@ -149,7 +181,7 @@ export class ConsultantInfoComponent implements OnInit {
         const mimeType = file.type;
 
         if (mimeType.match(/image\/*/) == null) {
-            this.message = 'Only images are supported.';
+            this.message = 'Solo se soportan imagenes.';
             return;
         }
 
@@ -157,6 +189,7 @@ export class ConsultantInfoComponent implements OnInit {
         reader.readAsDataURL(file);
         reader.onload = (_event) => {
             this.currentImages.push({
+                id: Math.random().toString(36).substring(7),
                 src: reader.result,
                 thumb: reader.result,
                 caption: file.name,
@@ -176,5 +209,38 @@ export class ConsultantInfoComponent implements OnInit {
     close(): void {
         // close lightbox programmatically
         this.lightBox.close();
+    }
+
+    openRemovePopup(image: Image) {
+        this.imageToRemove = image;
+        this.removePopup = true;
+    }
+
+    removeImage(image: Image) {
+        if (image.fromBackend) {
+            this.isRemoving = true;
+
+            this.consultationsService.removeImage(this.consultantData.id, image.id).subscribe(() => {
+                this.currentImages = this.currentImages.filter((item) => item.id !== image.id);
+                notify('La imagen ha sido borrada con éxito', 'success', 2500);
+                this.removePopup = false;
+                this.imageToRemove = null;
+                this.isRemoving = false;
+            },  (error) => {
+                notify('Error al eliminar la imagen, inténtalo mas tarde', 'error', 2500);
+                this.isRemoving = false;
+            })
+        } else {
+            this.currentImages = this.currentImages.filter((item) => item.id !== image.id);
+            this.removePopup = false;
+            this.imageToRemove = null;
+            notify('La imagen ha sido borrada con éxito', 'success', 2500);
+        }
+    }
+
+    expandAll(e) {
+        for (let i = 0; i < this.columns.length; i++) {
+            e.component.expandItem(i);
+        }
     }
 }
