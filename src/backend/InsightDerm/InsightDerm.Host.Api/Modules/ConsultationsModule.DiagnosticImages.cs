@@ -10,9 +10,11 @@ namespace InsightDerm.Host.Api.Modules
     {
         protected virtual async Task<dynamic> GetImages(dynamic args, CancellationToken ct)
         {
-            string filter = Request.Query["$filter"];
+            var id = (Guid)args.ImageId;
+            
+            //string filter = Request.Query["$filter"];
 
-            var entities = _diagnosticImageService.GetAll(filter, "");
+            var entities = _diagnosticImageService.GetAll(x => x.ConsultationId == id);
 
             return Response.AsJson(entities);
         }
