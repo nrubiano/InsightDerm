@@ -9,8 +9,6 @@ import {  DxDateBoxModule,
     DxButtonModule } from 'devextreme-angular'
 
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {FileUploadModule} from "@iplab/ngx-file-upload";
-
 
 @NgModule({
     imports: [
@@ -24,8 +22,7 @@ import {FileUploadModule} from "@iplab/ngx-file-upload";
         ReactiveFormsModule,
         BrowserAnimationsModule
     ],
-    declarations: [
-    ]
+    declarations: []
 
 })
 

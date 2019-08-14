@@ -22,6 +22,7 @@
                                 valueExpr="id">
                             </dxo-lookup>
                         </dxi-column>
+
                         <dxi-column dataField="patientId"
                                     caption="Nombre Paciente">
                             <dxo-lookup
@@ -64,17 +65,19 @@
                                 <dx-button text="Asignar"></dx-button>
                             </div>
                         </div>
+
                         <dxo-remote-operations
                             [sorting]="true"
                             [paging]="true">
                         </dxo-remote-operations>
+
                         <dxo-paging [pageSize]="12"></dxo-paging>
+
                         <dxo-pager
                             [showPageSizeSelector]="true"
                             [allowedPageSizes]="[8, 12, 20]">
                         </dxo-pager>
                     </dx-data-grid>
-                    <!-- End Grid -->
                     <!-- End Grid -->
                 </div>
             </div>

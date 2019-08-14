@@ -1,0 +1,72 @@
+<!-- START: pages/login-alpha -->
+<div class="cat__pages__login cat__pages__login--fullscreen" style="background-image: url(/assets/modules/core/img/bg-login.jpg)">
+    <div class="cat__pages__login__header">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="cat__pages__login__header__logo">
+                    <img src="/assets/modules/core/img/logo-inverse.png" alt="Insight Derm" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cat__pages__login__block">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="cat__pages__login__block__inner">
+                    <div class="cat__pages__login__block__form">
+                        <h4 class="text-uppercase">
+                            <strong>POR FAVOR INICIA SESIÓN</strong>
+                        </h4>
+                        <br />
+                        <form id="form-validation" name="form-validation" method="POST">
+                            <div class="form-group">
+                                <label class="form-label">Usuario:</label>
+                                <input id="validation-email"
+                                       class="form-control"
+                                       placeholder="Email or Username"
+                                       name="validation[email]"
+                                       type="text"
+                                       data-validation="[EMAIL]">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Contraseña:</label>
+                                <input id="validation-password"
+                                       class="form-control password"
+                                       name="validation[password]"
+                                       type="password" data-validation="[L>=6]"
+                                       data-validation-message="$ must be at least 6 characters"
+                                       placeholder="Password">
+                            </div>
+                            <div class="form-group">
+<!--                                <a href="javascript: void(0);" class="pull-right cat__core__link&#45;&#45;blue cat__core__link&#45;&#45;underlined">Olvide mi contraseña?</a>-->
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="example6" checked>
+                                        Recuérdame
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit"
+                                        [routerLink]="['/dashboard']"
+                                        class="btn btn-primary mr-3">Iniciar Sesión</button>
+<!--                                <span class="register-link">-->
+<!--                                    <a href="" class="cat__core__link&#45;&#45;blue cat__core__link&#45;&#45;underlined">Registrate</a> si no tienes una cuenta-->
+<!--                                </span>-->
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cat__pages__login__footer text-center">
+        <ul class="list-unstyled list-inline">
+            <li class="list-inline-item"><a href="javascript: void(0);">Terminos y condiciones de uso</a></li>
+            <li class="list-inline-item"><a href="javascript: void(0);">Información confidencial</a></li>
+            <li class="list-inline-item"><a href="javascript: void(0);">Soporte</a></li>
+            <li class="list-inline-item"><a href="javascript: void(0);">Contactos</a></li>
+        </ul>
+    </div>
+</div>
+<!-- END: pages/login-alpha -->
