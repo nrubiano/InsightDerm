@@ -10,7 +10,7 @@ namespace InsightDerm.Host.Api.Modules
     {
         protected virtual async Task<dynamic> GetImages(dynamic args, CancellationToken ct)
         {
-            var id = (Guid)args.ImageId;
+            var id = (Guid)args.Id;
             
             //string filter = Request.Query["$filter"];
 
@@ -30,8 +30,11 @@ namespace InsightDerm.Host.Api.Modules
 
         protected virtual async Task<dynamic> PostImage(dynamic args, CancellationToken ct)
         {
+            var consultationId = (Guid)args.Id;
+            
             var model = BindBody<DiagnosticImageDto>();
-
+            model.ConsultationId = consultationId;
+            
             model = _diagnosticImageService.Create(model);
 
             return Response.AsJson(model);
