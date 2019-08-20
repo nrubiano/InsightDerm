@@ -9,7 +9,13 @@ import {
     DxNumberBoxModule,
     DxPopupModule,
     DxDataGridModule,
-    DxButtonModule, DxTextBoxModule, DxValidatorModule, DxFileUploaderModule, DxAccordionModule
+    DxButtonModule,
+    DxTextBoxModule,
+    DxValidatorModule,
+    DxFileUploaderModule,
+    DxAccordionModule,
+    DxDropDownBoxModule,
+    DxLookupModule, DxSelectBoxModule
 } from 'devextreme-angular'
 
 import { ConsultationList } from './consultation.list'
@@ -47,7 +53,10 @@ export const routes: Routes = [
         LightboxModule,
         NgxImageZoomModule,
         NgxMasonryModule,
-        DxAccordionModule
+        DxAccordionModule,
+        DxDropDownBoxModule,
+        DxLookupModule,
+        DxSelectBoxModule
     ],
     declarations: [
         ConsultationList,

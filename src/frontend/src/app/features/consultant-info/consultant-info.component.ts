@@ -1,12 +1,14 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import notify from 'devextreme/ui/notify';
-import {Consultation} from '../../models/consultation';
+import {Consultation, MedicalExam, Treatment} from '../../models/consultation';
 import {MedicalBackground} from '../../models/medical-background';
 import {PhysicalExam} from '../../models/physical-exam';
-import {FileUploadControl} from '@iplab/ngx-file-upload';
-import {ConsultationsService} from '../../services/consultations.services';
 import {IAlbum, Lightbox} from 'ngx-lightbox';
 import {forkJoin} from 'rxjs';
+import {ConsultationsService} from "../../services/consultations.services";
+import {MedicalExamsService} from "../../services/medical-exams.services";
+import {DxSelectBoxComponent} from "devextreme-angular";
+
 
 
 interface Image extends IAlbum{
@@ -20,11 +22,14 @@ interface Image extends IAlbum{
     templateUrl: './consultant-info.component.html',
     styleUrls: ['./consultant-info.component.css'],
     providers: [
-        ConsultationsService
+        ConsultationsService,
+        MedicalExamsService
     ]
 })
 
 export class ConsultantInfoComponent implements OnInit {
+    @ViewChild(DxSelectBoxComponent) examsSelectBox: DxSelectBoxComponent
+
     @Input('isVisible') isVisible = true;
     @Input('infoTitle') infoTitle = 'Iniciar Consulta';
     @Input('saveText') saveText = 'Guardar Interconsulta';
@@ -51,24 +56,70 @@ export class ConsultantInfoComponent implements OnInit {
     removePopup: boolean = false;
     isRemoving = false;
     columns: any[];
+    currentTreatment: string;
+    currentExam: any;
+    medicalExams: any[];
+    currentExams: MedicalExam[];
+    currentTreatments: Treatment[];
 
     constructor(
         private consultationsService: ConsultationsService,
+        private medicalExamsService: MedicalExamsService,
         private lightBox: Lightbox
     ) {
-        this.columns = [{
-            id: 'consultationReason',
-            title: 'Motivo Consulta'
-        },{
-            id: 'record',
-            title: 'Antecedentes'
-        },{
-            id: 'physicalExam',
-            title: 'Examen F&iacute;sico '
-        },{
-            id: 'diagnosticImages',
-            title: 'Im&aacute;genes Diagnosticas'
-        },]
+        this.columns = [
+            {
+                id: 'consultationReason',
+                title: 'Motivo Consulta'
+            }, {
+                id: 'record',
+                title: 'Antecedentes'
+            }, {
+                id: 'physicalExam',
+                title: 'Examen F&iacute;sico '
+            }, {
+                id: 'diagnosticImages',
+                title: 'Im&aacute;genes Diagnosticas'
+            },{
+                id: 'treatment',
+                title: 'Tratamiento'
+            }
+        ];
+
+        /*this.medicalExamsService.store.load().then((exams) => {
+            console.warn(exams);
+            this.medicalExams = exams.data;
+        }).catch((error) => {
+            console.error('Error', error);
+        });*/
+
+        this.medicalExams = [
+            {
+                id: 0,
+                name: 'Examen de sangre'
+            },
+            {
+                id: 1,
+                name: 'Examen de orina'
+            },
+            {
+                id: 2,
+                name: 'Examen auditivo'
+            },
+            {
+                id: 3,
+                name: 'Resonancia magnetica'
+            },
+            {
+                id: 4,
+                name: 'Radriografia'
+            },
+            {
+                id: 5,
+                name: 'Examen de glucosa'
+            }
+        ];
+        this.currentExams = [];
     }
 
     ngOnInit() {
@@ -80,6 +131,7 @@ export class ConsultantInfoComponent implements OnInit {
             this.consultation.reason = this.consultantData.reason;
             this.updateExistingEntity(this.medicalBackground, this.consultantData.medicalBackground);
             this.updateExistingEntity(this.physicalExam, this.consultantData.physicalExam);
+            this.currentTreatments = this.consultantData.treatments ? this.consultantData.treatments.map((item) => JSON.parse(item)) : [];
 
             this.imagesUlr = `localhost:5000/api/v1/consultations/${this.consultantData.id}/images`;
 
@@ -111,6 +163,7 @@ export class ConsultantInfoComponent implements OnInit {
         this.loading = true;
         this.consultation.medicalBackground = this.medicalBackground.json();
         this.consultation.physicalExam = this.physicalExam.json();
+        this.consultation.treatments = this.currentTreatments.map((item) => JSON.stringify(item));
         this.consultation.patientId = this.patientId;
 
         const requestFn = !this.editMode ?
@@ -242,5 +295,45 @@ export class ConsultantInfoComponent implements OnInit {
         for (let i = 0; i < this.columns.length; i++) {
             e.component.expandItem(i);
         }
+    }
+
+    addTreatment() {
+        this.currentTreatments.push({
+            date: Date.now(),
+            description: this.currentTreatment,
+            by: 'Current User',
+            medicalExams: this.currentExams
+        });
+
+        this.currentExams = [];
+
+        this.currentTreatment = '';
+        this.examsSelectBox.instance.reset();
+    }
+
+    addExam(event) {
+        if (this.currentExam) {
+            const examExists = this.currentExams.find((exam) => exam.medicalExamId === this.currentExam.id);
+
+            if (!examExists) {
+                this.currentExams.push({
+                    medicalExamId: this.currentExam.id,
+                    result: {
+                        date: Date.now(),
+                        description: this.currentExam.name
+                    }
+                });
+            }
+
+            this.examsSelectBox.instance.reset();
+        }
+    }
+
+    removeExam(examRemove: MedicalExam) {
+        this.currentExams = this.currentExams.filter((exam) => exam.medicalExamId !== examRemove.medicalExamId)
+    }
+
+    removeTreatment(treatmentIndex: any) {
+        this.currentTreatments.splice(treatmentIndex, 1);
     }
 }

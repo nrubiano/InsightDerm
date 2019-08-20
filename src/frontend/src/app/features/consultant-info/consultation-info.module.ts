@@ -2,11 +2,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule }      from '@angular/core';
 import { CommonModule }  from '@angular/common';
 
-import {  DxDateBoxModule,
+import {
+    DxDateBoxModule,
     DxTextAreaModule,
     DxNumberBoxModule,
     DxPopupModule,
-    DxButtonModule } from 'devextreme-angular'
+    DxButtonModule,
+    DxLookupModule
+} from 'devextreme-angular'
 
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
@@ -20,7 +23,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
         DxPopupModule,
         DxButtonModule,
         ReactiveFormsModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        DxLookupModule
     ],
     declarations: []
 
