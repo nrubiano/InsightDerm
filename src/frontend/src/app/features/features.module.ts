@@ -8,6 +8,9 @@ import { PatientModule } from './patient/patient.module';
 import { ConsultationModule } from './consultation/consultation.module';
 import { ConsultationInfoModule } from "./consultant-info/consultation-info.module";
 import {FileUploadModule} from "@iplab/ngx-file-upload";
+import { LoginComponent } from './login/login.component';
+import {LoginModule} from "./login/login.module";
+import {DashboardModule} from "./dashboard/dashboard.module";
 
 @NgModule({
     imports: [
@@ -18,7 +21,10 @@ import {FileUploadModule} from "@iplab/ngx-file-upload";
         PatientModule,
         ConsultationModule,
         ConsultationInfoModule,
+        LoginModule,
+        DashboardModule,
         FileUploadModule
-    ]
+    ],
+    declarations: []
 })
 export class FeaturesModule { }

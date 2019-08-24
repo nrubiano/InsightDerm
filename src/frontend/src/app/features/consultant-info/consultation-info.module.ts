@@ -2,15 +2,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule }      from '@angular/core';
 import { CommonModule }  from '@angular/common';
 
-import {  DxDateBoxModule,
+import {
+    DxDateBoxModule,
     DxTextAreaModule,
     DxNumberBoxModule,
     DxPopupModule,
-    DxButtonModule } from 'devextreme-angular'
+    DxButtonModule,
+    DxLookupModule
+} from 'devextreme-angular'
 
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {FileUploadModule} from "@iplab/ngx-file-upload";
-
 
 @NgModule({
     imports: [
@@ -22,10 +23,10 @@ import {FileUploadModule} from "@iplab/ngx-file-upload";
         DxPopupModule,
         DxButtonModule,
         ReactiveFormsModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        DxLookupModule
     ],
-    declarations: [
-    ]
+    declarations: []
 
 })
 

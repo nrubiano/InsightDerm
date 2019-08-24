@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import CustomStore from 'devextreme/data/custom_store';
 import { AppSettings } from '../app.config';
 import { map } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Consultation } from 'app/models/consultation';
 
@@ -19,6 +19,7 @@ export class ConsultationsService {
         this.setupStore();
         this.api = AppSettings.API + '/consultations';
     }
+
     /**
      * Setup the store with the http methods
      */
@@ -36,42 +37,29 @@ export class ConsultationsService {
                             .toPromise();
             },
             load: (loadOptions): Promise<any> => {
-                let params = '';
-
-                if (loadOptions.skip) {
-                    params += 'skip=' + loadOptions.skip;
-                }
-
-                if (loadOptions.take) {
-                    params += '&take=' + loadOptions.take;
-                }
-
-                if (loadOptions.filter) {
-                    params += '&$filter=' + loadOptions.filter;
-                }
-
-                if (loadOptions.sort) {
-                    params += '&orderby=' + loadOptions.sort[0].selector;
-                    if (loadOptions.sort[0].desc) {
-                        params += ' desc';
-                    }
-                }
-
-                let query = '';
-                if (params.length > 0) {
-                    query = '?' + params;
-                }
-
-                return http.get<any[]>(this.api + query)
+                let params: HttpParams = new HttpParams();
+                [
+                    "skip",
+                    "take",
+                    "requireTotalCount",
+                    "requireGroupCount",
+                    "sort",
+                    "filter",
+                    "totalSummary",
+                    "group",
+                    "groupSummary"
+                ].forEach(function(i) {
+                    if(i in loadOptions && isNotEmpty(loadOptions[i]))
+                        params = params.set(i, JSON.stringify(loadOptions[i]));
+                });
+                return this.http.get<any[]>(this.api, { params: params })
                     .toPromise()
-                    .then(response => {
-                        const json = response;
+                    .then(result => {
                         return {
-                            data: json,
-                            totalCount: json.length
-                        }
-                    })
-                    .catch(error => { throw new Error('Data Loading Error') });
+                            data: result,
+                            totalCount: result.length
+                        };
+                    });
             },
             update: (entity, updatedValues): Promise<any> => {
                 return this.update(entity, updatedValues)
@@ -131,4 +119,8 @@ export class ConsultationsService {
         const api =  `${AppSettings.API}/consultations/${consultationId}/images`;
         return this.http.get(api);
     }
+}
+
+function isNotEmpty(value: any): boolean {
+    return value !== undefined && value !== null && value !== "";
 }
