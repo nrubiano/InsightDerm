@@ -5,13 +5,13 @@ import {MedicalBackground} from '../../models/medical-background';
 import {PhysicalExam} from '../../models/physical-exam';
 import {IAlbum, Lightbox} from 'ngx-lightbox';
 import {forkJoin} from 'rxjs';
-import {ConsultationsService} from "../../services/consultations.services";
-import {MedicalExamsService} from "../../services/medical-exams.services";
-import {DxSelectBoxComponent} from "devextreme-angular";
+import {ConsultationsService} from '../../services/consultations.services';
+import {MedicalExamsService} from '../../services/medical-exams.services';
+import {DxSelectBoxComponent} from 'devextreme-angular';
 
 
 
-interface Image extends IAlbum{
+interface Image extends IAlbum {
     id?: any,
     fromBackend?: boolean,
     isRemoving?: boolean
@@ -51,9 +51,9 @@ export class ConsultantInfoComponent implements OnInit {
     imagesUlr: string;
     imageIndexHover: number = null;
     currentImages: Image[] = [];
-    loadingImages: boolean = false;
+    loadingImages = false;
     imageToRemove: Image = null;
-    removePopup: boolean = false;
+    removePopup = false;
     isRemoving = false;
     columns: any[];
     currentTreatment: string;
@@ -80,11 +80,15 @@ export class ConsultantInfoComponent implements OnInit {
             }, {
                 id: 'diagnosticImages',
                 title: 'Im&aacute;genes Diagnosticas'
-            },{
+            },
+        ];
+
+        if (this.editMode) {
+            this.columns.push({
                 id: 'treatment',
                 title: 'Tratamiento'
-            }
-        ];
+            });
+        }
 
         /*this.medicalExamsService.store.load().then((exams) => {
             console.warn(exams);
@@ -163,8 +167,11 @@ export class ConsultantInfoComponent implements OnInit {
         this.loading = true;
         this.consultation.medicalBackground = this.medicalBackground.json();
         this.consultation.physicalExam = this.physicalExam.json();
-        this.consultation.treatments = this.currentTreatments.map((item) => JSON.stringify(item));
         this.consultation.patientId = this.patientId;
+
+        if (this.editMode) {
+            this.consultation.treatments = this.currentTreatments.map((item) => JSON.stringify(item));
+        }
 
         const requestFn = !this.editMode ?
             this.consultationsService.insert(this.consultation) :

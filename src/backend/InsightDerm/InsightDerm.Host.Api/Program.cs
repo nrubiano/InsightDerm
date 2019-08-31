@@ -16,6 +16,7 @@ namespace InsightDerm.Host.Api
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 //.UseIISIntegration()
+                //.UseUrls("http://localhost:5000", "http://172.20.10.3:5000")
                 .UseStartup<Startup>()
                 .Build();
 
