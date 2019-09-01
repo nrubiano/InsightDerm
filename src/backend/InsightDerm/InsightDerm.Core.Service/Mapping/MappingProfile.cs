@@ -15,13 +15,13 @@ namespace InsightDerm.Core.Service.Mapping
             CreateMap<Consultation, ConsultationDto>();
             
             CreateMap<ConsultationDto, Consultation>()
-                .ForMember(mn => mn.MedicalLaboratories, con => con.Ignore())
+                .ForMember(mn => mn.ConsultationDiagnoses, con => con.Ignore())
                 .ForMember(mn => mn.DiagnosticImages, con => con.Ignore());
 
             CreateMap<MedicalLaboratory, MedicalLaboratoryDto>();
             
             CreateMap<MedicalLaboratoryDto, MedicalLaboratory>()
-                .ForMember(mn => mn.Consultation, con => con.Ignore())
+                .ForMember(mn => mn.ConsultationDiagnosis, con => con.Ignore())
                 .ForMember(mn => mn.Type, con => con.Ignore())
                 .ForMember(mn => mn.RequestedBy, con => con.Ignore());
 

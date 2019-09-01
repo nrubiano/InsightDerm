@@ -9,7 +9,7 @@ namespace InsightDerm.Core.Data.Domain.Model
         public Guid Id { get; set; }
 
         [Required]
-        public Guid ConsultationId { get; set; }
+        public Guid ConsultationDiagnosisId { get; set; }
 
         [Required]
         public DateTime RequestedDate { get; set; }
@@ -20,7 +20,7 @@ namespace InsightDerm.Core.Data.Domain.Model
         [Required]
         public Guid TypeId { get; set; }
 
-        public Consultation Consultation { get; set; }
+        public ConsultationDiagnosis ConsultationDiagnosis { get; set; }
 
         public Doctor RequestedBy { get; set; }
 

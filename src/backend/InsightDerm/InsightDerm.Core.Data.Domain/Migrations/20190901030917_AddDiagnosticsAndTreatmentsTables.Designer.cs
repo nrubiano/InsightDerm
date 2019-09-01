@@ -12,9 +12,10 @@ using System;
 namespace InsightDerm.Core.Data.Domain.Migrations
 {
     [DbContext(typeof(InsightDermContext))]
-    partial class InsightDermContextModelSnapshot : ModelSnapshot
+    [Migration("20190901030917_AddDiagnosticsAndTreatmentsTables")]
+    partial class AddDiagnosticsAndTreatmentsTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

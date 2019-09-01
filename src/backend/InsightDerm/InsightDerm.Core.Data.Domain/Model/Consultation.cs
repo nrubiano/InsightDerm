@@ -29,11 +29,14 @@ namespace InsightDerm.Core.Data.Domain.Model
         [MaxLength(1000)]
         public string PhysicalExam { get; set; }
 
+        [Required]
+        public ConsultationStatus Status { get; set; }
+
         public Patient Patient { get; set; }
 
         public Doctor RequestedBy { get; set; }
 
-        public virtual List<MedicalLaboratory> MedicalLaboratories { get; set; }
+        public List<ConsultationDiagnosis> ConsultationDiagnoses { get; set; }
 
         public List<DiagnosticImage> DiagnosticImages { get; set; }
     }

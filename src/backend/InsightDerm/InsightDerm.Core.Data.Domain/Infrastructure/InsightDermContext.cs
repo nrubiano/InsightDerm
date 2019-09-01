@@ -9,6 +9,10 @@ namespace InsightDerm.Core.Data.Domain.Infrastructure
 
 	    public DbSet<Consultation> Consultations { get; set; }
 
+        public DbSet<ConsultationDiagnosis> ConsultationDiagnoses { get; set; }
+
+        public DbSet<ConsultationTreatment> ConsultationTreatments { get; set; }
+
         public DbSet<DiagnosticImage> DiagnosticImages { get; set; }
 
         public DbSet<Doctor> Doctors { get; set; }
@@ -52,13 +56,20 @@ namespace InsightDerm.Core.Data.Domain.Infrastructure
 
 		    modelBuilder.Entity<Consultation>()
 		        .ToTable("Consultations")
-		        .HasMany(x => x.MedicalLaboratories)
-		        .WithOne(x => x.Consultation)
-		        .OnDelete(DeleteBehavior.Cascade);
+		        .HasMany(x => x.ConsultationDiagnoses)
+                .WithOne(x => x.Consultation)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Consultation>()
+                .ToTable("Consultations")
                 .HasMany(x => x.DiagnosticImages)
                 .WithOne(x => x.Consultation)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<ConsultationDiagnosis>()
+                .ToTable("ConsultationDiagnosis")
+                .HasMany(x => x.MedicalLaboratories)
+                .WithOne(x => x.ConsultationDiagnosis)
                 .OnDelete(DeleteBehavior.Cascade);
         }
 	}
