@@ -21,5 +21,7 @@ namespace InsightDerm.Core.Dto
         public PatientDto Patient { get; set; }
 
         public DoctorDto RequestedBy { get; set; }
+
+        public int Status { get; set; }
     }
 }

@@ -27,7 +27,7 @@ namespace InsightDerm.Host.Api
 
             builder.RegisterInstance(settingsService).As<IOptions<ApiSettings>>();
             
-            ServiceKernel.Init(builder, _configuration.GetConnectionString("DefaultConnection"));
+            AutofactServiceKernel.Init(builder, _configuration.GetConnectionString("DefaultConnection"));
             
             builder.Update(existingContainer.ComponentRegistry);
         }

@@ -6,7 +6,7 @@ namespace InsightDerm.Core.Dto
     {
         public Guid Id { get; set; }
    
-        public Guid ConsultationId { get; set; }
+        public Guid ConsultationDiagnosisId { get; set; }
         
         public DateTime RequestedDate { get; set; }
         

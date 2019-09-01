@@ -8,7 +8,7 @@ using InsightDerm.Core.Data;
 
 namespace InsightDerm.Core.Service.Core
 {
-    public static class ServiceKernel
+    public static class AutofactServiceKernel
     {
         public static void Init(ContainerBuilder container, string connectionString)
         {
