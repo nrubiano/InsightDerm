@@ -9,14 +9,18 @@ namespace InsightDerm.Host.Backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ConsultationsController : ControllerBase
+    public partial class ConsultationsController : ControllerBase
     {
         private readonly IMapper _mapper;
         private readonly ConsultationService _consultationService;
+        private readonly DiagnosticImageService _diagnosticImageService;
 
-        public ConsultationsController(ConsultationService consultationService, IMapper mapper)
+        public ConsultationsController(ConsultationService consultationService, 
+                                        DiagnosticImageService diagnosticImageService,
+                                        IMapper mapper)
         {
             _consultationService = consultationService;
+            _diagnosticImageService = diagnosticImageService;
             _mapper = mapper;
         }
 
