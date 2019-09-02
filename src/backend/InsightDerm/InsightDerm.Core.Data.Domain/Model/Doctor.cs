@@ -28,11 +28,14 @@ namespace InsightDerm.Core.Data.Domain.Model
         
         [Required]
         public Guid SpecialityId { get; set; }
-        
+
         [Required]
+        public Guid UserId { get; set; }
+
         public virtual MedicalCenter MedicalCenter { get; set; }
         
-        [Required]
-        public virtual Speciality Speciality { get; set; }        
+        public virtual Speciality Speciality { get; set; }
+
+        public virtual User User { get; set; }
     }
 }

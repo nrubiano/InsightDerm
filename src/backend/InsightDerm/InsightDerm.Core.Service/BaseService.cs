@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using AutoMapper;
 using InsightDerm.Core.Data;
 using InsightDerm.Core.Service.Interfaces;
@@ -16,33 +15,33 @@ namespace InsightDerm.Core.Service
 
         private readonly IMapper _mapper;
 
-        private readonly IRepository<TEntity> _repository;
+        protected readonly IRepository<TEntity> Repository;
 
         public BaseService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             UnitOfWork = unitOfWork;
 
             _mapper = mapper;
-            _repository = UnitOfWork.GetRepository<TEntity>();
+            Repository = UnitOfWork.GetRepository<TEntity>();
         }
 
         public IEnumerable<TDto> GetAll(Expression<Func<TEntity, bool>> predicate)
         {
-            var list = _repository.GetPagedList(predicate, null, null, 0, 20);
+            var list = Repository.GetPagedList(predicate, null, null, 0, 20);
 
             return _mapper.Map<IEnumerable<TDto>>(list.Items);
         }
 
         public IEnumerable<TDto> GetAll(string filter, string sort)
         {
-            var list = _repository.GetPagedList(filter);
+            var list = Repository.GetPagedList(filter);
 
             return _mapper.Map<IEnumerable<TDto>>(list.Items);
         }
         
 		public TDto GetSingle(Expression<Func<TEntity, bool>> predicate)
 		{
-            var single = _repository.GetFirstOrDefault(predicate, null, null, true);
+            var single = Repository.GetFirstOrDefault(predicate, null, null, true);
 
 			return _mapper.Map<TDto>(single);
 		}
@@ -51,25 +50,25 @@ namespace InsightDerm.Core.Service
         {
             var toInsert = _mapper.Map<TEntity>(entity);
 
-            _repository.Insert(toInsert);
+            Repository.Insert(toInsert);
 
             UnitOfWork.SaveChanges(true);
 
-            _repository.Detach(toInsert);
+            Repository.Detach(toInsert);
 
             return _mapper.Map<TDto>(toInsert);
         }
 
 		public bool Exist(Expression<Func<TEntity, bool>> predicate)
 		{
-			return _repository.Exist(predicate);
+			return Repository.Exist(predicate);
 		}
 
         public void Remove(TDto entity)
         {
             var toDelete = _mapper.Map<TEntity>(entity);
 
-            _repository.Delete(toDelete);
+            Repository.Delete(toDelete);
 
 			UnitOfWork.SaveChanges(true);
         }
@@ -78,11 +77,11 @@ namespace InsightDerm.Core.Service
         {
             var toUpdate = _mapper.Map<TEntity>(entity);
 
-            _repository.Update(toUpdate);
+            Repository.Update(toUpdate);
 
             UnitOfWork.SaveChanges(true);
 
-            _repository.Detach(toUpdate);
+            Repository.Detach(toUpdate);
 
             return _mapper.Map<TDto>(toUpdate);
         }

@@ -1,9 +1,11 @@
 ﻿using System;
 using InsightDerm.Core.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InsightDerm.Host.Backend.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class SpecialitiesController : ControllerBase

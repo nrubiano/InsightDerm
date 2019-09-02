@@ -13,7 +13,7 @@ namespace InsightDerm.Core.Data.Domain.Model
         public Guid ConsultationId { get; set; }
 
         [Required]
-        public Guid By { get; set; }
+        public Guid ById { get; set; }
 
         [Required]
         public string Description { get; set; }
@@ -28,5 +28,7 @@ namespace InsightDerm.Core.Data.Domain.Model
         public virtual List<MedicalLaboratory> MedicalLaboratories { get; set; }
 
         public virtual ConsultationTreatment Treatment { get; set; }
+
+        public virtual Doctor By { get; set; }
     }
 }

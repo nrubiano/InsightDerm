@@ -27,9 +27,12 @@ namespace InsightDerm.Core.Dto
         
         [Required]
         public Guid SpecialityId { get; set; }
+
+        [Required]
+        public Guid UserId { get; set; }
         
         public virtual MedicalCenterDto MedicalCenter { get; set; }
         
-        public virtual SpecialityDto Speciality { get; set; }  
+        public virtual SpecialityDto Speciality { get; set; }
     }
 }

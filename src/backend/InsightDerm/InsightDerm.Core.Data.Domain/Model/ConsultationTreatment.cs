@@ -15,9 +15,11 @@ namespace InsightDerm.Core.Data.Domain.Model
         public string Description { get; set; }
 
         [Required]
-        public Guid By { get; set; }
+        public Guid ById { get; set; }
 
         public DateTime CreationDate { get; set; }
+
+        public virtual Doctor By { get; set; }
 
         public virtual ConsultationDiagnosis Diagnosis { get; set; }    
     }

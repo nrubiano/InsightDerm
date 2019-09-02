@@ -29,7 +29,9 @@ namespace InsightDerm.Core.Data.Domain.Infrastructure
 		
 		public DbSet<Speciality> Specialities { get; set; }
 
-		public InsightDermContext(DbContextOptions<InsightDermContext> options)
+        public DbSet<User> Users { get; set; }
+
+        public InsightDermContext(DbContextOptions<InsightDermContext> options)
 			: base(options)
 		{
 			

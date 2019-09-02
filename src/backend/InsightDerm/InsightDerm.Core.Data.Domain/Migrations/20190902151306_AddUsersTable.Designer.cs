@@ -12,9 +12,10 @@ using System;
 namespace InsightDerm.Core.Data.Domain.Migrations
 {
     [DbContext(typeof(InsightDermContext))]
-    partial class InsightDermContextModelSnapshot : ModelSnapshot
+    [Migration("20190902151306_AddUsersTable")]
+    partial class AddUsersTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -326,7 +327,7 @@ namespace InsightDerm.Core.Data.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("Microsoft.EntityFrameworkCore.AutoHistory", b =>
