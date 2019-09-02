@@ -32,16 +32,13 @@ namespace InsightDerm.Core.Service.Mapping
             CreateMap<DoctorDto, Doctor>();
 
             CreateMap<MedicalCenter, MedicalCenterDto>();
-
             CreateMap<MedicalCenterDto, MedicalCenter>()
                 .ForMember(mn => mn.CityId, con => con.Condition(c => c.CityId.HasValue));
             
             CreateMap<MaritalStatus, MaritalStatusDto>();
-            
             CreateMap<MaritalStatusDto, MaritalStatus>();
 
             CreateMap<Patient, PatientDto>();
-            
             CreateMap<PatientDto, Patient>();
 
             CreateMap<DiagnosticImage, DiagnosticImageDto>();
