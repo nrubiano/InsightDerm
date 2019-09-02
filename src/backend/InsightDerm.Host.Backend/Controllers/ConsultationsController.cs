@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Security.Claims;
 using AutoMapper;
 using InsightDerm.Core.Dto;
 using InsightDerm.Core.Service;
@@ -14,16 +16,25 @@ namespace InsightDerm.Host.Backend.Controllers
     public partial class ConsultationsController : ControllerBase
     {
         private readonly IMapper _mapper;
+        private readonly DoctorService _doctorService;
         private readonly ConsultationService _consultationService;
         private readonly DiagnosticImageService _diagnosticImageService;
+        private readonly ConsultationDiagnosisService _diagnosisService;
+        private readonly ConsultationTreatmentService _treatmentService;
 
         public ConsultationsController(ConsultationService consultationService, 
                                         DiagnosticImageService diagnosticImageService,
+                                        ConsultationDiagnosisService diagnosisService,
+                                        ConsultationTreatmentService treatmentService,
+                                        DoctorService doctorService,
                                         IMapper mapper)
         {
+            _mapper = mapper;
+            _doctorService = doctorService;
+            _treatmentService = treatmentService;
             _consultationService = consultationService;
             _diagnosticImageService = diagnosticImageService;
-            _mapper = mapper;
+            _diagnosisService = diagnosisService;
         }
 
         [HttpGet]
@@ -51,8 +62,13 @@ namespace InsightDerm.Host.Backend.Controllers
         [HttpPost]
         public IActionResult Post(ConsultationDto consultation)
         {
+            var currentUser = this.User.Identity(x => x.Type == ClaimTypes.NameIdentifier);
+            var currentUserId = Guid.Parse(currentUser.Value);
+
+            var requestDoctor = _doctorService.GetSingle(x => x.UserId == currentUserId);
+
             consultation.CreationDate = DateTime.Now;
-            consultation.RequestedById = Guid.Parse("7ed9364b-418b-481b-b8a7-c7f5bb3b5f7b");
+            consultation.RequestedById = requestDoctor.Id;
 
             consultation = _consultationService.Create(consultation);
 

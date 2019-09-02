@@ -88,14 +88,16 @@ namespace InsightDerm.Host.Backend
             container.AddScoped(x => InitMapper());
 
             container.AddScoped<CityService>();
-            container.AddScoped<ConsultationService>();
             container.AddScoped<DiagnosticImageService>();
-            container.AddScoped<DoctorService>();
             container.AddScoped<MaritalStatusService>();
             container.AddScoped<MedicalCenterService>();
+            container.AddScoped<UserService>();
+            container.AddScoped<DoctorService>();
             container.AddScoped<PatientService>();
             container.AddScoped<SpecialityService>();
-            container.AddScoped<UserService>();
+            container.AddScoped<ConsultationService>();
+            container.AddScoped<ConsultationDiagnosisService>();
+            container.AddScoped<ConsultationTreatmentService>();
         }
 
         private IUnitOfWork InitUnitOfWork(string connectionString)

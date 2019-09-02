@@ -9,9 +9,9 @@ namespace InsightDerm.Host.Backend.Controllers
     {
         [HttpGet]
         [Route("{id}/images")]
-        public IActionResult GetDiagnosticImages()
+        public IActionResult GetDiagnosticImages(Guid id)
         {
-            var entities = _diagnosticImageService.GetAll(null);
+            var entities = _diagnosticImageService.GetAll(x => x.ConsultationId == id);
 
             return Ok(entities);
         }
