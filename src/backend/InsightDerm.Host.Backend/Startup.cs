@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using InsightDerm.Core.Data;
 using InsightDerm.Core.Data.Domain.Infrastructure;
+using InsightDerm.Core.Data.Domain.Model;
 using InsightDerm.Core.Service;
 using InsightDerm.Core.Service.Mapping;
 using InsightDerm.Host.Backend.Core;
@@ -64,6 +65,13 @@ namespace InsightDerm.Host.Backend
             container.AddScoped(x => InitMapper());
 
             container.AddScoped<CityService>();
+            container.AddScoped<ConsultationService>();
+            container.AddScoped<DiagnosticImageService>();
+            container.AddScoped<DoctorService>();
+            container.AddScoped<MaritalStatusService>();
+            container.AddScoped<MedicalCenterService>();
+            container.AddScoped<PatientService>();
+            container.AddScoped<SpecialityService>();
         }
 
         private IUnitOfWork InitUnitOfWork(string connectionString)
