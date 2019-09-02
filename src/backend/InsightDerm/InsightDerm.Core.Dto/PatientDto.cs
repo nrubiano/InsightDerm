@@ -25,7 +25,6 @@ namespace InsightDerm.Core.Dto
         public string Genre { get; set; }
 
         [Required]
-        [MaxLength(255)]
         public DateTime BornDate { get; set; }
         
         [Required]
