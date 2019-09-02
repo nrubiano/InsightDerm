@@ -7,14 +7,19 @@ namespace InsightDerm.Core.Dto
     {
         public Guid? Id { get; set; }
 
+        [Required]
         public string Name { get; set; }
 
+        [Required]
         public string Identification { get; set; }
 
+        [Required]
         public string Phone { get; set; }
 
+        [Required]
         public string CellPhone { get; set; }
 
+        [Required]
         public string Email { get; set; }
         
         [Required]
@@ -23,10 +28,8 @@ namespace InsightDerm.Core.Dto
         [Required]
         public Guid SpecialityId { get; set; }
         
-        [Required]
         public virtual MedicalCenterDto MedicalCenter { get; set; }
         
-        [Required]
         public virtual SpecialityDto Speciality { get; set; }  
     }
 }

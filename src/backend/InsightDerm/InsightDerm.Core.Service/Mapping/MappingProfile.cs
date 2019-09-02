@@ -26,11 +26,9 @@ namespace InsightDerm.Core.Service.Mapping
                 .ForMember(mn => mn.RequestedBy, con => con.Ignore());
 
             CreateMap<Speciality, SpecialityDto>();
-            
             CreateMap<SpecialityDto, Speciality>();
             
 			CreateMap<Doctor, DoctorDto>();
-            
             CreateMap<DoctorDto, Doctor>();
 
             CreateMap<MedicalCenter, MedicalCenterDto>();
