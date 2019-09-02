@@ -62,10 +62,10 @@ namespace InsightDerm.Host.Backend.Controllers
         [HttpPost]
         public IActionResult Post(ConsultationDto consultation)
         {
-            var currentUser = this.User.Identity(x => x.Type == ClaimTypes.NameIdentifier);
-            var currentUserId = Guid.Parse(currentUser.Value);
+            //var currentUser = this.User.Identity(x => x.Type == ClaimTypes.NameIdentifier);
+            //var currentUserId = Guid.Parse(currentUser.Value);
 
-            var requestDoctor = _doctorService.GetSingle(x => x.UserId == currentUserId);
+            var requestDoctor = _doctorService.GetSingle(x => x.UserId == Guid.Empty);
 
             consultation.CreationDate = DateTime.Now;
             consultation.RequestedById = requestDoctor.Id;
