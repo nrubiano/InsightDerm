@@ -25,7 +25,9 @@ namespace InsightDerm.Host.Backend.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var entities = _patientService.GetAll(null);
+            Request.Query.TryGetValue("$filter", out var filter);
+
+            var entities = _patientService.GetAll(filter, "");
 
             return Ok(entities);
         }

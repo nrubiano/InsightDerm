@@ -59,16 +59,11 @@ namespace InsightDerm.Core.Data
                 case "=":                    
                     return $"{columnName} == {value}";
                 case "eq":
-                    value = string.Format("\"{0}\"", value);
-                    return $"{columnName} == {value}";
+                    return $"{columnName}.Equals(\"{value}\".ToString())";
                 case "contains":
                     return string.Format(columnName + ".Contains(\"{0}\")", value);
                 case "<>":
-                    if (int.TryParse(value, out _))
-                    {
-                        return string.Format("{0} <> {1}", columnName, value);
-                    }
-                    return string.Format("!{0}.StartsWith(\"{1}\")", columnName, value);
+                    return int.TryParse(value, out _) ? $"{columnName} <> {value}" : $"!{columnName}.StartsWith(\"{value}\")";
                 case ">=":                    
                     var d = Convert.ToDateTime(value);
                     return $"{columnName} >= DateTime({d.Year},{d.Month},{d.Day})";

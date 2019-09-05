@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Security.Claims;
 using AutoMapper;
 using InsightDerm.Core.Dto;
@@ -62,10 +61,13 @@ namespace InsightDerm.Host.Backend.Controllers
         [HttpPost]
         public IActionResult Post(ConsultationDto consultation)
         {
-            //var currentUser = this.User.Identity(x => x.Type == ClaimTypes.NameIdentifier);
-            //var currentUserId = Guid.Parse(currentUser.Value);
+            var currentUser = User.FindFirst(ClaimTypes.Name);
 
-            var requestDoctor = _doctorService.GetSingle(x => x.UserId == Guid.Empty);
+            if (currentUser == null) return BadRequest("The user is not authenticated");
+
+            var currentUserId = Guid.Parse(currentUser.Value);
+
+            var requestDoctor = _doctorService.GetSingle(x => x.UserId == currentUserId);
 
             consultation.CreationDate = DateTime.Now;
             consultation.RequestedById = requestDoctor.Id;
