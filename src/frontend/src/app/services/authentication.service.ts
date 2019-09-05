@@ -14,7 +14,6 @@ export class AuthenticationService  {
      }
 
     login(username: string, password: string) {
-        console.log({username, password});
         return this.http.post<any>(`${this.api}/authenticate`, { userName: username, password: password }, {})
         .pipe(map(user => {
             if (user && user.token) {
