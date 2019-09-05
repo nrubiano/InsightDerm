@@ -1,67 +1,58 @@
-import { Inject, Injectable } from '@angular/core';
-import { Http, HttpModule } from '@angular/http';
+import { Injectable } from '@angular/core';
 import CustomStore from 'devextreme/data/custom_store';
-import LoadOptions from 'devextreme/data/custom_store';
-import CustomStoreOptions from 'devextreme/data/custom_store';
 import { AppSettings } from '../app.config';
+import { HttpClient } from '@angular/common/http';
 
 /**
  * Cities Service
  */
 @Injectable()
-export class CitiesService
-{
-    store : CustomStore;
+export class CitiesService {
+    store: CustomStore;
 
-    constructor(private http: Http) 
-    {   
+    constructor(private http: HttpClient) {
         this.setupStore();
     }
     /**
      * Setup the store with the http methods
      */
-    setupStore()
-    {
-        var api = AppSettings.API + "/Cities"
-        var http = this.http;
+    setupStore() {
+        const api = AppSettings.API + '/cities'
+        const http = this.http;
         this.store = new CustomStore({
-            load: (loadOptions : any) : Promise<any> =>
-            {
-                var params = '?';
-                
-                if(loadOptions.filter) {
-                    params += 'filter=' + loadOptions.filter || "";
+            load: (loadOptions: any): Promise<any> => {
+                let params = '?';
+
+                if (loadOptions.filter) {
+                    params += 'filter=' + loadOptions.filter || '';
                 }
-                
+
                 params += 'skip=' + loadOptions.skip || 0;
                 params += '&take=' + loadOptions.take || 12;
 
-                if(loadOptions.sort) {
+                if (loadOptions.sort) {
                     params += '&orderby=' + loadOptions.sort[0].selector;
-                    if(loadOptions.sort[0].desc) {
+                    if (loadOptions.sort[0].desc) {
                         params += ' desc';
                     }
                 }
-                return http.get(api + params)
+                return http.get<any[]>(api + params)
                     .toPromise()
                     .then(response => {
-                        var json = response.json();
-                        
                         return {
-                            data: json,
-                            totalCount: json.length
+                            data: response,
+                            totalCount: response.length
                         }
                     })
-                    .catch(error => { throw 'Data Loading Error' });
+                    .catch(() => { throw new Error('Data Loading Error') });
             },
-            byKey: (key :any) : Promise<any> => {
-                return http.get(api + "/" + key)
+            byKey: (key: any): Promise<any> => {
+                return http.get(api + '/' + key)
                     .toPromise()
                     .then(response => {
-                        var json = response.json();
-                        return json;
+                        return response;
                     })
-                    .catch(error => { throw 'Data Loading Error' });
+                    .catch(() => { throw new Error('Data Loading Error') });
             }
         });
     }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'app/services/authentication.service';
+import { Router } from '@angular/router';
 declare var $: any;
 declare var jQuery: any;
 
@@ -14,7 +15,8 @@ export class LoginComponent implements OnInit {
     username: string;
     password: string;
 
-    constructor(private _authenticationService: AuthenticationService) {
+    constructor(private _authenticationService: AuthenticationService,
+                private _router: Router) {
 
     }
 
@@ -45,7 +47,7 @@ export class LoginComponent implements OnInit {
 
             // Change BG
             $('.random-bg-image').on('click', function () {
-                let min = 1, max = 5,
+                const min = 1, max = 5,
                     next = Math.floor($('.random-bg-image').data('img')) + 1,
                     final = next > max ? min : next;
 
@@ -57,14 +59,13 @@ export class LoginComponent implements OnInit {
     }
 
     login() {
-        console.log("from login");
         this._authenticationService.login(this.username, this.password)
                 .toPromise()
                 .then(res => {
-                    console.log(res);
+                    this._router.navigateByUrl('/consultation');
                 })
                 .catch(e => {
-                    console.log("something went very bad", e);
+                    console.log('something went very bad', e);
                 });
     }
 }

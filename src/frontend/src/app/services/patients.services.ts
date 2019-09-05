@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import CustomStore from 'devextreme/data/custom_store';
 import { AppSettings } from '../app.config';
+import { HttpClient } from '@angular/common/http';
 
 /**
  * Patients Service
@@ -10,16 +10,15 @@ import { AppSettings } from '../app.config';
 export class PatientsService {
     store: CustomStore;
 
-    constructor(private http: Http)
-    {
+    constructor(private http: HttpClient) {
         this.setupStore();
     }
     /**
      * Setup the store with the http methods
      */
     setupStore() {
-        let api = AppSettings.API + '/Patients'
-        let http = this.http;
+        const api = AppSettings.API + '/Patients'
+        const http = this.http;
         this.store = new CustomStore({
             insert: (item): Promise<any> => {
                 return  http
@@ -59,14 +58,12 @@ export class PatientsService {
                     query = '?' + params;
                 }
 
-                return http.get(api + query)
+                return http.get<any[]>(api + query)
                     .toPromise()
                     .then(response => {
-                        let json = response.json();
-
                         return {
-                            data: json,
-                            totalCount: json.length
+                            data: response,
+                            totalCount: response.length
                         }
                     })
                     .catch(error => { throw new Error('Data Loading Error') });
@@ -75,9 +72,8 @@ export class PatientsService {
                 return http.put(api + '/' + encodeURIComponent(entity.id), {...entity, ...updatedValues})
                                 .toPromise()
                                 .then(response => {
-                                    let json = response.json();
                                     return {
-                                        data: json
+                                        data: response
                                     }
                                 })
                                 .catch(error => { throw new Error('Data Update Error') });
@@ -86,14 +82,13 @@ export class PatientsService {
                 return http.delete(api + '/' + encodeURIComponent(key.id))
                             .toPromise()
                             .then(response => {
-                                let json = response.json();
                                 return {
-                                    data: json
+                                    data: response
                                 }
                             })
                             .catch(error => {
                                 console.log(error);
-                                throw new Error('Data Update Error') 
+                                throw new Error('Data Update Error')
                             });
             }
         });

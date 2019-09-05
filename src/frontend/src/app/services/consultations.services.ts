@@ -39,18 +39,19 @@ export class ConsultationsService {
             load: (loadOptions): Promise<any> => {
                 let params: HttpParams = new HttpParams();
                 [
-                    "skip",
-                    "take",
-                    "requireTotalCount",
-                    "requireGroupCount",
-                    "sort",
-                    "filter",
-                    "totalSummary",
-                    "group",
-                    "groupSummary"
+                    'skip',
+                    'take',
+                    'requireTotalCount',
+                    'requireGroupCount',
+                    'sort',
+                    'filter',
+                    'totalSummary',
+                    'group',
+                    'groupSummary'
                 ].forEach(function(i) {
-                    if(i in loadOptions && isNotEmpty(loadOptions[i]))
+                    if (i in loadOptions && isNotEmpty(loadOptions[i])) {
                         params = params.set(i, JSON.stringify(loadOptions[i]));
+                    }
                 });
                 return this.http.get<any[]>(this.api, { params: params })
                     .toPromise()
@@ -65,12 +66,12 @@ export class ConsultationsService {
                 return this.update(entity, updatedValues)
                             .toPromise()
                                 .then(response => {
-                                    let json = response.json();
+                                    const json = response.json();
                                     return {
                                         data: json
                                     }
                                 })
-                                .catch(error => { throw 'Data Update Error' });
+                                .catch(error => { throw new Error('Data Update Error') });
             },
             remove: (key): Promise<any> => {
                 return http.delete(this.api + '/' + encodeURIComponent(key.id))
@@ -122,5 +123,5 @@ export class ConsultationsService {
 }
 
 function isNotEmpty(value: any): boolean {
-    return value !== undefined && value !== null && value !== "";
+    return value !== undefined && value !== null && value !== '';
 }

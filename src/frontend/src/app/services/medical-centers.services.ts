@@ -1,99 +1,89 @@
-import { Inject, Injectable } from '@angular/core';
-import { Http, HttpModule } from '@angular/http';
+import { Injectable } from '@angular/core';
 import CustomStore from 'devextreme/data/custom_store';
 import { AppSettings } from '../app.config';
+import { HttpClient } from '@angular/common/http';
 
 /**
  * MedicalCenters Service
  */
 @Injectable()
-export class MedicalCentersService
-{
-    store : CustomStore;
+export class MedicalCentersService {
+    store: CustomStore;
 
-    constructor(private http: Http) 
-    {   
+    constructor(private http: HttpClient) {
         this.setupStore();
     }
     /**
      * Setup the store with the http methods
      */
-    setupStore()
-    {
-        var api = AppSettings.API + "/MedicalCenters"
-        var http = this.http;
+    setupStore() {
+        const api = AppSettings.API + '/medicalCenters'
+        const http = this.http;
         this.store = new CustomStore({
-            insert: (item) : Promise<any> => 
-            {
+            insert: (item): Promise<any> => {
                 return  http
                         .post(api, item)
                         .toPromise()
                         .then(response => {
                             return response;
                         })
-                        .catch(error => { 
+                        .catch(error => {
                             throw error._body;
                         });
-                
+
             },
-            load: (loadOptions) :Promise<any> =>
-            {
-                var params = '?';
+            load: (loadOptions): Promise<any> => {
+                let params = '?';
 
                 params += 'skip=' + loadOptions.skip || 0;
                 params += '&take=' + loadOptions.take || 12;
 
-                if(loadOptions.sort) {
+                if (loadOptions.sort) {
                     params += '&orderby=' + loadOptions.sort[0].selector;
-                    if(loadOptions.sort[0].desc) {
+                    if (loadOptions.sort[0].desc) {
                         params += ' desc';
                     }
                 }
-                return http.get(api + params)
+                return http.get<any[]>(api + params)
                     .toPromise()
                     .then(response => {
-                        var json = response.json();
-                        
                         return {
-                            data: json,
-                            totalCount: json.length
+                            data: response,
+                            totalCount: response.length
                         }
                     })
-                    .catch(error => { throw 'Data Loading Error' });
+                    .catch(() => { throw new Error('Data Loading Error') });
             },
-            update: (entity, updatedValues):Promise<any> => {
-                return http.put(api + "/" + encodeURIComponent(entity.id), {...entity, ...updatedValues})
+            update: (entity, updatedValues): Promise<any> => {
+                return http.put(api + '/' + encodeURIComponent(entity.id), {...entity, ...updatedValues})
                                 .toPromise()
                                 .then(response => {
-                                    var json = response.json();
                                     return {
-                                        data: json
+                                        data: response
                                     }
                                 })
-                                .catch(error => { throw 'Data Update Error' });
+                                .catch(() => { throw new Error('Data Update Error') });
             },
-            remove: (key) : Promise<any> => {
-                return http.delete(api + "/" + encodeURIComponent(key.id))
+            remove: (key): Promise<any> => {
+                return http.delete(api + '/' + encodeURIComponent(key.id))
                             .toPromise()
                             .then(response => {
-                                var json = response.json();
                                 return {
-                                    data: json
+                                    data: response
                                 }
                             })
-                            .catch(error => { 
+                            .catch(error => {
                                 console.log(error);
-                                throw 'Data Update Error' 
+                                throw new Error('Data Update Error')
                             });
             },
-            byKey: (key :any) : Promise<any> => {
-                return http.get(api + "/" + key)
+            byKey: (key: any): Promise<any> => {
+                return http.get(api + '/' + key)
                     .toPromise()
                     .then(response => {
-                        var json = response.json();
-                        return json;
+                        return response;
                     })
-                    .catch(error => { throw 'Data Loading Error' });
+                    .catch(() => { throw new Error('Data Loading Error') });
             }
         });
     }

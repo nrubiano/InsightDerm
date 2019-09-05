@@ -3,7 +3,7 @@ import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { Router, NavigationStart, NavigationEnd, RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -22,6 +22,9 @@ import { FeaturesModule } from './features/features.module';
 import { DoctorsService } from './services/doctors.services';
 
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { JwtInterceptor } from './infrastructure/interceptors/jwt.interceptor';
+import { ErrorInterceptor } from './infrastructure/interceptors/error.interceptor';
+import { AuthenticationService } from './services/authentication.service';
 
 declare var NProgress: any;
 
@@ -48,7 +51,10 @@ declare var NProgress: any;
         routing
     ],
     providers: [
-        DoctorsService
+        DoctorsService,
+        AuthenticationService,
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
     ],
     bootstrap: [AppComponent]
 })
