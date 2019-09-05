@@ -1,16 +1,25 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from 'app/services/authentication.service';
 declare var $: any;
 declare var jQuery: any;
 
 @Component({
     selector: 'app-login',
-    templateUrl: './login.component.html'
+    templateUrl: './login.component.html',
+    providers: [AuthenticationService]
 })
 
 export class LoginComponent implements OnInit {
+
+    username: string;
+    password: string;
+
+    constructor(private _authenticationService: AuthenticationService) {
+
+    }
+
     ngOnInit() {
         $(function() {
-
             // Form Validation
             $('#form-validation').validate({
                 submit: {
@@ -36,7 +45,7 @@ export class LoginComponent implements OnInit {
 
             // Change BG
             $('.random-bg-image').on('click', function () {
-                var min = 1, max = 5,
+                let min = 1, max = 5,
                     next = Math.floor($('.random-bg-image').data('img')) + 1,
                     final = next > max ? min : next;
 
@@ -45,7 +54,18 @@ export class LoginComponent implements OnInit {
             })
 
         });
+    }
 
+    login() {
+        console.log("from login");
+        this._authenticationService.login(this.username, this.password)
+                .toPromise()
+                .then(res => {
+                    console.log(res);
+                })
+                .catch(e => {
+                    console.log("something went very bad", e);
+                });
     }
 }
 
