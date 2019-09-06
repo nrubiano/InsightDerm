@@ -9,17 +9,14 @@ namespace InsightDerm.Core.Service.Mapping
         public MappingProfile()
         {       
             CreateMap<City, CityDto>();
-            
             CreateMap<CityDto, City>();
             
             CreateMap<Consultation, ConsultationDto>();
-            
             CreateMap<ConsultationDto, Consultation>()
                 .ForMember(mn => mn.ConsultationDiagnoses, con => con.Ignore())
                 .ForMember(mn => mn.DiagnosticImages, con => con.Ignore());
 
             CreateMap<MedicalLaboratory, MedicalLaboratoryDto>();
-            
             CreateMap<MedicalLaboratoryDto, MedicalLaboratory>()
                 .ForMember(mn => mn.ConsultationDiagnosis, con => con.Ignore())
                 .ForMember(mn => mn.Type, con => con.Ignore())
@@ -41,6 +38,9 @@ namespace InsightDerm.Core.Service.Mapping
 
             CreateMap<Patient, PatientDto>();
             CreateMap<PatientDto, Patient>();
+
+            CreateMap<MedicalLaboratoryType, MedicalLaboratoryTypeDto>();
+            CreateMap<MedicalLaboratoryTypeDto, MedicalLaboratoryType>();
 
             CreateMap<DiagnosticImage, DiagnosticImageDto>();
             CreateMap<DiagnosticImageDto, DiagnosticImage>()

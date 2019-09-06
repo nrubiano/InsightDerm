@@ -98,6 +98,8 @@ namespace InsightDerm.Host.Backend
             container.AddScoped<ConsultationService>();
             container.AddScoped<ConsultationDiagnosisService>();
             container.AddScoped<ConsultationTreatmentService>();
+            container.AddScoped<MedicalLaboratoryTypeService>();
+            container.AddScoped<MedicalLaboratoryService>();
         }
 
         private IUnitOfWork InitUnitOfWork(string connectionString)
