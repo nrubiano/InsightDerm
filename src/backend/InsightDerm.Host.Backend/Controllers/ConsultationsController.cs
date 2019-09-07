@@ -20,15 +20,18 @@ namespace InsightDerm.Host.Backend.Controllers
         private readonly DiagnosticImageService _diagnosticImageService;
         private readonly ConsultationDiagnosisService _diagnosisService;
         private readonly ConsultationTreatmentService _treatmentService;
+        private readonly MedicalLaboratoryService _medicalLaboratoryService;
 
         public ConsultationsController(ConsultationService consultationService, 
                                         DiagnosticImageService diagnosticImageService,
                                         ConsultationDiagnosisService diagnosisService,
                                         ConsultationTreatmentService treatmentService,
+                                        MedicalLaboratoryService medicalLaboratoryService,
                                         DoctorService doctorService,
                                         IMapper mapper)
         {
             _mapper = mapper;
+            _medicalLaboratoryService = medicalLaboratoryService;
             _doctorService = doctorService;
             _treatmentService = treatmentService;
             _consultationService = consultationService;
