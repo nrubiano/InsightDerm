@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Claims;
 using InsightDerm.Core.Data.Domain.Model;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -34,7 +35,17 @@ namespace InsightDerm.Host.Backend.Controllers
         [Route("{id}/diagnosis/{diagnosisId}/treatments")]
         public IActionResult PostTreatment(Guid id, Guid diagnosisId, ConsultationTreatmentDto treatment)
         {
+            var currentUser = User.FindFirst(ClaimTypes.Name);
+
+            if (currentUser == null) return BadRequest("The user is not authenticated");
+
+            var currentUserId = Guid.Parse(currentUser.Value);
+
+            var requestDoctor = _doctorService.GetSingle(x => x.UserId == currentUserId);
+
             treatment.ConsultationDiagnosisId = diagnosisId;
+            treatment.ById = requestDoctor.Id;
+            treatment.CreationDate = DateTime.Now;
 
             treatment = _treatmentService.Create(treatment);
 

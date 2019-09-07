@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Claims;
 using InsightDerm.Core.Dto;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -34,7 +35,17 @@ namespace InsightDerm.Host.Backend.Controllers
         [Route("{id}/diagnosis")]
         public IActionResult PostDiagnosis(Guid id, ConsultationDiagnosisDto diagnosis)
         {
+            var currentUser = User.FindFirst(ClaimTypes.Name);
+
+            if (currentUser == null) return BadRequest("The user is not authenticated");
+
+            var currentUserId = Guid.Parse(currentUser.Value);
+
+            var requestDoctor = _doctorService.GetSingle(x => x.UserId == currentUserId);
+
             diagnosis.ConsultationId = id;
+            diagnosis.ById = requestDoctor.Id;
+            diagnosis.CreationDate = DateTime.Now;
 
             diagnosis = _diagnosisService.Create(diagnosis);
 
@@ -52,6 +63,8 @@ namespace InsightDerm.Host.Backend.Controllers
 
             model = _mapper.Map(diagnosis, model);
 
+            model.UpdateDate = DateTime.Now;
+
             _diagnosisService.Update(model);
 
             return Ok(diagnosis);
@@ -59,7 +72,7 @@ namespace InsightDerm.Host.Backend.Controllers
 
         [HttpPatch]
         [Route("{id}/diagnosis/{diagnosisId}")]
-        public IActionResult PutDiagnosis(Guid id, Guid diagnosisId, JsonPatchDocument<ConsultationDiagnosisDto> diagnosis)
+        public IActionResult PatchDiagnosis(Guid id, Guid diagnosisId, JsonPatchDocument<ConsultationDiagnosisDto> diagnosis)
         {
             var model = _diagnosisService.GetSingle(x => x.ConsultationId == id && x.Id == diagnosisId);
 
@@ -67,6 +80,8 @@ namespace InsightDerm.Host.Backend.Controllers
                 return NotFound();
 
             diagnosis.ApplyTo(model);
+
+            model.UpdateDate = DateTime.Now;
 
             _diagnosisService.Update(model);
 

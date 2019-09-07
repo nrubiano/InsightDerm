@@ -43,10 +43,16 @@ namespace InsightDerm.Core.Service.Mapping
             CreateMap<MedicalLaboratoryTypeDto, MedicalLaboratoryType>();
 
             CreateMap<ConsultationDiagnosis, ConsultationDiagnosisDto>();
-            CreateMap<ConsultationDiagnosisDto, ConsultationDiagnosis>();
+            CreateMap<ConsultationDiagnosisDto, ConsultationDiagnosis>()
+                .ForMember(mn => mn.Consultation, con => con.Ignore())
+                .ForMember(mn => mn.Treatment, con => con.Ignore())
+                .ForMember(mn => mn.MedicalLaboratories, con => con.Ignore())
+                .ForMember(mn => mn.By, con => con.Ignore());
 
             CreateMap<ConsultationTreatment, ConsultationTreatmentDto>();
-            CreateMap<ConsultationTreatmentDto, ConsultationTreatment>();
+            CreateMap<ConsultationTreatmentDto, ConsultationTreatment>()
+                .ForMember(mn => mn.Diagnosis, con => con.Ignore())
+                .ForMember(mn => mn.By, con => con.Ignore());
 
             CreateMap<DiagnosticImage, DiagnosticImageDto>();
             CreateMap<DiagnosticImageDto, DiagnosticImage>()
