@@ -42,6 +42,12 @@ namespace InsightDerm.Core.Service.Mapping
             CreateMap<MedicalLaboratoryType, MedicalLaboratoryTypeDto>();
             CreateMap<MedicalLaboratoryTypeDto, MedicalLaboratoryType>();
 
+            CreateMap<ConsultationDiagnosis, ConsultationDiagnosisDto>();
+            CreateMap<ConsultationDiagnosisDto, ConsultationDiagnosis>();
+
+            CreateMap<ConsultationTreatment, ConsultationTreatmentDto>();
+            CreateMap<ConsultationTreatmentDto, ConsultationTreatment>();
+
             CreateMap<DiagnosticImage, DiagnosticImageDto>();
             CreateMap<DiagnosticImageDto, DiagnosticImage>()
                 .ForMember(mn => mn.Consultation, con => con.Ignore());
