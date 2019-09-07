@@ -1,10 +1,10 @@
 import { Routes, RouterModule } from '@angular/router';
 import { ModuleWithProviders } from '@angular/core';
-import {PagesLoginAlpha} from "./structure/pages/login-alpha.page";
-import {PagesRegister} from "./structure/pages/register.page";
+import {Roles} from "./models/base";
+import {AuthGuard} from "./infrastructure/guards/auth.guard";
 
 export const routes: Routes = [
-    { path: '', redirectTo: 'login', pathMatch: 'full' },
+    { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
     { path: '**', redirectTo: 'pages/page-404' }
 
 ];

@@ -6,9 +6,10 @@ import { Routes, RouterModule }  from '@angular/router';
 import { DxDataGridModule } from 'devextreme-angular';
 
 import { MedicalCenterList } from './medical-center.list'
+import {AuthGuard} from "../../infrastructure/guards/auth.guard";
 
 export const routes: Routes = [
-  { path: 'medical-center/list', component: MedicalCenterList }
+  { path: 'medical-center/list', canActivate: [AuthGuard], component: MedicalCenterList }
 ];
 
 @NgModule({

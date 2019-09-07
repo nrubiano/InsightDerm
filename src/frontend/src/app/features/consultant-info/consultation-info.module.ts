@@ -8,7 +8,7 @@ import {
     DxNumberBoxModule,
     DxPopupModule,
     DxButtonModule,
-    DxLookupModule
+    DxLookupModule, DxTooltipModule
 } from 'devextreme-angular'
 
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -24,7 +24,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
         DxButtonModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
-        DxLookupModule
+        DxLookupModule,
+        DxTooltipModule
     ],
     declarations: []
 

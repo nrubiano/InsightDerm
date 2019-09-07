@@ -3,9 +3,10 @@ import { CommonModule }  from '@angular/common';
 import { Routes, RouterModule }  from '@angular/router';
 
 import { CitiesList } from './cities.list'
+import {AuthGuard} from "../../infrastructure/guards/auth.guard";
 
 export const routes: Routes = [
-  { path: 'cities/list', component: CitiesList }
+  { path: 'cities/list', canActivate: [AuthGuard], component: CitiesList }
 ];
 
 @NgModule({

@@ -25,6 +25,9 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { JwtInterceptor } from './infrastructure/interceptors/jwt.interceptor';
 import { ErrorInterceptor } from './infrastructure/interceptors/error.interceptor';
 import { AuthenticationService } from './services/authentication.service';
+import { HasRoleDirective } from "./directives/roles.directive";
+import {AuthGuard} from "./infrastructure/guards/auth.guard";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 declare var NProgress: any;
 
@@ -34,7 +37,8 @@ declare var NProgress: any;
         TopBarComponent,
         MenuLeftComponent,
         MenuRightComponent,
-        FooterComponent
+        FooterComponent,
+        HasRoleDirective
     ],
     imports: [
         BrowserModule,
@@ -45,7 +49,7 @@ declare var NProgress: any;
         RouterModule,
         StructureModule,
         FeaturesModule,
-        AngularFontAwesomeModule,
+        FontAwesomeModule,
         NgbModule.forRoot(),
         SweetAlert2Module.forRoot(),
         routing
@@ -53,6 +57,7 @@ declare var NProgress: any;
     providers: [
         DoctorsService,
         AuthenticationService,
+        AuthGuard,
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
     ],

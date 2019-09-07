@@ -13,8 +13,10 @@
                     <!-- Grid-->
                     <dx-data-grid
                         id="gridContainer"
-                        [dataSource]="consultations">
+                        [dataSource]="consultations"
+                        [columnHidingEnabled]="true">
                         <dxi-column dataField="patientId"
+                                    [hidingPriority]="2"
                                     caption="Identificación Paciente">
                             <dxo-lookup
                                 [dataSource]="patients"
@@ -22,7 +24,7 @@
                                 valueExpr="id">
                             </dxo-lookup>
                         </dxi-column>
-
+                        
                         <dxi-column dataField="patientId"
                                     caption="Nombre Paciente">
                             <dxo-lookup
@@ -39,10 +41,12 @@
                             dataField="creationDate"
                             dataType="date"
                             format="yyyy/MM/dd hh:mm a"
+                            [hidingPriority]="1"
                             caption="Fecha Consulta">
                         </dxi-column>
                         <dxi-column
                             dataField="requestedById"
+                            [hidingPriority]="0"
                             caption="Solicitada Por">
                             <dxo-lookup
                                 [dataSource]="doctors"
@@ -51,6 +55,7 @@
                             </dxo-lookup>
                         </dxi-column>
                         <dxi-column caption="Acciones"
+                                    [hidingPriority]="3"
                                     [minWidth]="320"
                                     cellTemplate="actionsTemplate">
                         </dxi-column>
@@ -65,14 +70,14 @@
                                 <dx-button text="Asignar"></dx-button>
                             </div>
                         </div>
-
+                        
                         <dxo-remote-operations
                             [sorting]="true"
                             [paging]="true">
                         </dxo-remote-operations>
-
+                        
                         <dxo-paging [pageSize]="12"></dxo-paging>
-
+                        
                         <dxo-pager
                             [showPageSizeSelector]="true"
                             [allowedPageSizes]="[8, 12, 20]">

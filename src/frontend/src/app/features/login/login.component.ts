@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
 
     username: string;
     password: string;
+    currentError: string;
 
     constructor(private _authenticationService: AuthenticationService,
                 private _router: Router) {
@@ -59,14 +60,15 @@ export class LoginComponent implements OnInit {
     }
 
     login() {
-        this._authenticationService.login(this.username, this.password)
-                .toPromise()
-                .then(res => {
-                    this._router.navigateByUrl('/consultation');
-                })
-                .catch(e => {
-                    console.log('something went very bad', e);
-                });
+        this._authenticationService
+            .login(this.username, this.password)
+            .toPromise()
+            .then(res => {
+                this._router.navigateByUrl('/dashboard');
+            })
+            .catch(e => {
+                this.currentError = e;
+            });
     }
 }
 

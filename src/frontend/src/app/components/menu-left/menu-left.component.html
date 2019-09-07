@@ -73,13 +73,13 @@
                     Interconsultas
                 </a>
                 <ul class="cat__menu-left__list">
-                    <li class="cat__menu-left__item" [routerLinkActive]="['cat__menu-left__item--active']">
+                    <li class="cat__menu-left__item" [routerLinkActive]="['cat__menu-left__item--active']" *appHasRole="['specialist', 'doctor', 'admin']">
                         <a [routerLink]="['consultation/add']">
                             <span class="cat__menu-left__icon fa fa-plus"></span>
                             Iniciar Consulta
                         </a>
                     </li>
-                    <li class="cat__menu-left__item" [routerLinkActive]="['cat__menu-left__item--active']">
+                    <li class="cat__menu-left__item" [routerLinkActive]="['cat__menu-left__item--active']" *appHasRole="['specialist', 'admin']">
                         <a [routerLink]="['consultation']">
                             <span class="cat__menu-left__icon fa fa-list-ul"></span>
                             Consultas

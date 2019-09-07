@@ -4,6 +4,10 @@
     background-color: #f2f4f8;
 }
 
+.cat__pages__login__error {
+    color: orangered;
+}
+
 .cat__pages__login--fullscreen {
     position: fixed;
     z-index: 20000;

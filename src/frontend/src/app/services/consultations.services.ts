@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import CustomStore from 'devextreme/data/custom_store';
 import { AppSettings } from '../app.config';
-import { map } from 'rxjs/operators';
+import {flatMap, map, tap} from 'rxjs/operators';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Consultation } from 'app/models/consultation';
+import {forkJoin, from, Observable, pipe} from 'rxjs';
+import {Consultation, Diagnosis} from 'app/models/consultation';
 
 /**
  * Consultations Service
@@ -34,7 +34,7 @@ export class ConsultationsService {
             },
             insert: (item): Promise<any> => {
                 return  this.insert(item)
-                            .toPromise();
+                    .toPromise();
             },
             load: (loadOptions): Promise<any> => {
                 let params: HttpParams = new HttpParams();
@@ -64,14 +64,14 @@ export class ConsultationsService {
             },
             update: (entity, updatedValues): Promise<any> => {
                 return this.update(entity, updatedValues)
-                            .toPromise()
-                                .then(response => {
-                                    const json = response.json();
-                                    return {
-                                        data: json
-                                    }
-                                })
-                                .catch(error => { throw new Error('Data Update Error') });
+                    .toPromise()
+                    .then(response => {
+                        const json = response.json();
+                        return {
+                            data: json
+                        }
+                    })
+                    .catch(error => { throw new Error('Data Update Error') });
             },
             remove: (key): Promise<any> => {
                 return http.delete(this.api + '/' + encodeURIComponent(key.id))
@@ -90,14 +90,30 @@ export class ConsultationsService {
         });
     }
 
+    getAll(): Promise<Consultation[]>{
+        return this.http.get<Consultation[]>(this.api)
+            .toPromise()
+            .then(result => {
+                return result
+            });
+    }
+
+    test(): Promise<Consultation[]>{
+        return this.http.get<any>(AppSettings.API + '/medicallaboratorytypes')
+            .toPromise()
+            .then(result => {
+                return result
+            });
+    }
+
     insert(consultation: Consultation): Observable<Consultation> {
         return  this.http
-                    .post<Consultation>(this.api, consultation);
+            .post<Consultation>(this.api, consultation);
     }
 
     update(consultation: Consultation, updated: Consultation): Observable<Consultation> {
         return this.http
-                    .put<Consultation>(this.api + '/' + encodeURIComponent(consultation.id), {...consultation, ...updated});
+            .put<Consultation>(this.api + '/' + encodeURIComponent(consultation.id), {...consultation, ...updated});
     }
 
     removeImage(consultationId, imageId) {
@@ -120,6 +136,82 @@ export class ConsultationsService {
         const api =  `${AppSettings.API}/consultations/${consultationId}/images`;
         return this.http.get(api);
     }
+
+    postDiagnosis(consultationId, diagnosis: Diagnosis) {
+        const api =  `${AppSettings.API}/consultations/${consultationId}/diagnosis`;
+        return this.http.post(api, diagnosis);
+    }
+
+    deleteDiagnosis(consultationId, diagnosisId) {
+        const api =  `${AppSettings.API}/consultations/${consultationId}/diagnosis/${diagnosisId}`;
+        return this.http.delete(api);
+    }
+
+    getDiagnosticsAndExams(consultationId) {
+        return new Promise((resolve, reject) => {
+            const api =  `${AppSettings.API}/consultations/${consultationId}/diagnosis`;
+            this.http.get(api).subscribe((diagnosticsList: Diagnosis[]) => {
+                let promisesArray = [];
+                diagnosticsList.forEach(item => {
+                    promisesArray.push(
+                        this.getMedicalLaboratoies(consultationId, item.id).pipe(
+                            map((exams: any) => {
+                                item.exams = exams;
+                                return item
+                            })
+                        )
+                    );
+                });
+
+
+                forkJoin(promisesArray).subscribe(data => {
+                    promisesArray = [];
+                    data.forEach(diagnosticItem => {
+                        promisesArray.push(
+                            this.getTreatments(consultationId, diagnosticItem.id).pipe(
+                                map((treatments: any) => {
+                                    diagnosticItem.treatments = treatments;
+                                    return diagnosticItem
+                                })
+                            )
+                        );
+                    });
+
+                    forkJoin(promisesArray).subscribe(data => resolve(data));
+                });
+            });
+        })
+    }
+
+    postMedicalLaboratories(consultationId, diagnosisId, laboratoryInstance) {
+        const api =  `${AppSettings.API}/consultations/${consultationId}/diagnosis/${diagnosisId}/medical-laboratories`;
+        return this.http.post(api, {
+            diagnosisId,
+            typeId: laboratoryInstance.id
+        });
+    }
+
+    getMedicalLaboratoies(consultationId, diagnosisId) {
+        const api =  `${AppSettings.API}/consultations/${consultationId}/diagnosis/${diagnosisId}/medical-laboratories`;
+        return this.http.get(api);
+    }
+
+    postTreatment(consultationId, diagnosisId, treatment) {
+        const api =  `${AppSettings.API}/consultations/${consultationId}/diagnosis/${diagnosisId}/treatments`;
+        return this.http.post(api, treatment);
+    }
+
+    getTreatments(consultationId, diagnosisId) {
+        const api =  `${AppSettings.API}/consultations/${consultationId}/diagnosis/${diagnosisId}/treatments`;
+        return this.http.get(api);
+    }
+
+
+    deleteTreatment(consultationId, diagnosisId, treatmentId) {
+        const api =  `${AppSettings.API}/consultations/${consultationId}/diagnosis/${diagnosisId}/treatments/${treatmentId}`;
+        return this.http.delete(api);
+    }
+
 }
 
 function isNotEmpty(value: any): boolean {

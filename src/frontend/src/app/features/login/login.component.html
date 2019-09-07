@@ -18,7 +18,7 @@
                             <strong>POR FAVOR INICIA SESIÓN</strong>
                         </h4>
                         <br />
-                        <div id="form-validation" name="form-validation">
+                        <div (keydown.enter)="login()" id="form-validation" name="form-validation">
                             <div class="form-group">
                                 <label class="form-label">Usuario:</label>
                                 <input id="validation-email"
@@ -39,11 +39,15 @@
                                        [(ngModel)]="password">
                             </div>                            
                             <div class="form-actions">
-                                <button type="button"                                        
+                                <button type="button"
                                         class="btn btn-primary mr-3"
                                         (click)="login()">
                                         Iniciar Sesión
                                 </button>
+                            </div>
+                            
+                            <div class="cat__pages__login__error" *ngIf="currentError">
+                                {{currentError}}
                             </div>
                         </div>
                     </div>

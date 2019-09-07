@@ -17,8 +17,7 @@ export class MedicalExamsService {
      * Setup the store with the http methods
      */
     setupStore() {
-        // var api = AppSettings.API + "/medicalExams";
-        const api = AppSettings.API + '/MedicalCenters';
+        const api = AppSettings.API + '/medicallaboratorytypes';
         const http = this.http;
         this.store = new CustomStore({
             insert: (item): Promise<any> => {

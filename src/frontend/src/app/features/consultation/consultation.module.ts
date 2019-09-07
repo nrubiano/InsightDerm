@@ -15,7 +15,7 @@ import {
     DxFileUploaderModule,
     DxAccordionModule,
     DxDropDownBoxModule,
-    DxLookupModule, DxSelectBoxModule
+    DxLookupModule, DxSelectBoxModule, DxTooltipModule
 } from 'devextreme-angular'
 
 import { ConsultationList } from './consultation.list'
@@ -27,11 +27,14 @@ import {ConsultantDetails} from "./consultant-details";
 import {LightboxModule} from "ngx-lightbox";
 import {NgxImageZoomModule} from "ngx-image-zoom";
 import {NgxMasonryModule} from "ngx-masonry";
+import {Roles} from "../../models/base";
+import {AuthGuard} from "../../infrastructure/guards/auth.guard";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 export const routes: Routes = [
-    { path: 'consultation', component: ConsultationList },
-    { path: 'consultation/add', component: ConsultationAdd },
-    { path: 'consultation/:id', component: ConsultantDetails }
+    { path: 'consultation', component: ConsultationList, canActivate: [AuthGuard], data: {roles: [Roles.Admin, Roles.Specialist]} },
+    { path: 'consultation/add', component: ConsultationAdd, canActivate: [AuthGuard], data: {roles: [Roles.Admin, Roles.Specialist, Roles.Doctor]} },
+    { path: 'consultation/:id', component: ConsultantDetails, canActivate: [AuthGuard], data: {roles: [Roles.Admin, Roles.Specialist]} }
 ];
 
 @NgModule({
@@ -56,7 +59,9 @@ export const routes: Routes = [
         DxAccordionModule,
         DxDropDownBoxModule,
         DxLookupModule,
-        DxSelectBoxModule
+        DxSelectBoxModule,
+        DxTooltipModule,
+        FontAwesomeModule
     ],
     declarations: [
         ConsultationList,

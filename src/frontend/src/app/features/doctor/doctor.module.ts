@@ -4,9 +4,10 @@ import { CommonModule }  from '@angular/common';
 import { Routes, RouterModule }  from '@angular/router';
 import { DxDataGridModule } from 'devextreme-angular';
 import { DoctorList } from './doctor.list';
+import {AuthGuard} from "../../infrastructure/guards/auth.guard";
 
 export const routes: Routes = [
-  { path: 'doctor/list', component: DoctorList }
+  { path: 'doctor/list', canActivate: [AuthGuard], component: DoctorList }
 ];
 
 @NgModule({

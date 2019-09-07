@@ -4,6 +4,7 @@ import { ConsultationsService } from 'app/services/consultations.services';
 import { PatientsService } from 'app/services/patients.services';
 import { DoctorsService } from 'app/services/doctors.services';
 import {Router} from "@angular/router";
+import {Consultation} from "../../models/consultation";
 
 declare var $: any;
 declare var jQuery: any;
@@ -19,7 +20,7 @@ declare var jQuery: any;
 })
 export class ConsultationList implements OnInit {
 
-    consultations: CustomStore;
+    consultations: Consultation[];
 
     patients: CustomStore;
 
@@ -31,7 +32,9 @@ export class ConsultationList implements OnInit {
         private patientsService: PatientsService,
         private doctorsService: DoctorsService)
     {
-        this.consultations = this.consultationsService.store;
+        this.consultationsService.getAll().then(data => {
+            this.consultations = data;
+        });
         this.patients = this.patientsService.store;
         this.doctors = this.doctorsService.store;
     }

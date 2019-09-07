@@ -10,11 +10,32 @@ export class MedicalExam {
     result?: MedicalExamInfo;
 }
 
-export class Treatment {
-    date: any;
+export class MedicalLaboratory {
+    id?: string;
+    consultationDiagnosisId: string;
+    requestedDate: string;
+    requestedById?: string;
+    typeId?: string;
+}
+
+export class Diagnosis {
+    id?: string;
+    consultationId: any;
+    byId: string;
     description: string;
-    by: string;
-    medicalExams: MedicalExam[]
+    creationDate: any;
+    updateDate?: any;
+    exams?: any[]
+    treatments?: any[]
+    currentTreatment?: string
+}
+
+export class Treatment {
+    id?: string;
+    consultationDiagnosisId: any;
+    description: string;
+    byId: string;
+    creationDate: any
 }
 
 export class Consultation extends Entity {
@@ -26,5 +47,6 @@ export class Consultation extends Entity {
     medicalBackground: string;
     physicalExam: string;
     patient: Patient;
-    treatments: string[];
+    diagnostics: string[];
+    status: string;
 }

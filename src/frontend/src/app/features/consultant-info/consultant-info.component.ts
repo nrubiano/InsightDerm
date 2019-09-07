@@ -1,13 +1,16 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import notify from 'devextreme/ui/notify';
-import {Consultation, MedicalExam, Treatment} from '../../models/consultation';
+import {Consultation, MedicalExam, Diagnosis, Treatment, MedicalLaboratory} from '../../models/consultation';
 import {MedicalBackground} from '../../models/medical-background';
 import {PhysicalExam} from '../../models/physical-exam';
 import {IAlbum, Lightbox} from 'ngx-lightbox';
-import {forkJoin} from 'rxjs';
+import {forkJoin, from} from 'rxjs';
 import {ConsultationsService} from '../../services/consultations.services';
 import {MedicalExamsService} from '../../services/medical-exams.services';
 import {DxSelectBoxComponent} from 'devextreme-angular';
+import {Router} from "@angular/router";
+import {AuthenticationService} from "../../services/authentication.service";
+import {flatMap, tap} from "rxjs/operators";
 
 
 
@@ -16,6 +19,38 @@ interface Image extends IAlbum {
     fromBackend?: boolean,
     isRemoving?: boolean
 }
+
+
+export enum Status {
+    'Open',
+    'Assigned',
+    'PendingDiagnosis',
+    'PendingMedicalExams',
+    'Closed'
+}
+
+const statusData = [
+    {
+        id: Status.Open,
+        name: 'Abierta'
+    },
+    {
+        id: Status.Assigned,
+        name: 'Asignada'
+    },
+    {
+        id: Status.PendingDiagnosis,
+        name: 'Diagnósticos pendientes'
+    },
+    {
+        id: Status.PendingMedicalExams,
+        name: 'Exámenes médicos pendientes'
+    },
+    {
+        id: Status.Closed,
+        name: 'Cerrada'
+    },
+];
 
 @Component({
     selector: 'app-consultant-info',
@@ -28,7 +63,7 @@ interface Image extends IAlbum {
 })
 
 export class ConsultantInfoComponent implements OnInit {
-    @ViewChild(DxSelectBoxComponent) examsSelectBox: DxSelectBoxComponent
+    @ViewChild('examsSelectBox') examsSelectBox: DxSelectBoxComponent;
 
     @Input('isVisible') isVisible = true;
     @Input('infoTitle') infoTitle = 'Iniciar Consulta';
@@ -48,25 +83,51 @@ export class ConsultantInfoComponent implements OnInit {
     loading = false;
 
     value: any[] = [];
-    imagesUlr: string;
     imageIndexHover: number = null;
     currentImages: Image[] = [];
     loadingImages = false;
     imageToRemove: Image = null;
+    removeText: string;
+    removeBasicPopup = false;
+    removeBasicPopupTitle: string;
+    removeBasicPopupFn: Function;
+    removeBasicPopupParam: any;
     removePopup = false;
+    examsPopup = false;
+    examsPopover = false;
     isRemoving = false;
     columns: any[];
+    currentDiagnosis: string;
     currentTreatment: string;
     currentExam: any;
-    medicalExams: any[];
-    currentExams: MedicalExam[];
-    currentTreatments: Treatment[];
+    medicalLaboratory: any;
+    currentExams: any;
+    modalCurrentExams: any;
+    modalCurrentDiagnosis: any;
+    currentDiagnostics: Diagnosis[];
+    currentExamsPerDiagnosis: any;
+    configuredColumns: boolean = false;
+    consultantStatus: any[];
+    showTreatments: boolean;
 
     constructor(
         private consultationsService: ConsultationsService,
         private medicalExamsService: MedicalExamsService,
-        private lightBox: Lightbox
+        private lightBox: Lightbox,
+        private router: Router,
+        private authService: AuthenticationService
     ) {
+        this.consultantStatus = statusData;
+        this.currentExams = [];
+        this.currentDiagnostics = [];
+        this.showTreatments = false;
+    }
+
+    ngOnInit() {
+        this.medicalExamsService.store.load().then(exams => {
+            this.medicalLaboratory = exams.data;
+        });
+
         this.columns = [
             {
                 id: 'consultationReason',
@@ -80,66 +141,41 @@ export class ConsultantInfoComponent implements OnInit {
             }, {
                 id: 'diagnosticImages',
                 title: 'Im&aacute;genes Diagnosticas'
-            },
+            }
         ];
 
         if (this.editMode) {
             this.columns.push({
-                id: 'treatment',
-                title: 'Tratamiento'
-            });
+                id: 'diagnostics',
+                title: 'Diagnósticos'
+            })
         }
 
-        /*this.medicalExamsService.store.load().then((exams) => {
-            console.warn(exams);
-            this.medicalExams = exams.data;
-        }).catch((error) => {
-            console.error('Error', error);
-        });*/
+        this.configuredColumns = true;
 
-        this.medicalExams = [
-            {
-                id: 0,
-                name: 'Examen de sangre'
-            },
-            {
-                id: 1,
-                name: 'Examen de orina'
-            },
-            {
-                id: 2,
-                name: 'Examen auditivo'
-            },
-            {
-                id: 3,
-                name: 'Resonancia magnetica'
-            },
-            {
-                id: 4,
-                name: 'Radriografia'
-            },
-            {
-                id: 5,
-                name: 'Examen de glucosa'
-            }
-        ];
-        this.currentExams = [];
-    }
-
-    ngOnInit() {
         this.consultation = new Consultation();
         this.medicalBackground = new MedicalBackground();
         this.physicalExam = new PhysicalExam();
 
         if (this.consultantData) {
             this.consultation.reason = this.consultantData.reason;
+            this.consultation.status = this.consultantData.status;
             this.updateExistingEntity(this.medicalBackground, this.consultantData.medicalBackground);
             this.updateExistingEntity(this.physicalExam, this.consultantData.physicalExam);
-            this.currentTreatments = this.consultantData.treatments ? this.consultantData.treatments.map((item) => JSON.parse(item)) : [];
-
-            this.imagesUlr = `localhost:5000/api/v1/consultations/${this.consultantData.id}/images`;
+            this.currentDiagnostics = this.consultantData.diagnostics ? this.consultantData.diagnostics.map((item) => JSON.parse(item)) : [];
 
             this.loadingImages = true;
+
+            this.consultationsService
+                .getDiagnosticsAndExams(this.consultantData.id)
+                .then((diagnostics: Diagnosis[]) => {
+                    this.currentDiagnostics = diagnostics.map(diagnosis => {
+                        diagnosis.exams = diagnosis.exams.map(exam => this.medicalLaboratory.find(item => item.id === exam.typeId));
+                        return diagnosis
+                    });
+                }).catch(error => {
+                console.error(error);
+            });
 
             this.consultationsService.getImages(this.consultantData.id).subscribe((images) => {
                 images.map((img) => {
@@ -163,14 +199,14 @@ export class ConsultantInfoComponent implements OnInit {
         Object.keys(parsedData).forEach((key) => entity[key] = parsedData[key]);
     }
 
-    saveConsultation() {
+    saveConsultation(alternativeMsg?: string, cb?: Function) {
         this.loading = true;
         this.consultation.medicalBackground = this.medicalBackground.json();
         this.consultation.physicalExam = this.physicalExam.json();
         this.consultation.patientId = this.patientId;
 
         if (this.editMode) {
-            this.consultation.treatments = this.currentTreatments.map((item) => JSON.stringify(item));
+            this.consultation.diagnostics = this.currentDiagnostics ? this.currentDiagnostics.map((item) => JSON.stringify(item)) : [];
         }
 
         const requestFn = !this.editMode ?
@@ -178,7 +214,7 @@ export class ConsultantInfoComponent implements OnInit {
             this.consultationsService.update(this.consultantData, this.consultation);
 
         requestFn.subscribe(consultantData => {
-            this.message = `La consulta fue ${!this.editMode ? 'creada' : 'actualizada'} correctamente!!`;
+            this.message = alternativeMsg || `La consulta fue ${!this.editMode ? 'creada' : 'actualizada'} correctamente!!`;
             notify(this.message, 'success', 2500);
             // notify('Uploading images', 'info');
 
@@ -186,6 +222,10 @@ export class ConsultantInfoComponent implements OnInit {
 
             if (!this.editMode) {
                 this.restore();
+            }
+
+            if (cb) {
+                cb();
             }
 
             this.uploadImages(consultantData.id).subscribe(value => {
@@ -212,17 +252,19 @@ export class ConsultantInfoComponent implements OnInit {
     }
 
     uploadImages(id) {
-        const observables = [];
-        this.currentImages.forEach((image) => {
-            if (!image.fromBackend) {
-                observables.push(this.consultationsService.uploadImage(id, image.src))
-            }
-        });
+        const observables = this.currentImages.filter(image => !image.fromBackend).map((image) => this.consultationsService.uploadImage(id, image.src));
         return forkJoin(observables);
     }
 
     cancel() {
         this.canceled.emit();
+    }
+
+    closeConsultantion() {
+        this.consultation.status = String(Status.Closed);
+        this.saveConsultation('La consulta ha sido cerrada', () => {
+            this.router.navigate(['/consultation/']);
+        });
     }
 
     restore() {
@@ -271,9 +313,97 @@ export class ConsultantInfoComponent implements OnInit {
         this.lightBox.close();
     }
 
-    openRemovePopup(image: Image) {
-        this.imageToRemove = image;
-        this.removePopup = true;
+    expandAll(e) {
+        for (let i = 0; i < this.columns.length; i++) {
+            e.component.expandItem(i);
+        }
+    }
+
+    addDiagnosis() {
+        let examPromises: any[] = [];
+        const currentUser = this.authService.getCurrentUser();
+        const currentDiagnosis = {
+            consultationId: this.consultantData.id,
+            byId: currentUser ? currentUser.id : '',
+            description: this.currentDiagnosis,
+            creationDate: new Date().toISOString()
+        };
+
+        this.consultationsService.postDiagnosis(this.consultantData.id, currentDiagnosis).subscribe((diagnosis: Diagnosis) => {
+            this.currentExams.forEach(item => {
+                examPromises.push(this.consultationsService.postMedicalLaboratories(this.consultantData.id, diagnosis.id, item))
+            });
+
+            forkJoin(examPromises).subscribe(examsResponse => {
+                diagnosis.exams = this.currentExams;
+                this.currentDiagnostics.push(diagnosis);
+
+                this.currentExams = [];
+                this.currentDiagnosis = '';
+            });
+
+
+        }, function (error) {
+            console.error(error);
+        });
+    }
+    removeTreatment(data) {
+        const treatment = data[0];
+        const diagnosis = data[1];
+
+        this.isRemoving = true;
+        this.removeBasicPopup = false;
+
+        this.consultationsService.deleteTreatment(this.consultantData.id, diagnosis.id, treatment.id).subscribe(response => {
+            diagnosis.treatments = diagnosis.treatments.filter((item) => item.id !== treatment.id);
+            notify('El tratamiento ha sido borrado con éxito', 'success', 2500);
+            this.removeBasicPopup = false;
+            this.removeBasicPopupParam = null;
+            this.isRemoving = false;
+        },  (error) => {
+            notify('Error al eliminar el tratamiento, inténtalo mas tarde', 'error', 2500);
+            this.isRemoving = false;
+        })
+    }
+
+    addTreatment(diagnosis: Diagnosis, treatmentDescription) {
+        const currentUser = this.authService.getCurrentUser();
+
+        if (!diagnosis.treatments) {
+            diagnosis.treatments = []
+        }
+        const currentTreatment = {
+            consultationDiagnosisId: diagnosis.id,
+            description: treatmentDescription,
+            byId: currentUser ? currentUser.id : '',
+            creationDate: new Date().toISOString()
+        };
+
+        this.consultationsService.postTreatment(this.consultantData.id, diagnosis.id, currentTreatment).subscribe(response => {
+            diagnosis.treatments.push(response);
+            diagnosis.currentTreatment = '';
+        });
+
+
+    }
+
+    addExam(event) {
+        if (this .examsSelectBox.value) {
+            const examExists = this.currentExams.find((exam) => exam.id === this.examsSelectBox.value);
+
+            if (!examExists) {
+                this.currentExams.push({
+                    id: this.examsSelectBox.value,
+                    name: this.examsSelectBox.text,
+                });
+            }
+
+            this.examsSelectBox.instance.reset();
+        }
+    }
+
+    removeExam(examRemove: any) {
+        this.currentExams = this.currentExams.filter((exam) => exam.id !== examRemove.id)
     }
 
     removeImage(image: Image) {
@@ -298,49 +428,45 @@ export class ConsultantInfoComponent implements OnInit {
         }
     }
 
-    expandAll(e) {
-        for (let i = 0; i < this.columns.length; i++) {
-            e.component.expandItem(i);
-        }
+    removeDiagnosis(diagnosisItem: Diagnosis) {
+        this.isRemoving = true;
+        this.removeBasicPopup = false;
+
+        this.consultationsService.deleteDiagnosis(this.consultantData.id, diagnosisItem.id).subscribe(() => {
+            this.currentDiagnostics = this.currentDiagnostics.filter((item) => item.id !== diagnosisItem.id);
+            notify('El diagnóstico ha sido borrado con éxito', 'success', 2500);
+            this.removeBasicPopup = false;
+            this.removeBasicPopupParam = null;
+            this.isRemoving = false;
+        },  (error) => {
+            notify('Error al eliminar el diagnóstico, inténtalo mas tarde', 'error', 2500);
+            this.isRemoving = false;
+        })
+
+        //this.currentDiagnostics.splice(DiagnosisIndex, 1);
     }
 
-    addTreatment() {
-        this.currentTreatments.push({
-            date: Date.now(),
-            description: this.currentTreatment,
-            by: 'Current User',
-            medicalExams: this.currentExams
-        });
-
-        this.currentExams = [];
-
-        this.currentTreatment = '';
-        this.examsSelectBox.instance.reset();
+    viewExams(exams) {
+        this.modalCurrentExams = exams;
+        this.examsPopup = true;
     }
 
-    addExam(event) {
-        if (this.currentExam) {
-            const examExists = this.currentExams.find((exam) => exam.medicalExamId === this.currentExam.id);
-
-            if (!examExists) {
-                this.currentExams.push({
-                    medicalExamId: this.currentExam.id,
-                    result: {
-                        date: Date.now(),
-                        description: this.currentExam.name
-                    }
-                });
-            }
-
-            this.examsSelectBox.instance.reset();
-        }
+    openRemoveTreatmentsPopup(treatment: Treatment, diagnosis: Diagnosis) {
+        this.removeBasicPopupParam = [treatment, diagnosis];
+        this.removeBasicPopupTitle = '¿Deseas eliminar el tratamiento?';
+        this.removeBasicPopupFn = this.removeTreatment;
+        this.removeBasicPopup = true;
     }
 
-    removeExam(examRemove: MedicalExam) {
-        this.currentExams = this.currentExams.filter((exam) => exam.medicalExamId !== examRemove.medicalExamId)
+    openRemoveDiagnosisPopup(diagnosisItem: Diagnosis) {
+        this.removeBasicPopupParam = diagnosisItem;
+        this.removeBasicPopupTitle = '¿Deseas eliminar el diagnóstico?';
+        this.removeBasicPopupFn = this.removeDiagnosis;
+        this.removeBasicPopup = true;
     }
 
-    removeTreatment(treatmentIndex: any) {
-        this.currentTreatments.splice(treatmentIndex, 1);
+    openRemovePopup(image: Image) {
+        this.imageToRemove = image;
+        this.removePopup = true;
     }
 }

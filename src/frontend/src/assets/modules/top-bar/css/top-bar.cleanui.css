@@ -23,6 +23,18 @@ body {
     padding: 1rem 1.28rem;
     margin-right: 1.42rem;
 }
+.cat__top-bar__logo a {
+    display: flex;
+    white-space: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.cat__top-bar__logo h3 {
+    margin: 0;
+    padding-left: 5px;
+    color: black;
+}
 
 .cat__top-bar__logo img {
     max-height: 2.5rem;
